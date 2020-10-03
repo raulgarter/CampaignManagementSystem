@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEWTOMS LLC</title>
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item">
+        <h4 style="margin-top: 3%;" >Upload Scheduler</h4>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          <i class="fas fa-th-large"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <img src="../../dist/img/newtoms3.jpg" alt="" style="width: 80%; height: 22%; margin-left: 10%; margin-bottom: -15%;">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex"></div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="./../../index.html" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
+              <p>Home</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./profile.html" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Profile</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./users.html" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>Users</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./upload.html" class="nav-link">
+              <i class="nav-icon fas fa-file-upload"></i>
+              <p>Upload</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./campaign.html" class="nav-link">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>Campaigns</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./campaignHistory.html" class="nav-link">
+              <i class="nav-icon fas fa-th-list"></i>
+              <p>Campaign History</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./churn.html" class="nav-link">
+              <i class="nav-icon fas fa-users-slash"></i>
+              <p>Churn</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-8 mx-auto">
+            <!-- jquery validation -->
+            <div class="card card-warning">
+              <div class="card-header">
+                <h3 class="card-title"><b>Scheduler</b></h3>
+              </div>
+              <!-- form start -->
+              <form id="quickForm">
+                <div class="card-body">
+                  <!-- Begin Date -->
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Start Date</label>
+                    <div class="col-sm-9">
+                      <div class="input-group date" id="reservationdate1"  data-target-input="nearest">
+                          <input type="text" name="startDate" class="form-control datetimepicker-input" data-target="#reservationdate1" placeholder="Start Date"/>
+                          <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Finish Date -->
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">End Date</label>
+                    <div class="col-sm-9">
+                      <div class="input-group date" id="reservationdate2" data-target-input="nearest">
+                          <input type="text" name="endDate" class="form-control datetimepicker-input" data-target="#reservationdate2" placeholder="End Date"/>
+                          <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Frequency -->
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Frequency</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" name="frequency" id="frequency">
+                        <option value="" disabled selected>Select Frequency</option>
+                        <option value="1">Daily</option>
+                        <option value="2">Weekly</option>
+                        <option value="2">Day</option>
+                        <option value="2">Hour</option>
+                        <option value="2">Minute</option>
+                        <option value="2">Seconds</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Frequency Value -->
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Frequency Value</label>
+                    <div class="col-sm-9">
+                      <div class="input-group" data-target-input="nearest">
+                          <input type="number" name="valueFrequency" id="valueFrequency" class="form-control" placeholder="Frequency Value"/>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /.card-body -->
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success float-right">Submit</button>
+                  <a href="./campaign.html" class="btn btn-danger float-right">Cancelar</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section><!-- /.content -->
+  </div><!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.1.0-pre
+    </div>
+    <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jquery-validation -->
+<script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+
+<!-- Date & Time -->
+<!-- Select2 -->
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="../../plugins/moment/moment.min.js"></script>
+<script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<!-- date-range-picker -->
+<script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Page specific script -->
+<script>
+$(function () {
+  $.validator.setDefaults({
+    submitHandler: function () {
+      alert( "Form successful submitted!" );
+    }
+  });
+
+  $('#quickForm').validate({
+    rules: {
+      startDate: {
+        required: true,
+      },
+      endDate: {
+        required: true,
+      },
+      frequency: {
+        required: true,
+      }
+    },
+    messages: {
+      startDate: {
+        required: "Please enter a begin date",
+      },
+      endDate: {
+        required: "Please enter a end date",
+      },
+      frequency: {
+        required: "Please enter a frequency",
+      }
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('div').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+});
+</script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Timepicker
+    $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
+    
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox()
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    $('.my-colorpicker2').on('colorpickerChange', function(event) {
+      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+    });
+
+    $("input[data-bootstrap-switch]").each(function(){
+      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    });
+
+  })
+</script>
+
+<script>  
+ $(document).ready(function(){  
+      var i=1;  
+      $('#add').click(function(){  
+           i++;  
+           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Name</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Field</label><div class="col-sm-10"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Select field</option><option value="">Current balance</option><option value="">SMS</option><option value="">Voice</option><option value="">Data</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Type</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Type</option><option value="<">Less than</option><option value=">">Greater than</option><option value="<=">Less than or equal</option><option value=">=">Greater than or equal</option><option value="=">Equal</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Value</label><div class="col-sm-10"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
+      });  
+      $(document).on('click', '.btn_remove', function(){  
+           var button_id = $(this).attr("id");   
+           $('#row'+button_id+'').remove();  
+      });    
+ });  
+</script>
+
+</body>
+</html>
