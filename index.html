@@ -30,46 +30,19 @@
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-light navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-light navbar-light" style="background-image: url(dist/img/foto9.jpg); color: white;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item">
-        <h4 style="margin-top: 3%;" >Home</h4>
+        <h4 style="margin-top: 9%;">Home</h4>
       </li>
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
@@ -77,7 +50,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="./pages/cms/loginCMS.html">
-          <i class="text-danger fas fa-sign-out-alt"></i>
+          <i class="fas fa-sign-out-alt" style="font-size: 25px;"></i>
         </a>
       </li>
     </ul>
@@ -87,13 +60,13 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Sidebar -->
-    <div class="sidebar">
-      <img src="dist/img/newtoms3.jpg" alt="" style="width: 80%; height: 21; margin-left: 10%; margin-bottom: -15%;">
+    <div class="sidebar" style="background-image: url(dist/img/foto1.jpg);">
+      <img src="dist/img/newtoms.png" alt="" style="width: 80%; height: 21; margin-left: 10%; margin-bottom: -15%;">
       <div class="user-panel mt-3 pb-3 mb-3"></div>
       
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <nav class="mt-2" >
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
           <li class="nav-item">
             <a href="./index.html" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
@@ -118,7 +91,34 @@
               <p>Upload</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item menu-open">
+            <!-- <a href="·" class="nav-link active" style="background-color: mediumseagreen;"> -->
+            <a href="·" class="nav-link active" style="background-color: darkgrey;">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>Campaigns<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="pages/cms/campaign.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Campaigns</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/cms/campaignCreate.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create Campaigns</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/cms/campaignHistory.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Campaigns History</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- <li class="nav-item">
             <a href="pages/cms/campaign.html" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>Campaigns</p>
@@ -129,7 +129,7 @@
               <i class="nav-icon fas fa-th-list"></i>
               <p>Campaign History</p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="pages/cms/churn.html" class="nav-link">
               <i class="nav-icon fas fa-users-slash"></i>
@@ -144,7 +144,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="background-image: url(dist/img/foto11.jpg);">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -160,7 +160,7 @@
           
           <div class="col-12 col-sm-6 col-md-4">
             <div class="info-box mb-3">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-shopping-cart"></i></span>
+              <span class="info-box-icon btn-primary elevation-1"><i class="fas fa-shopping-cart"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text"># Total Campañas</span>
                 <span class="info-box-number">10</span>
@@ -187,9 +187,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <div class="clearfix hidden-md-up"></div> -->
-
         </div>
         <!-- /.row -->
         <!-- Main row -->
@@ -198,22 +195,13 @@
           <section class="col-lg-12 connectedSortable">
             <!-- TABLE: LATEST ORDERS -->
             <div class="card">
-              <div class="card-header border-transparent">
+              <div class="card-header border-transparent" style="color: white; font-family: 'Microsoft YaHei UI'; font-size: 14.5px; background-image: url(dist/img/foto10.jpg);">
                 <h3 class="card-title">Campañas</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body p-0">
+              <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table m-0">
+                  <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                       <th>Campaña</th>
@@ -228,7 +216,7 @@
                       <td>28/08/2020</td>
                       <td>Activa</td>
                       <td>
-                        <a class="btn btn-warning" href="#">
+                        <a class="btn" style="border-color: chocolate; color: chocolate;" href="#">
                           <i class="fas fa-eye fa-fw" title="Consultar"></i>
                         </a>
                       </td>
@@ -341,7 +329,7 @@
   </footer>
 
   <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
+  <aside class="control-sidebar control-sidebar-light">
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
