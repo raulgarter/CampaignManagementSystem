@@ -15,14 +15,14 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-image: url(../../dist/img/foto9.jpg); font-family: 'Gadugi'; font-weight: 400; color: white;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item">
-        <h4 style="margin-top: 3%;" >Crear Campaña</h4>
+        <h4 style="margin-top: 3%;">Crear Campaña</h4>
       </li>
     </ul>
 
@@ -38,7 +38,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-light-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-primary elevation-4" style="background-image: url('../../dist/img/foto1.jpg');">
     <!-- Sidebar -->
     <div class="sidebar">
       <img src="../../dist/img/newtoms3.jpg" alt="" style="width: 80%; height: 22%; margin-left: 10%; margin-bottom: -15%;">
@@ -50,43 +50,58 @@
           <li class="nav-item">
             <a href="./../../index.html" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
-              <p>Home</p>
+              <p>Inicio</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="./profile.html" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
-              <p>Profile</p>
+              <p>Perfil</p>
             </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <!-- <a href="·" class="nav-link active" style="background-color: mediumseagreen;"> -->
+            <a class="nav-link">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>Campañas<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="campaign.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Campañas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="campaignCreate.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Crear campaña</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="campaignHistory.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ejecuciones</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a href="./users.html" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
-              <p>Users</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="./upload.html" class="nav-link">
-              <i class="nav-icon fas fa-file-upload"></i>
-              <p>Upload</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="./campaign.html" class="nav-link">
-              <i class="nav-icon fas fa-shopping-cart"></i>
-              <p>Campaigns</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="./campaignHistory.html" class="nav-link">
-              <i class="nav-icon fas fa-th-list"></i>
-              <p>Campaign History</p>
+              <p>Usuarios</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="./churn.html" class="nav-link">
               <i class="nav-icon fas fa-users-slash"></i>
               <p>Churn</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./churn.html" class="nav-link">
+              <i class="nav-icon fas fa-chart-line"></i>
+              <p>Search Analytics</p>
             </a>
           </li>
         </ul>
@@ -97,7 +112,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="font-size: 16px; background-image: url(../../dist/img/foto11.jpg); padding: 0px 15px; padding-right: 20px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -108,12 +123,11 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <!-- left column -->
           <div class="col-md-8 mx-auto">
             <!-- jquery validation -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Datos de la Campaña</h3>
+            <div class="card">
+              <div class="card-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
+                <h3 class="card-title" style="margin-top: 5px; font-size: 18.5px;">Datos de la Campaña</h3>
               </div>
               <!-- form start -->
               <form id="quickForm">
@@ -141,21 +155,21 @@
                   </div>
                   <!-- Email Template -->
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-3 col-form-label">Email Template</label>
+                    <label for="inputEmail3" class="col-sm-3 col-form-label">Plantilla del correo</label>
                     <div class="col-sm-9">
                       <select class="form-control" name="email" id="email">
-                        <option value="" disabled selected>Seleccionar Template</option>
-                        <option value="1">Template 1</option>
-                        <option value="2">Template 2</option>
-                        <option value="2">Template 3</option>
+                        <option value="" disabled selected>Seleccionar Plantilla</option>
+                        <option value="1">Plantilla 1</option>
+                        <option value="2">Plantilla 2</option>
+                        <option value="2">Plantilla 3</option>
                       </select>
                     </div>
                   </div>
                 </div><!-- /.card-body -->
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-success float-right">Submit</button>
-                  <a href="./campaign.html" class="btn btn-danger float-right">Cancelar</a>
+                  <a href="./campaign.html" class="btn btn-default">Cancelar</a>
+                  <button type="submit" class="btn btn-success float-right">Agregar</button>
                 </div>
               </form>
             </div>
