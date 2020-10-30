@@ -195,6 +195,9 @@
                         <a class="btn btn-danger btn-sm" href="#">
                             <i class="fas fa-trash" title="Eliminar"></i>
                         </a>
+                        <a class="btn btn-success btn-sm ejecutar" href="#" id="1">
+                            <i class="fa fa-play-circle" title="Ejecutar"></i>
+                        </a>
                       </td>
                     </tr>
                   </tfoot>
@@ -277,6 +280,41 @@
 <script src="../../dist/js/csv-button.js"></script>
 <!-- Page specific script -->
 <script>
+  /*var link = 'http://localhot:8081//manual-execution/' + cxsk.value
+  fetch(link).then( 
+    response => { 
+      response.json().then(
+        data => {
+          console.log(data);
+        }
+      )
+    }
+  )*/
+
+  $(document).on('click', '.ejecutar', function(){
+    var id = $(this).attr("id");
+    var url = "http://localhost:8081/manual-execution/" + id;
+    console.log("La url es " + url);
+    $.ajax({
+      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      url: url,
+      method:"POST",
+      data:{id:id},
+      dataType:"json",
+      success:function(data){
+        $('.card-title').innerHTML("Edit Usuario");
+      }
+    })
+    /*fetch(url)
+    .then(function (response) {
+      return response.json();
+    })
+    .catch(function (error) {
+      console.log("Error: " + error);
+    });*/
+  });
+
+
 </script>
 <style>
   .page-item.active .page-link {

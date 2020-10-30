@@ -199,14 +199,14 @@
               <div class="card-body">
                 <form id="quickForm">
                   <div class="custom-control custom-switch mt-2 mb-3">
-                    <input type="checkbox" size="3" class="customModo custom-control-input" id="customSwitch1" checked="">
+                    <input type="checkbox" size="3" class="customModo custom-control-input" id="customSwitch1">
                     <label class="custom-control-label" for="customSwitch1" id="lblSwitch">Se repite</label>
                   </div>
                   <div class="form-group row" id="divNoRepite">
                     <label class="col-sm-1 col-form-label">Fecha</label>
                     <div class="col-sm-5">
-                      <div class="input-group date" id="fecha">
-                        <input type="datetime-local" class="form-control datetimepicker-input" data-target="#fecha"/>
+                      <div class="input-group date">
+                        <input type="datetime-local" step=900 min="2020-10-01T08:00" max="2025-12-31T08:00" name="fecha" class="form-control datetimepicker-input" data-target="#fecha"/>
                       </div>
                     </div>
                   </div>
@@ -215,7 +215,7 @@
                     <label class="col-sm-2 col-form-label text-right">Fecha inicio-fin</label>
                     <div class="col-sm-4">
                       <div class="input-group">
-                        <input type="text" class="form-control float-right" id="reservation">
+                        <input type="text" class="form-control float-right" id="rangoFechas" name="rangoFechas">
                       </div>
                     </div>
                     <label class="col-sm-2 col-form-label text-right">Frequencia</label>
@@ -231,41 +231,59 @@
                   <div class="form-group row" id="divMensual" hidden>
                     <label class="col-sm-2 col-form-label text-right">Fecha</label>
                     <div class="col-sm-4">
-                      <div class="input-group date" id="reservationdate">
-                        <input type="date" class="form-control datetimepicker-input" data-target="#reservationdate2" placeholder="Fecha de fin"/>
+                      <div class="input-group date">
+                        <input type="text" pattern="[0-3]{1}[0-9]{1}" class="form-control" placeholder="Ingrese nro entre 01 y 31" id="fechaNro" name="fechaNro"/>
                       </div>
                     </div>
                     <label class="col-sm-2 col-form-label text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" required>
+                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="hora" required>
                     </div>
                   </div>
                   <div class="form-group row" id="divSemanal" hidden>
                     <label class="col-sm-2 col-form-label text-right">Día</label>
                     <div class="col-sm-4">
-                      <select class="form-control" name="cars" id="cars">
+                      <select class="form-control" name="dia" id="dia">
                         <option value="" disabled selected>Seleccionar día</option>
-                        <option value="diaria">Lunes</option>
-                        <option value="semanal">Martes</option>
-                        <option value="mensual">Miércoles</option>
-                        <option value="diaria">Jueves</option>
-                        <option value="semanal">Viernes</option>
-                        <option value="mensual">Sábado</option>
-                        <option value="diaria">Domingo</option>
+                        <option value="1">Lunes</option>
+                        <option value="2">Martes</option>
+                        <option value="3">Miércoles</option>
+                        <option value="4">Jueves</option>
+                        <option value="5">Viernes</option>
+                        <option value="6">Sábado</option>
+                        <option value="7">Domingo</option>
                       </select>
                     </div>
                     <label class="col-sm-2 text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" required>
+                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="hora" required>
                     </div>  
                   </div>
                   <div class="form-group row" id="divDiario" hidden>
                     <label class="col-sm-2 text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" required>
+                      <input class="form-control" type="time"  value="08:00" step="900" max="23:00" list="hora" name="hora" required>
                     </div>  
                   </div>
+                  <div class="card-footer pb-1 mt-4 pr-0 pl-0" style="background-color: white;">
+                    <a href="./campaign.html" class="btn btn-default">Cancelar</a>
+                    <button type="submit" class="btn btn-success float-right">Guardar</button>
+                  </div>
                 </form>
+                <datalist id="hora">
+                  <option value="01:00"><option value="02:00"><option value="03:00">
+                  <option value="04:00"><option value="05:00"><option value="06:00">
+                  <option value="10:00"><option value="11:00"><option value="12:00">
+                  <option value="13:00"><option value="14:00"><option value="15:00">  
+                  <option value="10:00"><option value="11:00"><option value="12:00">
+                  <option value="13:00"><option value="14:00"><option value="15:00">
+                  <option value="07:00"><option value="08:00"><option value="09:00">
+                  <option value="10:00"><option value="11:00"><option value="12:00">
+                  <option value="13:00"><option value="14:00"><option value="15:00">
+                  <option value="16:00"><option value="17:00"><option value="18:00">
+                  <option value="19:00"><option value="20:00"><option value="21:00">
+                  <option value="22:00"><option value="22:00"><option value="00:00">
+                </datalist>
               </div>
               <!-- /.card-body -->
             </div>
@@ -326,7 +344,11 @@
                               </td> 
                               <td style="width:10%;"><button style="padding: 4px 10px; margin-top: 2px;" type="button" name="add" id="add" class="btn bg-gradient-success .btn-sm" title="Add another rule">&#10010;</button></td>  
                             </tr>  
-                          </table> 
+                          </table>
+                          <div class="card-footer pb-1 mt-0 pr-0 pl-0" style="background-color: white;">
+                            <a href="./campaign.html" class="btn btn-default">Cancelar</a>
+                            <button type="submit" class="btn btn-success float-right">Guardar</button>
+                          </div>
                         </form>
                         </div> 
                       </div>
@@ -385,7 +407,15 @@
 $(function () {
   $('.customModo').prop('checked', false);
   //Date range picker
-  $('#reservation').daterangepicker()
+
+  var today = new Date();
+  var todayDate = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
+
+  $('#rangoFechas').daterangepicker({
+    showDropdowns: true,
+    minDate: todayDate,
+    maxDate: '12/31/2025'
+  });
 
   $.validator.setDefaults({
     submitHandler: function () {
@@ -443,7 +473,9 @@ $(function () {
 
   $('.customModo').on('change', function(){
     var ch = $(this), c;
-    $('#divRangoHoras').attr("hidden", true);
+    $('#divSemanal').attr("hidden", true);
+    $('#divMensual').attr("hidden", true);
+    $('#divDiario').attr("hidden", true);
     $('#divRangoFechas').attr("hidden", true);
     if(ch.is(':checked')){
       $('#divRepite').removeAttr('hidden');
@@ -469,28 +501,22 @@ $(function () {
       $('#divSemanal').attr("hidden", true);
     }
   });
+
+  //Datemask dd/mm/yyyy
+  $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+  //Datemask2 mm/dd/yyyy
+  $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+
+  //Bootstrap Duallistbox
+  $('.duallistbox').bootstrapDualListbox()
+
+  $("input[data-bootstrap-switch]").each(function(){
+    $(this).bootstrapSwitch('state', $(this).prop('checked'));
+  });
+
 });
 </script>
 
-<script>
-  $(function () {
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Date range picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
-    //Bootstrap Duallistbox
-    $('.duallistbox').bootstrapDualListbox()
-
-    $("input[data-bootstrap-switch]").each(function(){
-      $(this).bootstrapSwitch('state', $(this).prop('checked'));
-    });
-
-  })
-</script>
 
 <script>  
  $(document).ready(function(){  
