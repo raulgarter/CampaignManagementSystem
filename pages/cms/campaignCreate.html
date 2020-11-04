@@ -123,6 +123,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
+          <!-- left column -->
           <div class="col-md-8 mx-auto">
             <!-- jquery validation -->
             <div class="card">
@@ -133,6 +134,7 @@
               <form id="quickForm">
                 <div class="card-body">
                   <!-- Nombre Campaña -->
+                  <label style="color: orange; margin-top: 5px;">Campaña</label>
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Nombre</label>
                     <div class="col-sm-9">
@@ -157,7 +159,7 @@
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Plantilla del correo</label>
                     <div class="col-sm-9">
-                      <select class="form-control" name="email" id="email">
+                      <select class="form-control" name="template" id="template">
                         <option value="" disabled selected>Seleccionar Plantilla</option>
                         <option value="1">Plantilla 1</option>
                         <option value="2">Plantilla 2</option>
@@ -165,14 +167,128 @@
                       </select>
                     </div>
                   </div>
+                  <br>
+                  <label style="color: orange;">Horario</label>
+                  <div class="custom-control custom-switch mt-2 mb-3">
+                    <input type="checkbox" size="3" class="customModo custom-control-input" id="customSwitch1">
+                    <label class="custom-control-label" for="customSwitch1" id="lblSwitch">Se repite</label>
+                  </div>
+                  <div class="form-group row" id="divNoRepite">
+                    <label class="col-sm-1 col-form-label">Fecha</label>
+                    <div class="col-sm-5">
+                      <div class="input-group date">
+                        <input type="datetime-local" step=900 min="2020-10-01T08:00" max="2025-12-31T08:00" name="fecha" id="fecha" class="form-control datetimepicker-input" data-target="#fecha"/>
+                      </div>
+                    </div>
+                  </div>
+                    <!-- Date range -->
+                  <div class="form-group row" id="divRepite" hidden>
+                    <label class="col-sm-2 col-form-label text-right">Fecha inicio-fin</label>
+                    <div class="col-sm-4">
+                      <div class="input-group">
+                        <input type="text" class="form-control float-right" id="rangoFechas" name="rangoFechas">
+                      </div>
+                    </div>
+                    <label class="col-sm-2 col-form-label text-right">Frequencia</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="frequencia" id="frequencia">
+                        <option value="" disabled selected>Seleccionar frequencia</option>
+                        <option value="diaria">Diaria</option>
+                        <option value="semanal">Semanal</option>
+                        <option value="mensual">Mensual</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row" id="divMensual" hidden>
+                    <label class="col-sm-2 col-form-label text-right">Fecha</label>
+                    <div class="col-sm-4">
+                      <div class="input-group date">
+                        <input type="number" min=1 max=31 class="form-control" placeholder="Ingrese nro entre 1 y 31" id="fechaNro" name="fechaNro"/>
+                      </div>
+                    </div>
+                    <label class="col-sm-2 col-form-label text-right">Hora</label>
+                    <div class=" col-sm-4">
+                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="hora" id="horaMensual" required>
+                    </div>
+                  </div>
+                  <div class="form-group row" id="divSemanal" hidden>
+                    <label class="col-sm-2 col-form-label text-right">Día</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="dia" id="dia">
+                        <option value="" disabled selected>Seleccionar día</option>
+                        <option value="1">Lunes</option>
+                        <option value="2">Martes</option>
+                        <option value="3">Miércoles</option>
+                        <option value="4">Jueves</option>
+                        <option value="5">Viernes</option>
+                        <option value="6">Sábado</option>
+                        <option value="7">Domingo</option>
+                      </select>
+                    </div>
+                    <label class="col-sm-2 text-right">Hora</label>
+                    <div class=" col-sm-4">
+                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="hora" id="horaSemanal" required>
+                    </div>  
+                  </div>
+                  <div class="form-group row" id="divDiario" hidden>
+                    <label class="col-sm-2 text-right">Hora</label>
+                    <div class=" col-sm-4">
+                      <input class="form-control" type="time"  value="08:00" step="900" max="23:00" list="hora" name="hora" id="horaDiario" required>
+                    </div>  
+                  </div>
+                  <br>
+                  <label style="color: orange;">&nbsp&nbsp Condiciones</label>
+                  <table class="table" id="dynamic_field">  
+                    <tr>  
+                      <td>
+                        <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Nombre</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Tipo</label>
+                          <div class="col-sm-10">
+                            <select class="form-control ruleTypes_list" name="ruleTypes[]" required>
+                              <option value="" disabled selected>Seleccionar tipo</option>
+                              <option value="<">Menor que</option>
+                              <option value=">">Mayor que</option>
+                              <option value="<=">Menor o igual que</option>
+                              <option value=">=">Mayor o igual que</option>
+                              <option value="=">Igual</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Campo</label>
+                          <div class="col-sm-4">
+                            <select class="form-control ruleFields_list" name="ruleFields[]" required>
+                              <option value="" disabled selected>Seleccionar campo</option>
+                              <option value="">Balance actual</option>
+                              <option value="">SMS</option>
+                              <option value="">Voz</option>
+                              <option value="">Datos</option>
+                            </select>
+                          </div>
+                          <label class="col-sm-2 col-form-label text-right">Valor</label>
+                          <div class="col-sm-4">
+                            <input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/>
+                          </div>
+                        </div>
+                      </td> 
+                      <td style="width:10%;"><button style="padding: 4px 10px; margin-top: 2px;" type="button" name="add" id="add" class="btn bg-gradient-success .btn-sm" title="Add another rule">&#10010;</button></td>  
+                    </tr>  
+                  </table>
                 </div><!-- /.card-body -->
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <a href="./campaign.html" class="btn btn-default">Cancelar</a>
-                  <button type="submit" class="btn btn-success float-right">Agregar</button>
+                  <button type="submit" class="btn btn-success float-right">Guardar</button>
                 </div>
               </form>
             </div>
+            <!-- /.card -->  
           </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -250,7 +366,65 @@ $(function () {
       $(element).removeClass('is-invalid');
     }
   });
+
+  $('.customModo').on('change', function(){
+    var ch = $(this), c;
+    $('#divSemanal').attr("hidden", true);
+    $('#divMensual').attr("hidden", true);
+    $('#divDiario').attr("hidden", true);
+    $('#divRangoFechas').attr("hidden", true);
+    if(ch.is(':checked')){
+      $('#divRepite').removeAttr('hidden');
+      $('#divNoRepite').attr("hidden", true);
+    }else{
+      $('#divNoRepite').removeAttr('hidden');
+      $('#divRepite').attr("hidden", true);
+    }
+  });
+
+  $('#frequencia').on('change', function(){
+    if($('#frequencia').val() == 'diaria'){
+      $('#divDiario').removeAttr('hidden');
+      $('#divSemanal').attr("hidden", true);
+      $('#divMensual').attr("hidden", true);
+    }else if ($('#frequencia').val() == 'semanal'){
+      $('#divSemanal').removeAttr('hidden');
+      $('#divDiario').attr("hidden", true);
+      $('#divMensual').attr("hidden", true);
+    }else{
+      $('#divMensual').removeAttr('hidden');
+      $('#divDiario').attr("hidden", true);
+      $('#divSemanal').attr("hidden", true);
+    }
+  });
 });
+
+var url = 'https://localhost:8081/campaigns';
+var data = {username: $('')};
+
+fetch(url, {
+  method: 'POST', // or 'PUT'
+  body: JSON.stringify(data), // data can be `string` or {object}!
+  headers:{
+    'Content-Type': 'application/json'
+  }
+}).then(res => res.json())
+.catch(error => console.error('Error:', error))
+.then(response => console.log('Success:', response));
+
+</script>
+<script>  
+ $(document).ready(function(){  
+      var i=1;  
+      $('#add').click(function(){  
+           i++;  
+           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor que</option><option value=">">Mayor que</option><option value="<=">Menor o igual que</option><option value=">=">Mayor o igual que</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
+      });  
+      $(document).on('click', '.btn_remove', function(){  
+           var button_id = $(this).attr("id");   
+           $('#row'+button_id+'').remove();  
+      });    
+ });  
 </script>
 </body>
 </html>
