@@ -52,10 +52,10 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex"></div>
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <nav class="mt-2" >
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
           <li class="nav-item">
-            <a href="./../../index.html" class="nav-link">
+            <a href="../../index.html" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>Inicio</p>
             </a>
@@ -66,10 +66,15 @@
               <p>Perfil</p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <!-- <a href="·" class="nav-link active" style="background-color: mediumseagreen;"> -->
-            <a class="nav-link">
-              <i class="nav-icon fas fa-shopping-cart"></i>
+          <li class="nav-item">
+            <a href="./users.html" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>Usuarios</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="·" class="nav-link" style="background-color: lightgrey; color: black;">
+              <i class="nav-icon fas fa-bullhorn"></i>
               <p>Campañas<i class="right fas fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview">
@@ -88,25 +93,19 @@
               <li class="nav-item">
                 <a href="campaignHistory.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Ejecuciones</p>
+                  <p>Historial de ejecuciones</p>
                 </a>
               </li>
             </ul>
           </li>
           <li class="nav-item">
-            <a href="./users.html" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>Usuarios</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="./churn.html" class="nav-link">
+            <a href="churn.html" class="nav-link">
               <i class="nav-icon fas fa-users-slash"></i>
               <p>Churn</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="./churn.html" class="nav-link">
+            <a href="churn.html" class="nav-link">
               <i class="nav-icon fas fa-chart-line"></i>
               <p>Search Analytics</p>
             </a>
@@ -398,6 +397,19 @@
 <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Page specific script -->
 <script>
+  
+  fetch('http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/27')
+  .then( 
+    response => { 
+      response.json().then(
+        data => {
+          console.log(data);
+          // document.getElementById("name").value = data.campaign_name;
+          // document.getElementById("description").value = data.description;
+          // document.getElementById("email").value = data.email_template;
+      })}
+  )
+
 $(function () {
   $('.customModo').prop('checked', false);
   //Date range picker
@@ -511,7 +523,6 @@ $(function () {
 });
 </script>
 
-
 <script>  
  $(document).ready(function(){  
       var i=1;  
@@ -524,6 +535,10 @@ $(function () {
            $('#row'+button_id+'').remove();  
       });    
  });  
+</script>
+
+<script>
+
 </script>
 
 </body>
