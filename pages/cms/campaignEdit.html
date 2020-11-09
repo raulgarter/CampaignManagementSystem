@@ -161,7 +161,7 @@
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Plantilla del correo</label>
                     <div class="col-sm-9">
-                      <select class="form-control" name="email" id="email">
+                      <select class="form-control" name="template" id="template">
                         <option value="" disabled selected>Seleccionar Plantilla</option>
                         <option value="Plantilla 1">Plantilla 1</option>
                         <option value="2">Plantilla 2</option>
@@ -192,7 +192,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form id="quickForm">
+                <form id="quickForm2">
                   <div class="custom-control custom-switch mt-2 mb-3">
                     <input type="checkbox" size="3" class="customModo custom-control-input" id="customSwitch1">
                     <label class="custom-control-label" for="customSwitch1" id="lblSwitch">Se repite</label>
@@ -227,12 +227,12 @@
                     <label class="col-sm-2 col-form-label text-right">Fecha</label>
                     <div class="col-sm-4">
                       <div class="input-group date">
-                        <input type="text" pattern="[0-3]{1}[0-9]{1}" class="form-control" placeholder="Ingrese nro entre 01 y 31" id="fechaNro" name="fechaNro"/>
+                        <input type="number" min="1" max="31" class="form-control" placeholder="Ingrese nro entre 1 y 31" id="fechaNro" name="fechaNro"/>
                       </div>
                     </div>
                     <label class="col-sm-2 col-form-label text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="hora" required>
+                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaMensual" required>
                     </div>
                   </div>
                   <div class="form-group row" id="divSemanal" hidden>
@@ -251,13 +251,13 @@
                     </div>
                     <label class="col-sm-2 text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="hora" required>
+                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaSemanal" required>
                     </div>  
                   </div>
                   <div class="form-group row" id="divDiario" hidden>
                     <label class="col-sm-2 text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time"  value="08:00" step="900" max="23:00" list="hora" name="hora" required>
+                      <input class="form-control" type="time"  value="08:00" step="900" max="23:00" list="hora" name="horaDiario" required>
                     </div>  
                   </div>
                   <div class="card-footer pb-1 mt-4 pr-0 pl-0" style="background-color: white;">
@@ -294,7 +294,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form id="quickForm">
+                <form id="quickForm3">
                         <label>&nbsp&nbsp Condiciones</label>
                         <div>  
                           <table class="table" id="dynamic_field">  
@@ -311,10 +311,10 @@
                                   <div class="col-sm-10">
                                     <select class="form-control ruleTypes_list" name="ruleTypes[]" required>
                                       <option value="" disabled selected>Seleccionar tipo</option>
-                                      <option value="<">Menor que</option>
-                                      <option value=">">Mayor que</option>
-                                      <option value="<=">Menor o igual que</option>
-                                      <option value=">=">Mayor o igual que</option>
+                                      <option value="<">Menor</option>
+                                      <option value=">">Mayor</option>
+                                      <option value="<=">Menor o igual</option>
+                                      <option value=">=">Mayor o igual</option>
                                       <option value="=">Igual</option>
                                     </select>
                                   </div>
@@ -344,6 +344,8 @@
                             <button class="btn btn-success float-right">Guardar</button>
                           </div>
                         </form>
+                        <input id="campaignID" value="48" hidden>
+                        <input id="campaignStatus" value="no iniciada" hidden>
                 <!-- /.row -->
               </div>
               <!-- /.card-body -->
@@ -527,6 +529,125 @@ $(function () {
   });
 
 });
+
+
+var form = document.getElementById('quickForm1');
+form.addEventListener('submit', function(e){
+
+  e.preventDefault();
+
+  var campaignID = $("#campaignID").val();
+  console.log($("#campaignID"));
+  console.log($("#campaignID").value);
+  var url = 'http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns' + '/' + campaignID;
+  console.log(url);
+  var data = {
+    campaign_name: $("#name").val(),
+    description: $("#description").val(),
+    status: $("#campaignStatus").val(),
+    email_template: $("#template").val(),
+    campaign_id: campaignID
+  };
+
+ fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+  .catch(error => console.error('Error:', error))
+  .then(response => console.log('Success:', response));
+  $('#quickForm1').trigger("reset");
+});
+
+var formScheduler = document.getElementById('quickForm2');
+formScheduler.addEventListener('submit', function(e){
+
+  e.preventDefault();
+
+  console.log($("#rangoFechas").val());
+  var campaignID = $("#campaignID").val();
+  var scheduler = {
+    dateRange: $('#rangoFechas').val(),
+    frequency: $('#frequencia').val(),
+    fixed_hour: null,
+    fixed_date: null,
+    day_week: null
+  };
+  console.log(scheduler);
+  console.log($("input[name='fecha']").val());
+
+  if ($('#frequencia').val() == 'diaria') {
+    scheduler.fixed_hour = $("input[name='horaDiario']").val() + ":00";
+  } else if ($('#frequencia').val() == 'semanal') {
+    scheduler.fixed_hour = $("input[name='horaSemanal']").val() + ":00";
+    scheduler.day_week= parseInt($("#dia").val());
+  } else if ($('#frequencia').val() == 'mensual') {
+    scheduler.fixed_hour= $("input[name='horaMensual']").val() + ":00";
+    scheduler.fixed_date= parseInt($("#fechaNro").val());
+  } else {
+    scheduler.dateRange = $("input[name='fecha']").val().substring(0, 10) + " - "+ $("input[name='fecha']").val().substring(0, 10);  
+    scheduler.fixed_hour= $("input[name='fecha']").val().substring(11, ) + ":00";  
+  };
+
+  var url = 'http://localhost:8081/api/campaigns/' + campaignID + '/scheduler';
+
+  fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(scheduler),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+  .catch(error => console.error('Error:', error))
+  .then(response => console.log('Success:', response));
+
+  $("#frequencia").val(null);
+});
+
+var formRules = document.getElementById('quickForm3');
+formRules.addEventListener('submit', function(e){
+
+  e.preventDefault();
+
+  var campaignID = "52"; //CAMBIAR
+  var rules = [];
+  var rule = {};
+  var rulesCount = $("input[name='ruleNames[]']").length;
+  var ruleField = null;
+  var ruleType = null;
+  var field1 = $(".ruleFields_list")[0];
+  console.log(field1.options[field1.selectedIndex].text);
+
+  for (var i = 0; i < rulesCount; i++) {
+    ruleField = $(".ruleFields_list")[i];
+    ruleType = $(".ruleTypes_list")[i];
+    rule = {
+      "rule_name": $("input[name='ruleNames[]']")[i].value,
+      "rule_description": null,
+      "rule_field": ruleField.options[ruleField.selectedIndex].text,
+      "rule_type": ruleType.options[ruleType.selectedIndex].text,
+      "rule_value": $("input[name='ruleValues[]']")[i].value,
+      "fk_campaign": campaignID
+    };
+    rules.push(rule);
+  }
+  
+  var url = 'http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + campaignID + '/rules';
+
+  fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(rules),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+  .catch(error => console.error('Error:', error))
+  .then(response => console.log('Success:', response));
+
+  $("#frequencia").val(null);
+})
 </script>
 
 <script>  
@@ -534,7 +655,7 @@ $(function () {
       var i=1;  
       $('#add').click(function(){  
            i++;  
-           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor que</option><option value=">">Mayor que</option><option value="<=">Menor o igual que</option><option value=">=">Mayor o igual que</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
+           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
       });  
       $(document).on('click', '.btn_remove', function(){  
            var button_id = $(this).attr("id");   

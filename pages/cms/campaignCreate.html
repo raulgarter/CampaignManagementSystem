@@ -213,7 +213,7 @@
                     </div>
                     <label class="col-sm-2 col-form-label text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="hora" id="horaMensual" required>
+                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaMensual" required>
                     </div>
                   </div>
                   <div class="form-group row" id="divSemanal" hidden>
@@ -232,7 +232,7 @@
                     </div>
                     <label class="col-sm-2 text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="hora" id="horaSemanal" required>
+                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaSemanal" required>
                     </div>  
                   </div>
                   <div class="form-group row" id="divDiario" hidden>
@@ -257,10 +257,10 @@
                           <div class="col-sm-10">
                             <select class="form-control ruleTypes_list" name="ruleTypes[]" required>
                               <option value="" disabled selected>Seleccionar tipo</option>
-                              <option value="<">Menor que</option>
-                              <option value=">">Mayor que</option>
-                              <option value="<=">Menor o igual que</option>
-                              <option value=">=">Mayor o igual que</option>
+                              <option value="<">Menor</option>
+                              <option value=">">Mayor</option>
+                              <option value="<=">Menor o igual</option>
+                              <option value=">=">Mayor o igual</option>
                               <option value="=">Igual</option>
                             </select>
                           </div>
@@ -270,10 +270,10 @@
                           <div class="col-sm-4">
                             <select class="form-control ruleFields_list" name="ruleFields[]" required>
                               <option value="" disabled selected>Seleccionar campo</option>
-                              <option value="">Balance actual</option>
-                              <option value="">SMS</option>
-                              <option value="">Voz</option>
-                              <option value="">Datos</option>
+                              <option value="balance">Balance actual</option>
+                              <option value="sms">SMS</option>
+                              <option value="voz">Voz</option>
+                              <option value="datos">Datos</option>
                             </select>
                           </div>
                           <label class="col-sm-2 col-form-label text-right">Valor</label>
@@ -440,60 +440,68 @@ var form = document.getElementById('quickForm');
 form.addEventListener('submit', function(e){
 
   e.preventDefault();
-  var scheduler = {};
 
+  console.log($("#rangoFechas").val());
+
+  var scheduler = {
+    dateRange: $('#rangoFechas').val(), //$("#rangoFechas").val().substring(0, 10),
+    //$("#rangoFechas").val().substring(13, 23),
+    frequency: $('#frequencia').val(),
+    fixed_hour: null,
+    fixed_date: null,
+    day_week: null
+  };
   console.log(scheduler);
   console.log($("input[name='fecha']").val());
 
   if ($('#frequencia').val() == 'diaria') {
-    scheduler = {
-      begin_date: $("#rangoFechas").val().substring(0, 10),
-      ending_date: $("#rangoFechas").val().substring(13, 23),
-      frequency: "diaria",
-      fixed_hour: $("input[name='horaDiario']").val(),
-      fixed_date: null,
-      day_week: null
-    };
+    scheduler.fixed_hour = $("input[name='horaDiario']").val();
   } else if ($('#frequencia').val() == 'semanal') {
-    scheduler = {
-      begin_date: $("#rangoFechas").val().substring(0, 10),
-      ending_date: $("#rangoFechas").val().substring(13, 23),
-      frequency: "semanal",
-      fixed_hour: $("#horaSemanal").val(),
-      fixed_date: null,
-      day_week: $("#dia").val()
-    };
+    scheduler.fixed_hour = $("input[name='horaSemanal']").val();
+    scheduler.day_week= $("#dia").val();
   } else if ($('#frequencia').val() == 'mensual') {
-      scheduler = {
-        begin_date: $("#rangoFechas").val().substring(0, 10),
-        ending_date: $("#rangoFechas").val().substring(13, 23),
-        frequency: "mensual",
-        fixed_hour: $("#horaMensual").val(),
-        fixed_date: $("fixed_date").val(),
-        day_week: null
-      };
+    scheduler.fixed_hour= $("input[name='horaMensual']").val();
+    scheduler.fixed_date= $("#fechaNro").val();
   } else {
-    scheduler = {
-      begin_date: $("input[name='fecha']").val().substring(0, 10),
-      ending_date: $("input[name='fecha']").val().substring(0, 10),
-      frequency: null,
-      fixed_hour: $("input[name='fecha']").val().substring(11, ),
-      fixed_date: null,
-      day_week: null
-    };  
-  }
+    scheduler.dateRange = $("input[name='fecha']").val().substring(0, 10) + " - "+ $("input[name='fecha']").val().substring(0, 10);  
+    scheduler.fixed_hour= $("input[name='fecha']").val().substring(11, );  
+  };
 
-  var url = 'http://localhost:8081/campaigns';
+  var rules = [];
+  var rule = {};
+  var rulesCount = $("input[name='ruleNames[]']").length;
+  var ruleField = null;
+  var ruleType = null;
+  var field1 = $(".ruleFields_list")[0];
+  console.log(field1.options[field1.selectedIndex].text);
+
+  for (var i = 0; i < rulesCount; i++) {
+    ruleField = $(".ruleFields_list")[i];
+    ruleType = $(".ruleTypes_list")[i];
+    rule = {
+      "rule_name": $("input[name='ruleNames[]']")[i].value,
+      "rule_description": null,
+      "rule_field": ruleField.options[ruleField.selectedIndex].text,
+      "rule_type": ruleType.options[ruleType.selectedIndex].text,
+      "rule_value": $("input[name='ruleValues[]']")[i].value
+    };
+    rules.push(rule);
+  }
+  console.log(rules);
+
+  var url = 'http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns';
   var data = {
     campaign_name: $("#name").val(),
     description: $("#description").val(),
-    template: $("#template").val(),
-    scheduler: scheduler
+    status: "no iniciada",
+    email_template: $("#template").val(),
+    scheduler: scheduler,
+    rules: rules
   };
 
   console.log(data);
 
- /*fetch(url, {
+  fetch(url, {
     method: 'POST',
     body: JSON.stringify(data),
     headers:{
@@ -503,7 +511,6 @@ form.addEventListener('submit', function(e){
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response));
 
-  console.log(data);*/
   $("#frequencia").val(null);
 })
 </script>
@@ -512,7 +519,7 @@ form.addEventListener('submit', function(e){
       var i=1;  
       $('#add').click(function(){  
            i++;  
-           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor que</option><option value=">">Mayor que</option><option value="<=">Menor o igual que</option><option value=">=">Mayor o igual que</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
+           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
       });  
       $(document).on('click', '.btn_remove', function(){  
            var button_id = $(this).attr("id");   
