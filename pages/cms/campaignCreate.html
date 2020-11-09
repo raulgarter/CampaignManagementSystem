@@ -482,7 +482,7 @@ form.addEventListener('submit', function(e){
     ruleType = $(".ruleTypes_list")[i];
     rule = {
       "rule_name": $("input[name='ruleNames[]']")[i].value,
-      "rule_description": $("input[name='ruleDescriptions[]']")[i].value,
+      "rule_description": $("textarea[name='ruleDescriptions[]']")[i].value,
       "rule_field": ruleField.options[ruleField.selectedIndex].text,
       "rule_type": ruleType.options[ruleType.selectedIndex].text,
       "rule_value": $("input[name='ruleValues[]']")[i].value
