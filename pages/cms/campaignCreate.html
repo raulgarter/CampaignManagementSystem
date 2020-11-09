@@ -253,6 +253,12 @@
                           </div>
                         </div>
                         <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Descripción</label>
+                          <div class="col-sm-10">
+                            <textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group row">
                           <label class="col-sm-2 col-form-label">Tipo</label>
                           <div class="col-sm-10">
                             <select class="form-control ruleTypes_list" name="ruleTypes[]" required>
@@ -293,19 +299,15 @@
                 </div>
               </form>
               <datalist id="hora">
-                  <option value="01:00"><option value="02:00"><option value="03:00">
-                  <option value="04:00"><option value="05:00"><option value="06:00">
-                  <option value="10:00"><option value="11:00"><option value="12:00">
-                  <option value="13:00"><option value="14:00"><option value="15:00">  
-                  <option value="10:00"><option value="11:00"><option value="12:00">
-                  <option value="13:00"><option value="14:00"><option value="15:00">
-                  <option value="07:00"><option value="08:00"><option value="09:00">
-                  <option value="10:00"><option value="11:00"><option value="12:00">
-                  <option value="13:00"><option value="14:00"><option value="15:00">
-                  <option value="16:00"><option value="17:00"><option value="18:00">
-                  <option value="19:00"><option value="20:00"><option value="21:00">
-                  <option value="22:00"><option value="22:00"><option value="00:00">
-                </datalist>
+                <option value="07:00"><option value="08:00"><option value="09:00">
+                <option value="10:00"><option value="11:00"><option value="12:00">
+                <option value="13:00"><option value="14:00"><option value="15:00">
+                <option value="16:00"><option value="17:00"><option value="18:00">
+                <option value="19:00"><option value="20:00"><option value="21:00">
+                <option value="22:00"><option value="00:00">
+                <option value="01:00"><option value="02:00"><option value="03:00">
+                <option value="04:00"><option value="05:00"><option value="06:00">
+              </datalist>
             </div>
             <!-- /.card -->  
           </div>
@@ -463,8 +465,10 @@ form.addEventListener('submit', function(e){
     scheduler.fixed_hour= $("input[name='horaMensual']").val();
     scheduler.fixed_date= $("#fechaNro").val();
   } else {
-    scheduler.dateRange = $("input[name='fecha']").val().substring(0, 10) + " - "+ $("input[name='fecha']").val().substring(0, 10);  
-    scheduler.fixed_hour= $("input[name='fecha']").val().substring(11, );  
+    var fecha = $("input[name='fecha']").val();
+    var dateFormatted = fecha.substring(5,7) + "/" + fecha.substring(8,10) + "/" + fecha.substring(0,4);
+    scheduler.fixed_hour= $("input[name='fecha']").val().substring(11, );
+    scheduler.dateRange = dateFormatted + " - " + dateFormatted;
   };
 
   var rules = [];
@@ -472,15 +476,13 @@ form.addEventListener('submit', function(e){
   var rulesCount = $("input[name='ruleNames[]']").length;
   var ruleField = null;
   var ruleType = null;
-  var field1 = $(".ruleFields_list")[0];
-  console.log(field1.options[field1.selectedIndex].text);
 
   for (var i = 0; i < rulesCount; i++) {
     ruleField = $(".ruleFields_list")[i];
     ruleType = $(".ruleTypes_list")[i];
     rule = {
       "rule_name": $("input[name='ruleNames[]']")[i].value,
-      "rule_description": null,
+      "rule_description": $("input[name='ruleDescriptions[]']")[i].value,
       "rule_field": ruleField.options[ruleField.selectedIndex].text,
       "rule_type": ruleType.options[ruleType.selectedIndex].text,
       "rule_value": $("input[name='ruleValues[]']")[i].value
@@ -519,7 +521,7 @@ form.addEventListener('submit', function(e){
       var i=1;  
       $('#add').click(function(){  
            i++;  
-           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
+           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
       });  
       $(document).on('click', '.btn_remove', function(){  
            var button_id = $(this).attr("id");   
