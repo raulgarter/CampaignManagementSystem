@@ -228,7 +228,7 @@
               fila += "<td>" + celda.campaign_name + "</td>";
               fila += "<td>" + celda.description + "</td>";
               fila += "<td>" + celda.status + "</td>";
-              fila += "<td><a class=\"btn btn-warning btn-sm\" href=\"#\"><i class=\"fas fa-eye\" title=\"Consultar\"></i></a></tr>";
+              fila += "<td><a class=\"btn btn-warning btn-sm\" onclick=\"keepID("+ celda.id_campaign +")\" href=\"./pages/cms/campaignConsult.html\"><i class=\"fas fa-eye\" title=\"Consultar\"></i></a></tr>";
             })
             fila += "</tbody>";
             document.getElementById("myTable").innerHTML = fila;
@@ -246,6 +246,14 @@
       )
     }
   )
+
+  function keepID(id_campaign) {
+    // document.getElementById("deleteVariable1").value = id_campaign;
+    // console.log($("#deleteVariable1").val());
+    localStorage.clear();
+    localStorage.setItem("id_campaign", id_campaign);
+  }
+
 </script>
 </body>
 </html>

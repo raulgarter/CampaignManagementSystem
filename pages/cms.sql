@@ -48,29 +48,28 @@ CREATE TABLE campaign (
     email_template VARCHAR (25) NOT NULL
 );
 
- 
-
 CREATE TABLE scheduler (
     id_scheduler serial PRIMARY KEY,
     begin_date date NOT NULL,
     ending_date date NOT NULL,
     frequency VARCHAR(8) NOT NULL,
-    fixed_hour time,
-    fixed_date date,
-    day_week INTEGER,
+    hour time,
+    date date,
+    day_week VARCHAR (10),
     fk_campaign integer NOT NULL,
+
     CONSTRAINT fk_campaign FOREIGN KEY (fk_campaign) references campaign (id_campaign) ON DELETE CASCADE
 );
 
- 
-
 CREATE TABLE campaign_rule (
     id_rule serial PRIMARY KEY,
-    rule_name VARCHAR(16) NOT NULL,
+    rule_name VARCHAR(25) NOT NULL,
+    rule_description VARCHAR(300),
     rule_field VARCHAR(16) NOT NULL,
     rule_type VARCHAR(12) NOT NULL,
     rule_value VARCHAR(24) NOT NULL,
     fk_campaign integer NOT NULL,
+
     CONSTRAINT fk_campaign FOREIGN KEY (fk_campaign) references campaign (id_campaign) ON DELETE CASCADE
 );
 
