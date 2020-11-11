@@ -11,13 +11,14 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- daterange picker -->
   <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -131,50 +132,55 @@
         <div class="row">
           <!-- left column -->
           <div class="col-md-8 mx-auto">
-            <!-- jquery validation -->
-            <div class="card">
+            <!-- Campaign EXAMPLE -->
+            <div class="card card-info">
               <div class="card-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
                 <h3 class="card-title" style="margin-top: 5px; font-size: 18.5px;">Datos de la Campaña</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
               </div>
               <!-- form start -->
-              <form id="quickForm1">
-                <div class="card-body">
-                  <!-- Nombre Campaña -->
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Nombre</label>
-                    <div class="col-sm-9">
-                      <div class="input-group" data-target-input="nearest">
-                          <input type="text" name="name" id="name" class="form-control" placeholder="Nombre"/>
+              <div class="card-body">
+                <form id="quickForm1">
+                    <!-- Nombre Campaña -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Nombre</label>
+                      <div class="col-sm-9">
+                        <div class="input-group" data-target-input="nearest">
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Nombre" required/>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <!-- Descripción Campaña -->
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Descripción</label>
-                    <div class="col-sm-9">
-                      <div class="input-group" data-target-input="nearest">
-                        <textarea name="description" id="description" class="form-control" rows="2" placeholder="Descripción"></textarea>  
+                    <!-- Descripción Campaña -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Descripción</label>
+                      <div class="col-sm-9">
+                        <div class="input-group" data-target-input="nearest">
+                          <textarea name="description" id="description" class="form-control" rows="2" placeholder="Descripción" required></textarea>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <!-- Email Template -->
-                  <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-3 col-form-label">Plantilla del correo</label>
-                    <div class="col-sm-9">
-                      <select class="form-control" name="template" id="template">
-                        <option value="" disabled selected>Seleccionar Plantilla</option>
-                        <option value="Plantilla 1">Plantilla 1</option>
-                        <option value="2">Plantilla 2</option>
-                        <option value="3">Plantilla 3</option>
-                      </select>
+                    <!-- Email Template -->
+                    <div class="form-group row">
+                      <label for="inputEmail3" class="col-sm-3 col-form-label">Plantilla del correo</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="template" id="template" required>
+                          <option value="" disabled selected>Seleccionar Plantilla</option>
+                          <option value="1">Plantilla 1</option>
+                          <option value="2">Plantilla 2</option>
+                          <option value="3">Plantilla 3</option>
+                        </select>
+                      </div>
                     </div>
-                  </div>
+                    <div class="card-footer pb-1 mt-4 pr-0 pl-0" style="background-color: white;">
+                      <button class="btn btn-success float-right swalDefaultSuccess1" onclick="editCampaign()">Guardar</button>
+                      <a href="./campaign.html" class="btn btn-default">Cancelar</a>
+                    </div>
+                  </form>
                 </div><!-- /.card-body -->
-                <div class="card-footer">
-                  <button class="btn btn-success float-right" onclick="editCampaign()">Guardar</button>
-                  <a href="./campaign.html" class="btn btn-default">Cancelar</a>
-                </div>
-              </form>
             </div>
 
             <!-- Scheduler EXAMPLE -->
@@ -185,9 +191,6 @@
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
-                  <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button> -->
                 </div>
               </div>
               <!-- /.card-header -->
@@ -262,7 +265,7 @@
                   </div>
                   <div class="card-footer pb-1 mt-4 pr-0 pl-0" style="background-color: white;">
                     <a href="./campaign.html" class="btn btn-default">Cancelar</a>
-                    <button type="submit" class="btn btn-success float-right">Guardar</button>
+                    <button type="submit" class="btn btn-success float-right swalDefaultSuccess2">Guardar</button>
                   </div>
                 </form>
                 <datalist id="hora">
@@ -291,63 +294,63 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <form id="quickForm3">
-                        <label>&nbsp&nbsp Condiciones</label>
-                        <div>  
-                          <table class="table" id="dynamic_field">  
-                            <tr>  
-                              <td>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">Nombre</label>
-                                  <div class="col-sm-10">
-                                    <input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">Descripción</label>
-                                  <div class="col-sm-10">
-                                    <textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;"></textarea>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">Tipo</label>
-                                  <div class="col-sm-10">
-                                    <select class="form-control ruleTypes_list" name="ruleTypes[]" required>
-                                      <option value="" disabled selected>Seleccionar tipo</option>
-                                      <option value="<">Menor</option>
-                                      <option value=">">Mayor</option>
-                                      <option value="<=">Menor o igual</option>
-                                      <option value=">=">Mayor o igual</option>
-                                      <option value="=">Igual</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">Campo</label>
-                                  <div class="col-sm-4">
-                                    <select class="form-control ruleFields_list" name="ruleFields[]" required>
-                                      <option value="" disabled selected>Seleccionar campo</option>
-                                      <option value="">Balance actual</option>
-                                      <option value="">SMS</option>
-                                      <option value="">Voz</option>
-                                      <option value="">Datos</option>
-                                    </select>
-                                  </div>
-                                  <label class="col-sm-2 col-form-label text-right">Valor</label>
-                                  <div class="col-sm-4">
-                                    <input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/>
-                                  </div>
-                                </div>
-                              </td> 
-                              <td style="width:10%;"><button style="padding: 4px 10px; margin-top: 2px;" type="button" name="add" id="add" class="btn bg-gradient-success .btn-sm" title="Add another rule">&#10010;</button></td>  
-                            </tr>  
-                          </table>
-                          <div class="card-footer pb-1 mt-0 pr-0 pl-0" style="background-color: white;">
-                            <a href="./campaign.html" class="btn btn-default">Cancelar</a>
-                            <button class="btn btn-success float-right">Guardar</button>
+                  <label>&nbsp&nbsp Condiciones</label>
+                  <div>  
+                    <table class="table" id="dynamic_field">  
+                      <tr>  
+                        <td>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Nombre</label>
+                            <div class="col-sm-10">
+                              <input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/>
+                            </div>
                           </div>
-                        </form>
-                        <input id="campaignID" hidden>
-                        <input id="campaignStatus" hidden>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Descripción</label>
+                            <div class="col-sm-10">
+                              <textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;"></textarea>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Tipo</label>
+                            <div class="col-sm-10">
+                              <select class="form-control ruleTypes_list" name="ruleTypes[]" required>
+                                <option value="" disabled selected>Seleccionar tipo</option>
+                                <option value="<">Menor</option>
+                                <option value=">">Mayor</option>
+                                <option value="<=">Menor o igual</option>
+                                <option value=">=">Mayor o igual</option>
+                                <option value="=">Igual</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Campo</label>
+                            <div class="col-sm-4">
+                              <select class="form-control ruleFields_list" name="ruleFields[]" required>
+                                <option value="" disabled selected>Seleccionar campo</option>
+                                <option value="">Balance actual</option>
+                                <option value="">SMS</option>
+                                <option value="">Voz</option>
+                                <option value="">Datos</option>
+                              </select>
+                            </div>
+                            <label class="col-sm-2 col-form-label text-right">Valor</label>
+                            <div class="col-sm-4">
+                              <input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/>
+                            </div>
+                          </div>
+                        </td> 
+                        <td style="width:10%;"><button style="padding: 4px 10px; margin-top: 2px;" type="button" name="add" id="add" class="btn bg-gradient-success .btn-sm" title="Add another rule">&#10010;</button></td>  
+                      </tr>  
+                    </table>
+                    <div class="card-footer pb-1 mt-0 pr-0 pl-0" style="background-color: white;">
+                      <a href="./campaign.html" class="btn btn-default">Cancelar</a>
+                      <button class="btn btn-success float-right swalDefaultSuccess3">Guardar</button>
+                    </div>
+                  </form>
+                  <input id="campaignID" hidden>
+                  <input id="campaignStatus" hidden>
                 <!-- /.row -->
               </div>
               <!-- /.card-body -->
@@ -358,17 +361,13 @@
     </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
   <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.1.0-pre
+    <strong>
+      Copyright &copy; 2020 
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <a href="https://www.newtoms.com">NEWTOMS LLC</a>.</strong>
     </div>
-    <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
@@ -400,14 +399,6 @@
   var id_campaign = localStorage.getItem("id_campaign");
   console.log('id_campaign: ', id_campaign)
 
-  // function editCampaign() {
-  //   var data = {
-  //     campaign_name: $("#name").val(),
-  //     description: $("#description").val(),
-  //     email_template: $("#email").val()
-  //   };console.log(data) 
-  // }
-  
   fetch('http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
   .then( 
     response => { 
@@ -416,7 +407,7 @@
           console.log(data);
           document.getElementById("name").value = data.campaign_name;
           document.getElementById("description").value = data.description;
-          document.getElementById("email").value = data.email_template;
+          document.getElementById("template").value = data.email_template;
           document.getElementById("campaignStatus").value = data.status;
       })}
   )
@@ -437,54 +428,6 @@ $(function () {
   $.validator.setDefaults({
     submitHandler: function () {
       alert( "Form successful submitted!" );
-    }
-  });
-
-  $('#quickForm').validate({
-    rules: {
-      name: {
-        required: true,
-      },
-      description: {
-        required: true,
-      },
-      beginDate: {
-        required: true,
-      },
-      finishDate: {
-        required: true,
-      },
-      email: {
-        required: true,
-      }
-    },
-    messages: {
-      name: {
-        required: "Please enter a name",
-      },
-      description: {
-        required: "Please enter a description",
-      },
-      beginDate: {
-        required: "Please enter a date",
-      },
-      finishDate: {
-        required: "Please enter a date",
-      },
-      email: {
-        required: "Please enter a email template",
-      }
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('div').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
     }
   });
 
@@ -652,22 +595,185 @@ formRules.addEventListener('submit', function(e){
 </script>
 
 <script>  
- $(document).ready(function(){  
+$(document).ready(function(){  
       var i=1;  
       $('#add').click(function(){  
-           i++;  
-           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
+          i++;  
+          $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
       });  
       $(document).on('click', '.btn_remove', function(){  
-           var button_id = $(this).attr("id");   
-           $('#row'+button_id+'').remove();  
+          var button_id = $(this).attr("id");   
+          $('#row'+button_id+'').remove();  
       });    
- });  
+});  
 </script>
 
+<!-- SweetAlert2 -->
+<script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 <script>
+  $(function() {
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
 
+    $('.swalDefaultSuccess1').click(function() {
+      Toast.fire({
+        icon: 'success',
+        title: '<br> Campaña actualizada.'
+      })
+    });
+    $('.swalDefaultSuccess2').click(function() {
+      Toast.fire({
+        icon: 'success',
+        title: '<br> Horario actualizad0.'
+      })
+    });
+    $('.swalDefaultSuccess3').click(function() {
+      Toast.fire({
+        icon: 'success',
+        title: '<br> Condiciones actualizadas.'
+      })
+    });
+    $('.swalDefaultInfo').click(function() {
+      Toast.fire({
+        icon: 'info',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.swalDefaultError').click(function() {
+      Toast.fire({
+        icon: 'error',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.swalDefaultWarning').click(function() {
+      Toast.fire({
+        icon: 'warning',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.swalDefaultQuestion').click(function() {
+      Toast.fire({
+        icon: 'question',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+
+    $('.toastrDefaultSuccess').click(function() {
+      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+    $('.toastrDefaultInfo').click(function() {
+      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+    $('.toastrDefaultError').click(function() {
+      toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+    $('.toastrDefaultWarning').click(function() {
+      toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+    $('.toastsDefaultDefault').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultTopLeft').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        position: 'topLeft',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultBottomRight').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        position: 'bottomRight',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultBottomLeft').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        position: 'bottomLeft',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultAutohide').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        autohide: true,
+        delay: 750,
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultNotFixed').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        fixed: false,
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultFull').click(function() {
+      $(document).Toasts('create', {
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        icon: 'fas fa-envelope fa-lg',
+      })
+    });
+    $('.toastsDefaultFullImage').click(function() {
+      $(document).Toasts('create', {
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        image: '../../dist/img/user3-128x128.jpg',
+        imageAlt: 'User Picture',
+      })
+    });
+    $('.toastsDefaultSuccess').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-success',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultInfo').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-info',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultWarning').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-warning',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultDanger').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-danger',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultMaroon').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-maroon',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+  });
 </script>
-
 </body>
 </html>
