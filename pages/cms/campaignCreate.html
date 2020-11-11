@@ -138,7 +138,7 @@
                 <h3 class="card-title" style="margin-top: 5px; font-size: 18.5px;">Datos de la Campaña</h3>
               </div>
               <!-- form start -->
-              <form id="quickForm">
+              <form id="quickForm" class="swalDefaultSuccess">
                 <div class="card-body">
                   <!-- Nombre Campaña -->
                   <label style="color: orange; margin-top: 5px;">Campaña</label>
@@ -293,7 +293,7 @@
                 </div><!-- /.card-body -->
                 <div class="card-footer">
                   <a href="./campaign.html" class="btn btn-default">Cancelar</a>
-                  <button type="submit" class="btn btn-success float-right swalDefaultSuccess">Agregar</button>
+                  <button type="submit" class="btn btn-success float-right">Agregar</button>
                 </div>
               </form>
               <datalist id="hora">
@@ -492,6 +492,7 @@
 <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 <script>
   $(function() {
+
     var Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -499,7 +500,7 @@
       timer: 3000
     });
 
-    $('.swalDefaultSuccess').click(function() {
+    $('.swalDefaultSuccess').submit(function() {
       Toast.fire({
         icon: 'success',
         title: '<br> Campaña agregada.'

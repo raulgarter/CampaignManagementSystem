@@ -144,7 +144,7 @@
               </div>
               <!-- form start -->
               <div class="card-body">
-                <form id="quickForm1">
+                <form id="quickForm1" class="swalDefaultSuccess1">
                     <!-- Nombre Campaña -->
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Nombre</label>
@@ -176,7 +176,7 @@
                       </div>
                     </div>
                     <div class="card-footer pb-1 mt-4 pr-0 pl-0" style="background-color: white;">
-                      <button class="btn btn-success float-right swalDefaultSuccess1" onclick="editCampaign()">Guardar</button>
+                      <button class="btn btn-success float-right" onclick="editCampaign()">Guardar</button>
                       <a href="./campaign.html" class="btn btn-default">Cancelar</a>
                     </div>
                   </form>
@@ -195,7 +195,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form id="quickForm2">
+                <form id="quickForm2" class="swalDefaultSuccess2">
                   <div class="custom-control custom-switch mt-2 mb-3">
                     <input type="checkbox" size="3" class="customModo custom-control-input" id="customSwitch1">
                     <label class="custom-control-label" for="customSwitch1" id="lblSwitch">Se repite</label>
@@ -264,7 +264,7 @@
                   </div>
                   <div class="card-footer pb-1 mt-4 pr-0 pl-0" style="background-color: white;">
                     <a href="./campaign.html" class="btn btn-default">Cancelar</a>
-                    <button type="submit" class="btn btn-success float-right swalDefaultSuccess2">Guardar</button>
+                    <button type="submit" class="btn btn-success float-right">Guardar</button>
                   </div>
                 </form>
                 <datalist id="hora">
@@ -292,7 +292,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form id="quickForm3">
+                <form id="quickForm3" class="swalDefaultSuccess3">
                   <label>&nbsp&nbsp Condiciones</label>
                   <div>  
                     <table class="table" id="dynamic_field">    
@@ -525,6 +525,7 @@ form.addEventListener('submit', function(e){
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response));
   $('#quickForm1').trigger("reset");
+  setTimeout(location.reload.bind(location), 1000)
 });
 
 var formScheduler = document.getElementById('quickForm2');
@@ -572,6 +573,7 @@ formScheduler.addEventListener('submit', function(e){
   .then(response => console.log('Success:', response));
 
   $("#frequencia").val(null);
+  setTimeout(location.reload.bind(location), 1000)
 });
 
 var formRules = document.getElementById('quickForm3');
@@ -614,6 +616,7 @@ formRules.addEventListener('submit', function(e){
   .then(response => console.log('Success:', response));
 
   $("#frequencia").val(null);
+  setTimeout(location.reload.bind(location), 1000)
 })
 </script>
 
@@ -643,19 +646,19 @@ $(document).ready(function(){
       timer: 3000
     });
 
-    $('.swalDefaultSuccess1').click(function() {
+    $('.swalDefaultSuccess1').submit(function() {
       Toast.fire({
         icon: 'success',
         title: '<br> Campaña actualizada.'
       })
     });
-    $('.swalDefaultSuccess2').click(function() {
+    $('.swalDefaultSuccess2').submit(function() {
       Toast.fire({
         icon: 'success',
-        title: '<br> Horario actualizad0.'
+        title: '<br> Horario actualizado.'
       })
     });
-    $('.swalDefaultSuccess3').click(function() {
+    $('.swalDefaultSuccess3').submit(function() {
       Toast.fire({
         icon: 'success',
         title: '<br> Condiciones actualizadas.'
