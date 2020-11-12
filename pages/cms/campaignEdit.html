@@ -363,8 +363,8 @@
           document.getElementById("description").value = data.description;
           var template = data.email_template;
           var templateOption = '<option value="1" ';
-          if( template == "1") { templateOption+='selected'; } templateOption += '>Plantilla 1</option><option ';
-          if( template == "2") { templateOption+='selected'; } templateOption += '>Plantilla 2</option><option ';
+          if( template == "1") { templateOption+='selected'; } templateOption += '>Plantilla 1</option><option value="2" ';
+          if( template == "2") { templateOption+='selected'; } templateOption += '>Plantilla 2</option><option value="3" ';
           if( template == "3") { templateOption+='selected'; } templateOption += '>Plantilla 3</option>';
           document.getElementById("template").innerHTML = templateOption;    
           document.getElementById("campaignStatus").value = data.status;
@@ -524,8 +524,7 @@ form.addEventListener('submit', function(e){
   }).then(res => res.json())
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response));
-  $('#quickForm1').trigger("reset");
-  setTimeout(location.reload.bind(location), 1000)
+
 });
 
 var formScheduler = document.getElementById('quickForm2');
@@ -573,7 +572,7 @@ formScheduler.addEventListener('submit', function(e){
   .then(response => console.log('Success:', response));
 
   $("#frequencia").val(null);
-  setTimeout(location.reload.bind(location), 1000)
+  
 });
 
 var formRules = document.getElementById('quickForm3');
@@ -614,9 +613,7 @@ formRules.addEventListener('submit', function(e){
   }).then(res => res.json())
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response));
-
-  $("#frequencia").val(null);
-  setTimeout(location.reload.bind(location), 1000)
+  
 })
 </script>
 

@@ -52,10 +52,10 @@ CREATE TABLE scheduler (
     id_scheduler serial PRIMARY KEY,
     begin_date date NOT NULL,
     ending_date date NOT NULL,
-    frequency VARCHAR(8) NOT NULL,
-    hour time,
-    date date,
-    day_week VARCHAR (10),
+    frequency VARCHAR(8),
+    fixed_hour time,
+    fixed_date integer,
+    day_week integer,
     fk_campaign integer NOT NULL,
 
     CONSTRAINT fk_campaign FOREIGN KEY (fk_campaign) references campaign (id_campaign) ON DELETE CASCADE
@@ -64,13 +64,23 @@ CREATE TABLE scheduler (
 CREATE TABLE campaign_rule (
     id_rule serial PRIMARY KEY,
     rule_name VARCHAR(25) NOT NULL,
-    rule_description VARCHAR(300),
+    rule_description VARCHAR(200),
     rule_field VARCHAR(16) NOT NULL,
-    rule_type VARCHAR(12) NOT NULL,
+    rule_type VARCHAR(18) NOT NULL,
     rule_value VARCHAR(24) NOT NULL,
     fk_campaign integer NOT NULL,
 
     CONSTRAINT fk_campaign FOREIGN KEY (fk_campaign) references campaign (id_campaign) ON DELETE CASCADE
+);
+
+CREATE TABLE cms_user (
+    id_user serial PRIMARY KEY,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    user_role VARCHAR(15) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    user_password VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE execution (
@@ -82,15 +92,4 @@ CREATE TABLE execution (
 
 	CONSTRAINT fk_campaign FOREIGN KEY (fk_campaign) references campaign (id_campaign) ON DELETE CASCADE,
 	CONSTRAINT fk_client FOREIGN KEY (fk_client) references client (id_client) ON DELETE CASCADE
-);
-
-CREATE TABLE cms_user (
-	id_user serial PRIMARY KEY,
-	first_name character varying NOT NULL,
-	last_name character varying NOT NULL,
-	user_status boolean NOT NULL,
-	user_role character varying NOT NULL,
-	email character varying NOT NULL,
-	username character varying NOT NULL,
-	user_password character varying NOT NULL
 );
