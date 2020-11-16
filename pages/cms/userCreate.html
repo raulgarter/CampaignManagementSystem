@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <style>
+      input,option, select {font-size: 14.5px !important;}
+  </style>  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NEWTOMS LLC</title>
 
@@ -11,6 +13,7 @@
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -129,47 +132,58 @@
               </div>
               <!-- form start -->
               <form id="quickForm" method="post">
-                <div class="card-body">
+                <div class="card-body" style="padding: 30px 105px;">
                   <!-- name -->
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nombre</label>
                     <div class="input-group col-sm-10">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Nombre"/>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Nombre" maxlenght="30" required style="font-size: 14px;" />
                     </div>
                   </div>
                   <!-- lastname -->
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Apellido</label>
                     <div class="input-group col-sm-10">
-                      <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Apellido"/>
+                      <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Apellido" maxlenght="30" required/>
                   </div>
-                  </div>
-                  <!-- Username -->
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Usuario</label>
-                    <div class="input-group col-sm-10">
-                      <input type="text" class="form-control" name="username" id="username" placeholder="Usuario"/>
-                    </div>
                   </div>
                   <!-- Email -->
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Email</label>
                     <div class="input-group col-sm-10">
-                      <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                      <input type="email" name="email" id="email" class="form-control" placeholder="Email" minlength="3" maxlenght="50" required/>
+                    </div>
+                  </div>
+                  <!-- Role -->
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Rol</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" id="rol" required>
+                        <option disabled selected>Seleccionar tipo</option>
+                        <option value="Usuario">Usuario</option>
+                        <option value="Administrador">Admistrador</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Username -->
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Usuario</label>
+                    <div class="input-group col-sm-10">
+                      <input type="text" class="form-control" name="username" id="username" placeholder="Usuario" minlength="4" maxlenght="20" required/>
                     </div>
                   </div>
                   <!-- Contraseña -->
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Contraseña</label>
                     <div class="input-group col-sm-10">
-                      <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña">
+                      <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" minlength="8" maxlenght="20" required>
                     </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
+                  <a href="./campaign.html" class="btn btn-default">Cancelar</a>
                   <button type="submit" class="btn btn-success float-right">Agregar</button>
-                  <a href="./usuarios.html" class="btn btn-danger float-right">Regresar</a>
                 </div>
               </form>
             </div>
@@ -216,7 +230,7 @@
 <script src="../../dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
-$(function () {
+/*$(function () {
   $.validator.setDefaults({
     submitHandler: function () {
       alert( "Form successful submitted!" );
@@ -274,7 +288,7 @@ $(function () {
       $(element).removeClass('is-invalid');
     }
   });
-});
+});*/
 </script>
 <script>
 
@@ -283,29 +297,28 @@ $(function () {
 
     e.preventDefault();
 
-    var name = document.getElementById("name").value;
-    var lastname = document.getElementById("lastname").value;
-    var username = document.getElementById("username").value;
-    var email = document.getElementById("email").value;
-    var contraseña = document.getElementById("password").value;
+    var user = {
+      user_first_name: $("#name").val(),
+      user_last_name: $("#lastname").val(),
+      user_role: $("#rol").val(),
+      user_email: $("#email").val(),
+      user_username: $("#username").val(),
+      user_password: $("#password").val()
+    };
+    console.log(user);
 
-    // FETCH POST REQUEST
-    // fetch('https://jsonplaceholder.typicode.com/posts', {
-    //   method: 'POST',
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8"
-    //   },
-    //   body: JSON.stringify ({
-    //     title: name,
-    //     body: lastname,
-    //     userID: 1
-    //   }) 
-    // })
-    // .then(response => response.json())
-    // .then(data => console.log(data))
-    // .catch(error => console.error('Error:', error))
-      
-    console.log('Fino');
+    var url = 'http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+      body: JSON.stringify (user) 
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error))
+
   })
 </script>
 </body>

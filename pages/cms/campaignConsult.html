@@ -196,7 +196,7 @@
                         <input type="text" name="frequency" id="frequency" class="form-control" disabled/>
                       </div>
                     </div>                    
-                    <label class="col-sm-2 col-form-label">Día/Mes</label>
+                    <label class="col-sm-2 col-form-label">Fecha del mes</label>
                     <div class="col-sm-4">
                       <div class="input-group" data-target-input="nearest">
                         <input type="text" name="dayMonth" id="dayMonth" class="form-control" disabled/>
@@ -204,7 +204,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Día/Semana</label>
+                  <label class="col-sm-2 col-form-label">Día de la semana</label>
                     <div class="col-sm-4">
                       <div class="input-group" data-target-input="nearest">
                           <input type="text" name="dayWeek" id="dayWeek" class="form-control" disabled/>
@@ -280,10 +280,10 @@
 
             // Scheduler info
             document.getElementById("dateRange").value = data.scheduler.dateRange;
-            document.getElementById("frequency").value = (data.scheduler.frequency) ? data.scheduler.frequency : "N/A";
-            document.getElementById("fixedHour").value = (data.scheduler.hour) ? (data.scheduler.hour).substring(11, 16) : "N/A";          
-            document.getElementById("dayMonth").value = (data.scheduler.date) ? data.scheduler.date: "N/A";
-            document.getElementById("dayWeek").value = (data.scheduler.day_week) ? data.scheduler.day_week: "N/A";
+            document.getElementById("frequency").value = (data.scheduler.frequency) ? data.scheduler.frequency : "Única";
+            document.getElementById("fixedHour").value = (data.scheduler.hour) ? (data.scheduler.hour).substring(11, 16) : "";          
+            document.getElementById("dayMonth").value = (data.scheduler.date) ? data.scheduler.date: "No aplica";
+            document.getElementById("dayWeek").value = (data.scheduler.day_week) ? data.scheduler.day_week: "No aplica";
 
             // Rules info 
             if ((data.rules).length > 0) {
@@ -291,7 +291,7 @@
               (data.rules).forEach((celda) =>{
                 fila += "<tr>";
                 fila += "<td>" + celda.rule_name + "</td>";
-                fila += "<td>" + ((celda.rule_description) ? celda.rule_description : 'N/A')  + "</td>";
+                fila += "<td>" + ((celda.rule_description) ? celda.rule_description : '')  + "</td>";
                 fila += "<td>" + celda.rule_field + "</td>";
                 fila += "<td>" + celda.rule_type + "</td>";
                 fila += "<td>" + celda.rule_value + "</td></tr>";
