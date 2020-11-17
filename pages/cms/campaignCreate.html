@@ -64,13 +64,7 @@
               <p>Inicio</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="./profile.html" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>Perfil</p>
-            </a>
-          </li>
-          <li class="nav-item">
+          <li class="nav-item" id="userBar">
             <a href="./users.html" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Usuarios</p>
@@ -151,7 +145,7 @@
                       <label class="col-sm-3 col-form-label">Nombre</label>
                       <div class="col-sm-9">
                         <div class="input-group" data-target-input="nearest">
-                            <input type="text" name="name" id="name" class="form-control" required/>
+                            <input type="text" name="name" id="name" class="form-control" maxlength="55"  required/>
                         </div>
                       </div>
                     </div>
@@ -160,7 +154,7 @@
                       <label class="col-sm-3 col-form-label">Descripción</label>
                       <div class="col-sm-9">
                         <div class="input-group" data-target-input="nearest">
-                          <textarea name="description" id="description" class="form-control" rows="2" required></textarea>  
+                          <textarea name="description" id="description" class="form-control" rows="2" maxlength="215" required></textarea>  
                         </div>
                       </div>
                     </div>
@@ -179,7 +173,7 @@
                     <br>
                   </div>
                   <label style="font-size: 17px;">&#10022; Horario</label>
-                  <hr class="mt-0" style="">
+                  <hr class="mt-0">
                   <div style="padding-left: 11px; padding-right: 11px;">
                     <div class="custom-control custom-switch mt-2 mb-3">
                       <input type="checkbox" size="3" class="customModo custom-control-input" id="customSwitch1">
@@ -355,6 +349,15 @@
 <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Page specific script -->
 <script>
+
+  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+  var userBar = document.getElementById("userBar");
+  if (activeSession.role == 'Admin'){
+    userBar.style.display = "block";
+  } else {
+    userBar.style.display = "none";
+  }
+
   $(function () {
     var today = new Date();
     var todayDate = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
@@ -462,7 +465,7 @@
     }
     console.log(rules);
 
-    var url = 'http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns';
+    var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns';
     var data = {
       campaign_name: $("#name").val(),
       description: $("#description").val(),
@@ -492,6 +495,7 @@
 
     //setTimeout(location.reload.bind(location), 1000)
   })
+
 </script>
 
 <script>  
@@ -666,7 +670,6 @@
     });
   });
 </script>
-
 
 </body>
 </html>

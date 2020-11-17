@@ -61,13 +61,7 @@
               <p>Inicio</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="./profile.html" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>Perfil</p>
-            </a>
-          </li>
-          <li class="nav-item">
+          <li class="nav-item" id="userBar">
             <a href="./users.html" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Usuarios</p>
@@ -144,13 +138,13 @@
               </div>
               <!-- form start -->
               <div class="card-body">
-                <form id="quickForm1" class="swalDefaultSuccess1">
+                <form id="quickForm1">
                     <!-- Nombre Campaña -->
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Nombre</label>
                       <div class="col-sm-9">
                         <div class="input-group" data-target-input="nearest">
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nombre" required/>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Nombre" maxlength="55" required/>
                         </div>
                       </div>
                     </div>
@@ -159,7 +153,7 @@
                       <label class="col-sm-3 col-form-label">Descripción</label>
                       <div class="col-sm-9">
                         <div class="input-group" data-target-input="nearest">
-                          <textarea name="description" id="description" class="form-control" rows="2" placeholder="Descripción" required></textarea>
+                          <textarea name="description" id="description" class="form-control" rows="2" placeholder="Descripción" maxlength="215" required></textarea>
                         </div>
                       </div>
                     </div>
@@ -180,7 +174,7 @@
                       <a href="./campaign.html" class="btn btn-default">Cancelar</a>
                     </div>
                   </form>
-                </div><!-- /.card-body -->
+                </div>
             </div>
 
             <!-- Scheduler EXAMPLE -->
@@ -195,7 +189,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form id="quickForm2" class="swalDefaultSuccess2">
+                <form id="quickForm2">
                   <div class="custom-control custom-switch mt-2 mb-3">
                     <input type="checkbox" size="3" class="customModo custom-control-input" id="customSwitch1">
                     <label class="custom-control-label" for="customSwitch1" id="lblSwitch">Se repite</label>
@@ -292,7 +286,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form id="quickForm3" class="swalDefaultSuccess3">
+                <form id="quickForm3">
                   <label>&nbsp&nbsp Condiciones</label>
                   <div>  
                     <table class="table" id="dynamic_field">    
@@ -350,9 +344,15 @@
 <script>
 
   var id_campaign = localStorage.getItem("id_campaign");
-  console.log('id_campaign: ', id_campaign)
+  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+  var userBar = document.getElementById("userBar");
+  if (activeSession.role == 'Admin'){
+    userBar.style.display = "block";
+  } else {
+    userBar.style.display = "none";
+  }
 
-  fetch('http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
+  fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
   .then( 
     response => { 
       response.json().then(
@@ -500,13 +500,12 @@ $(function () {
 
 });
 
-
 var form = document.getElementById('quickForm1');
 form.addEventListener('submit', function(e){
 
   e.preventDefault();
 
-  var url = 'http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns' + '/' + id_campaign;
+  var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns' + '/' + id_campaign;
   console.log(url);
   var data = {
     campaign_name: $("#name").val(),
@@ -522,10 +521,12 @@ form.addEventListener('submit', function(e){
     headers:{
       'Content-Type': 'application/json'
     }
-  }).then(res => res.json())
+  }).then(res => {
+    res.json();
+    notificationFunction('Campaña actualizada');
+  })
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response));
-
 });
 
 var formScheduler = document.getElementById('quickForm2');
@@ -560,7 +561,7 @@ formScheduler.addEventListener('submit', function(e){
     scheduler.dateRange = dateFormatted + " - " + dateFormatted;
   };
 
-  var url = 'http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/scheduler';
+  var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/scheduler';
 
   fetch(url, {
     method: 'PUT',
@@ -568,7 +569,11 @@ formScheduler.addEventListener('submit', function(e){
     headers:{
       'Content-Type': 'application/json'
     }
-  }).then(res => res.json())
+  })
+  .then(res => {
+    res.json();
+    notificationFunction('Horario actualizado');
+  })
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response));
 
@@ -603,7 +608,7 @@ formRules.addEventListener('submit', function(e){
     rules.push(rule);
   }
   
-  var url = 'http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/rules';
+  var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/rules';
 
   fetch(url, {
     method: 'PUT',
@@ -611,7 +616,11 @@ formRules.addEventListener('submit', function(e){
     headers:{
       'Content-Type': 'application/json'
     }
-  }).then(res => res.json())
+  })
+  .then(res => {
+    res.json();
+    notificationFunction('Condiciones actualizadas');
+  })
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response));
   
@@ -636,6 +645,23 @@ $(document).ready(function(){
 <!-- SweetAlert2 -->
 <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 <script>
+
+  function notificationFunction(texto) {
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+    $(function() {
+      Toast.fire({
+        icon: 'success',
+        title: '&nbsp' + texto
+      })
+    })
+  }
+
   $(function() {
     var Toast = Swal.mixin({
       toast: true,
@@ -644,160 +670,36 @@ $(document).ready(function(){
       timer: 3000
     });
 
-    $('.swalDefaultSuccess1').submit(function() {
+    $('.swalDefaultSuccess').submit(function() {
       Toast.fire({
         icon: 'success',
-        title: '<br> Campaña actualizada.'
+        title: '&nbsp Campaña actualizada.'
       })
     });
-    $('.swalDefaultSuccess2').submit(function() {
-      Toast.fire({
-        icon: 'success',
-        title: '<br> Horario actualizado.'
-      })
-    });
-    $('.swalDefaultSuccess3').submit(function() {
-      Toast.fire({
-        icon: 'success',
-        title: '<br> Condiciones actualizadas.'
-      })
-    });
-    $('.swalDefaultInfo').click(function() {
-      Toast.fire({
-        icon: 'info',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultError').click(function() {
-      Toast.fire({
-        icon: 'error',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultWarning').click(function() {
-      Toast.fire({
-        icon: 'warning',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultQuestion').click(function() {
-      Toast.fire({
-        icon: 'question',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-
-    $('.toastrDefaultSuccess').click(function() {
-      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultInfo').click(function() {
-      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultError').click(function() {
-      toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultWarning').click(function() {
-      toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastsDefaultDefault').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultTopLeft').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'topLeft',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultBottomRight').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'bottomRight',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultBottomLeft').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'bottomLeft',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultAutohide').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        autohide: true,
-        delay: 750,
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultNotFixed').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        fixed: false,
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultFull').click(function() {
-      $(document).Toasts('create', {
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        icon: 'fas fa-envelope fa-lg',
-      })
-    });
-    $('.toastsDefaultFullImage').click(function() {
-      $(document).Toasts('create', {
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        image: '../../dist/img/user3-128x128.jpg',
-        imageAlt: 'User Picture',
-      })
-    });
-    $('.toastsDefaultSuccess').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-success',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultInfo').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-info',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultWarning').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-warning',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultDanger').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-danger',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultMaroon').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-maroon',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
+    // $('.swalDefaultError').submit(function() {
+    //   Toast.fire({
+    //     icon: 'error',
+    //     title: '&nbsp Error!!!'
+    //   })
+    // });
+    // $('.swalDefaultInfo').click(function() {
+    //   Toast.fire({
+    //     icon: 'info',
+    //     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+    //   })
+    // });
+    // $('.swalDefaultWarning').click(function() {
+    //   Toast.fire({
+    //     icon: 'warning',
+    //     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+    //   })
+    // });
+    // $('.swalDefaultQuestion').click(function() {
+    //   Toast.fire({
+    //     icon: 'question',
+    //     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+    //   })
+    // });
   });
 </script>
 </body>

@@ -59,13 +59,7 @@
               <p>Inicio</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="./profile.html" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>Perfil</p>
-            </a>
-          </li>
-          <li class="nav-item">
+          <li class="nav-item" id="userBar">
             <a href="./users.html" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Usuarios</p>
@@ -259,12 +253,21 @@
 <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Page specific script -->
 <script>
+
+  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+  var userBar = document.getElementById("userBar");
+  if (activeSession.role == 'Admin'){
+    userBar.style.display = "block";
+  } else {
+    userBar.style.display = "none";
+  }
+
   $(function () {
 
     var id_campaign = localStorage.getItem("id_campaign");
-    console.log('id_campaign: ', id_campaign)
+    // console.log('id_campaign: ', id_campaign)
 
-    fetch('http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
+    fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
     .then( 
       response => { 
         response.json().then(

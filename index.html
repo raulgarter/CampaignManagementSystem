@@ -65,16 +65,10 @@
                 <p>Inicio</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="./pages/cms/profile.html" class="nav-link">
-                <i class="nav-icon fas fa-user"></i>
-                <p>Perfil</p>
-              </a>
-            </li>
-            <li class="nav-item">
+            <li class="nav-item" id="userBar">
               <a href="./pages/cms/users.html" class="nav-link">
                 <i class="nav-icon fas fa-users"></i>
-                <p>Usuarios</p>
+                <p>Usuarios</p> 
               </a>
             </li>
             <li class="nav-item">
@@ -218,7 +212,16 @@
 <script src="dist/js/demo.js"></script>
 
 <script>
-  fetch('http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns').then( 
+
+  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+  var userBar = document.getElementById("userBar");
+  if (activeSession.role == 'Admin'){
+    userBar.style.display = "block";
+  } else {
+    userBar.style.display = "none";
+  }
+
+  fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns').then( 
     response => { 
       response.json().then(
         data => {
@@ -250,7 +253,7 @@
   )
 
 
-  fetch('http://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/count').then( 
+  fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/count').then( 
     response => { 
       response.json().then(
         data => {
@@ -264,9 +267,7 @@
 
 
   function keepID(id_campaign) {
-    // document.getElementById("deleteVariable1").value = id_campaign;
-    // console.log($("#deleteVariable1").val());
-    localStorage.clear();
+    // localStorage.clear();
     localStorage.setItem("id_campaign", id_campaign);
   }
 
