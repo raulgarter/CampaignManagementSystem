@@ -79,64 +79,11 @@
 
       $(function() {
         Toast.fire({
-          icon: 'info',
-          title: '&nbsp Notificando!'
+          icon: 'error',
+          title: '&nbsp No pudo iniciar sesión!'
         })
       })
     }
-
-    $(function() {
-      var Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-      });
-
-      $('.swalDefaultSuccess1').submit(function() {
-        Toast.fire({
-          icon: 'success',
-          title: '&nbsp Campaña actualizada.'
-        })
-      });
-      $('.swalDefaultSuccess2').submit(function() {
-        Toast.fire({
-          icon: 'success',
-          title: '&nbsp Horario actualizado.'
-        })
-      });
-      $('.swalDefaultSuccess3').submit(function() {
-        Toast.fire({
-          icon: 'success',
-          title: '&nbsp Condiciones actualizadas.'
-        })
-      });
-      // $('.swalDefaultError').submit(function() {
-      //   Toast.fire({
-      //     icon: 'error',
-      //     title: '&nbsp Error!!!'
-      //   })
-      // });
-      // $('.swalDefaultInfo').click(function() {
-      //   Toast.fire({
-      //     icon: 'info',
-      //     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      //   })
-      // });
-      // $('.swalDefaultWarning').click(function() {
-      //   Toast.fire({
-      //     icon: 'warning',
-      //     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      //   })
-      // });
-      // $('.swalDefaultQuestion').click(function() {
-      //   Toast.fire({
-      //     icon: 'question',
-      //     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      //   })
-      // });
-    });
-  
   </script>
   
   <script>
@@ -148,7 +95,7 @@
       
       var sessionInformationObject = {
         username : 'guille16',
-        role : 'Admin',
+        role : 'Administrador',
         session : 'on'
       };
       console.log(sessionInformationObject);

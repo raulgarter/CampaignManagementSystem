@@ -28,15 +28,14 @@
         <h4 style="margin-top: 3%;" >Crear Usuario</h4>
       </li>
     </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
-    </ul>
+  <!-- Right navbar links -->
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="./pages/cms/loginCMS.html">
+        <i class="fas fa-sign-out-alt" style="font-size: 25px;"></i>
+      </a>
+    </li>
+  </ul>
   </nav>
   <!-- /.navbar -->
 
@@ -222,6 +221,28 @@
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+
+<!-- SweetAlert2 -->
+<script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
+<script>
+
+  function notificationFunction(text, iconType) {
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+    $(function() {
+      Toast.fire({
+        icon: iconType,
+        title: '&nbsp' + text
+      })
+    })
+  }
+</script>
+
 <!-- Page specific script -->
 <script>
 
@@ -257,9 +278,19 @@
       },
       body: JSON.stringify (user) 
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error))
+    .then(res => {
+      res.json();
+      if (res.status == 200 || res.status == 201) {
+        notificationFunction('Usuario creado.', 'success');
+      } else {
+        notificationFunction('No se pudo crear el usuario.', 'error');
+      }
+    })
+    .catch(error => {
+      notificationFunction('No se pudo crear el usuario.', 'error');
+      console.error('Error:', error);
+    })
+    // .then(response => console.log('Success:', response));
 
   })
 </script>

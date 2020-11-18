@@ -40,8 +40,8 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
+        <a class="nav-link" href="./pages/cms/loginCMS.html">
+          <i class="fas fa-sign-out-alt" style="font-size: 25px;"></i>
         </a>
       </li>
     </ul>
@@ -348,328 +348,199 @@
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Page specific script -->
-<script>
 
-  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
-  var userBar = document.getElementById("userBar");
-  if (activeSession.role == 'Admin'){
-    userBar.style.display = "block";
-  } else {
-    userBar.style.display = "none";
-  }
+  <!-- SweetAlert2 -->
+  <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
+  <script>
+    function notificationFunction(text, iconType) {
+      var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
 
-  $(function () {
-    var today = new Date();
-    var todayDate = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
-    var todayDateAndHour = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes();
-
-    //$("input[name='fecha']")[0].placeholder = "11/11/2020 00:00 AM";
-
-    $('#rangoFechas').daterangepicker({
-      showDropdowns: true,
-      minDate: todayDate,
-      maxDate: '12/31/2025'
-    });
-    $.validator.setDefaults({
-      submitHandler: function () {
-        alert( "Form successful submitted!" );
-      }
-    });
-
-    $('.customModo').on('change', function(){
-      var ch = $(this), c;
-      $('#divSemanal').attr("hidden", true);
-      $('#divMensual').attr("hidden", true);
-      $('#divDiario').attr("hidden", true);
-      $('#divRangoFechas').attr("hidden", true);
-      $('#frequencia').attr("required", false);
-      $("input[name='fecha']").attr("required", true);
-      if(ch.is(':checked')){
-        $('#divRepite').removeAttr('hidden');
-        $('#divNoRepite').attr("hidden", true);
-        $('#frequencia').attr("required", true);
-        $("input[name='fecha']").attr("required", false);
-      }else{
-        $('#divNoRepite').removeAttr('hidden');
-        $('#divRepite').attr("hidden", true);
-      }
-    });
-    
-    $('#frequencia').on('change', function(){
-      if($('#frequencia').val() == 'diaria'){
-        $('#divDiario').removeAttr('hidden');
-        $('#divSemanal').attr("hidden", true);
-        $('#divMensual').attr("hidden", true);
-      }else if ($('#frequencia').val() == 'semanal'){
-        $('#divSemanal').removeAttr('hidden');
-        $('#divDiario').attr("hidden", true);
-        $('#divMensual').attr("hidden", true);
-      }else{
-        $('#divMensual').removeAttr('hidden');
-        $('#divDiario').attr("hidden", true);
-        $('#divSemanal').attr("hidden", true);
-      }
-    });
-  });
-
-  var form = document.getElementById('quickForm');
-  form.addEventListener('submit', function(e){
-
-    e.preventDefault();
-
-    console.log($("#rangoFechas").val());
-
-    var scheduler = {
-      dateRange: $('#rangoFechas').val(), //$("#rangoFechas").val().substring(0, 10),
-      //$("#rangoFechas").val().substring(13, 23),
-      frequency: $('#frequencia').val(),
-      fixed_hour: null,
-      fixed_date: null,
-      day_week: null
-    };
-    console.log(scheduler);
-    console.log($("input[name='fecha']").val());
-
-    if ($('#frequencia').val() == 'diaria') {
-      scheduler.fixed_hour = $("input[name='horaDiario']").val();
-    } else if ($('#frequencia').val() == 'semanal') {
-      scheduler.fixed_hour = $("input[name='horaSemanal']").val();
-      scheduler.day_week= $("#dia").val();
-    } else if ($('#frequencia').val() == 'mensual') {
-      scheduler.fixed_hour= $("input[name='horaMensual']").val();
-      scheduler.fixed_date= $("#fechaNro").val();
-    } else {
-      var fecha = $("input[name='fecha']").val();
-      var dateFormatted = fecha.substring(5,7) + "/" + fecha.substring(8,10) + "/" + fecha.substring(0,4);
-      scheduler.fixed_hour= $("input[name='fecha']").val().substring(11, );
-      scheduler.dateRange = dateFormatted + " - " + dateFormatted;
-    };
-
-    var rules = [];
-    var rule = {};
-    var rulesCount = $("input[name='ruleNames[]']").length;
-    var ruleField = null;
-    var ruleType = null;
-
-    for (var i = 0; i < rulesCount; i++) {
-      ruleField = $(".ruleFields_list")[i];
-      ruleType = $(".ruleTypes_list")[i];
-      rule = {
-        "rule_name": $("input[name='ruleNames[]']")[i].value,
-        "rule_description": $("textarea[name='ruleDescriptions[]']")[i].value,
-        "rule_field": ruleField.options[ruleField.selectedIndex].text,
-        "rule_type": ruleType.options[ruleType.selectedIndex].text,
-        "rule_value": $("input[name='ruleValues[]']")[i].value
-      };
-      rules.push(rule);
+      $(function() {
+        Toast.fire({
+          icon: iconType,
+          title: '&nbsp' + text
+        })
+      })
     }
-    console.log(rules);
+  </script>
 
-    var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns';
-    var data = {
-      campaign_name: $("#name").val(),
-      description: $("#description").val(),
-      status: "No iniciada",
-      email_template: $("#template").val(),
-      scheduler: scheduler,
-      rules: rules
-    };
+  <script>
 
-    console.log(data);
+    // var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+    // var userBar = document.getElementById("userBar");
+    // if (activeSession.role == 'Admin'){
+    //   userBar.style.display = "block";
+    // } else {
+    //   userBar.style.display = "none";
+    // }
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers:{
-        'Content-Type': 'application/json'
+    $(function () {
+      var today = new Date();
+      var todayDate = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
+      var todayDateAndHour = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes();
+
+      //$("input[name='fecha']")[0].placeholder = "11/11/2020 00:00 AM";
+
+      $('#rangoFechas').daterangepicker({
+        showDropdowns: true,
+        minDate: todayDate,
+        maxDate: '12/31/2025'
+      });
+      $.validator.setDefaults({
+        submitHandler: function () {
+          alert( "Form successful submitted!" );
+        }
+      });
+
+      $('.customModo').on('change', function(){
+        var ch = $(this), c;
+        $('#divSemanal').attr("hidden", true);
+        $('#divMensual').attr("hidden", true);
+        $('#divDiario').attr("hidden", true);
+        $('#divRangoFechas').attr("hidden", true);
+        $('#frequencia').attr("required", false);
+        $("input[name='fecha']").attr("required", true);
+        if(ch.is(':checked')){
+          $('#divRepite').removeAttr('hidden');
+          $('#divNoRepite').attr("hidden", true);
+          $('#frequencia').attr("required", true);
+          $("input[name='fecha']").attr("required", false);
+        }else{
+          $('#divNoRepite').removeAttr('hidden');
+          $('#divRepite').attr("hidden", true);
+        }
+      });
+      
+      $('#frequencia').on('change', function(){
+        if($('#frequencia').val() == 'diaria'){
+          $('#divDiario').removeAttr('hidden');
+          $('#divSemanal').attr("hidden", true);
+          $('#divMensual').attr("hidden", true);
+        }else if ($('#frequencia').val() == 'semanal'){
+          $('#divSemanal').removeAttr('hidden');
+          $('#divDiario').attr("hidden", true);
+          $('#divMensual').attr("hidden", true);
+        }else{
+          $('#divMensual').removeAttr('hidden');
+          $('#divDiario').attr("hidden", true);
+          $('#divSemanal').attr("hidden", true);
+        }
+      });
+    });
+
+    var form = document.getElementById('quickForm');
+    form.addEventListener('submit', function(e){
+
+      e.preventDefault();
+
+      console.log($("#rangoFechas").val());
+
+      var scheduler = {
+        dateRange: $('#rangoFechas').val(), //$("#rangoFechas").val().substring(0, 10),
+        //$("#rangoFechas").val().substring(13, 23),
+        frequency: $('#frequencia').val(),
+        fixed_hour: null,
+        fixed_date: null,
+        day_week: null
+      };
+      console.log(scheduler);
+      console.log($("input[name='fecha']").val());
+
+      if ($('#frequencia').val() == 'diaria') {
+        scheduler.fixed_hour = $("input[name='horaDiario']").val();
+      } else if ($('#frequencia').val() == 'semanal') {
+        scheduler.fixed_hour = $("input[name='horaSemanal']").val();
+        scheduler.day_week= $("#dia").val();
+      } else if ($('#frequencia').val() == 'mensual') {
+        scheduler.fixed_hour= $("input[name='horaMensual']").val();
+        scheduler.fixed_date= $("#fechaNro").val();
+      } else {
+        var fecha = $("input[name='fecha']").val();
+        var dateFormatted = fecha.substring(5,7) + "/" + fecha.substring(8,10) + "/" + fecha.substring(0,4);
+        scheduler.fixed_hour= $("input[name='fecha']").val().substring(11, );
+        scheduler.dateRange = dateFormatted + " - " + dateFormatted;
+      };
+
+      var rules = [];
+      var rule = {};
+      var rulesCount = $("input[name='ruleNames[]']").length;
+      var ruleField = null;
+      var ruleType = null;
+
+      for (var i = 0; i < rulesCount; i++) {
+        ruleField = $(".ruleFields_list")[i];
+        ruleType = $(".ruleTypes_list")[i];
+        rule = {
+          "rule_name": $("input[name='ruleNames[]']")[i].value,
+          "rule_description": $("textarea[name='ruleDescriptions[]']")[i].value,
+          "rule_field": ruleField.options[ruleField.selectedIndex].text,
+          "rule_type": ruleType.options[ruleType.selectedIndex].text,
+          "rule_value": $("input[name='ruleValues[]']")[i].value
+        };
+        rules.push(rule);
       }
-    }).then(
-      res => {
-        res.json();
-        window.location.href = window.location.href.replace("campaignCreate.html","campaign.html");
-      })
-    .catch(error => console.error('Error:', error))
-    .then(response => console.log('Success:', response));
+      console.log(rules);
 
-    $("#frequencia").val(null);
+      var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns';
+      var data = {
+        campaign_name: $("#name").val(),
+        description: $("#description").val(),
+        status: "No iniciada",
+        email_template: $("#template").val(),
+        scheduler: scheduler,
+        rules: rules
+      };
 
-    //setTimeout(location.reload.bind(location), 1000)
-  })
+      console.log(data);
 
-</script>
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+          res.json();
+          if (res.status == 200 || res.status == 201) {
+            notificationFunction('Campaña creada.', 'success');
+            setTimeout(location.reload.bind(location), 1500);
+            // setTimeout(window.location.href = "campaign.html", 6000);
+            // window.location.href = "campaign.html"
+          } else {
+            notificationFunction('No se pudo crear la campaña', 'error');
+          }
+        })
+        .catch(error => {
+          notificationFunction('No se pudo crear la campaña', 'error');
+          console.error('Error:', error);
+        })
+      // .then(response => console.log('Success:', response));
 
-<script>  
- $(document).ready(function(){  
-      var i=1;  
-      $('#add').click(function(){  
-           i++;  
-           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" rows="1" style="width:100%;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
-      });  
-      $(document).on('click', '.btn_remove', function(){  
-           var button_id = $(this).attr("id");   
-           $('#row'+button_id+'').remove();  
-      });    
- });  
-</script>
+      $("#frequencia").val(null);
 
-<!-- SweetAlert2 -->
-<script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
-<script>
-  $(function() {
+      //setTimeout(location.reload.bind(location), 1000)
+    })
 
-    var Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
+  </script>
 
-    $('.swalDefaultSuccess').submit(function() {
-      Toast.fire({
-        icon: 'success',
-        title: '<br> Campaña agregada.'
-      })
-    });
-
-    $('.swalDefaultInfo').click(function() {
-      Toast.fire({
-        icon: 'info',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultError').click(function() {
-      Toast.fire({
-        icon: 'error',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultWarning').click(function() {
-      Toast.fire({
-        icon: 'warning',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultQuestion').click(function() {
-      Toast.fire({
-        icon: 'question',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-
-    $('.toastrDefaultSuccess').click(function() {
-      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultInfo').click(function() {
-      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultError').click(function() {
-      toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultWarning').click(function() {
-      toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-
-    $('.toastsDefaultDefault').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultTopLeft').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'topLeft',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultBottomRight').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'bottomRight',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultBottomLeft').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'bottomLeft',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultAutohide').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        autohide: true,
-        delay: 750,
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultNotFixed').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        fixed: false,
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultFull').click(function() {
-      $(document).Toasts('create', {
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        icon: 'fas fa-envelope fa-lg',
-      })
-    });
-    $('.toastsDefaultFullImage').click(function() {
-      $(document).Toasts('create', {
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        image: '../../dist/img/user3-128x128.jpg',
-        imageAlt: 'User Picture',
-      })
-    });
-    $('.toastsDefaultSuccess').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-success',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultInfo').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-info',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultWarning').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-warning',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultDanger').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-danger',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultMaroon').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-maroon',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-  });
-</script>
+  <script>  
+  $(document).ready(function(){  
+        var i=1;  
+        $('#add').click(function(){  
+            i++;  
+            $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" rows="1" style="width:100%;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
+        });  
+        $(document).on('click', '.btn_remove', function(){  
+            var button_id = $(this).attr("id");   
+            $('#row'+button_id+'').remove();  
+        });    
+  });  
+  </script>
 
 </body>
 </html>

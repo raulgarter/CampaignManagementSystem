@@ -32,14 +32,14 @@
       </li>
     </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
-    </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="./pages/cms/loginCMS.html">
+            <i class="fas fa-sign-out-alt" style="font-size: 25px;"></i>
+          </a>
+        </li>
+      </ul>
   </nav>
   <!-- /.navbar -->
 
@@ -254,13 +254,13 @@
 <!-- Page specific script -->
 <script>
 
-  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
-  var userBar = document.getElementById("userBar");
-  if (activeSession.role == 'Admin'){
-    userBar.style.display = "block";
-  } else {
-    userBar.style.display = "none";
-  }
+  // var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+  // var userBar = document.getElementById("userBar");
+  // if (activeSession.role == 'Admin'){
+  //   userBar.style.display = "block";
+  // } else {
+  //   userBar.style.display = "none";
+  // }
 
   $(function () {
 
