@@ -28,7 +28,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item">
-        <h4 style="margin-top: 3%;">Campañas</h4>
+        <h4 id="titulo" style="margin-top: 3%;">Campañas</h4>
       </li>
     </ul>
 
@@ -134,6 +134,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="myTable" class="table table-bordered table-hover"></table>
+                <div id="botonesDatatable" style="text-align: right; margin-top: 8px;"></div>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -272,15 +273,8 @@
               })
               fila += "</tbody>";
               document.getElementById("myTable").innerHTML = fila;
-              $('#myTable').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-              });
+              configureDatatable();
+              //$("#myTable").buttons().container().appendTo($('#botonesDatatable'));
             }
           }
         )

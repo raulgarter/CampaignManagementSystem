@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <style>
-      input,option, select {font-size: 14.5px !important;}
-  </style>  <meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NEWTOMS LLC</title>
 
@@ -26,7 +24,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item">
-        <h4 style="margin-top: 3%;" >Crear Usuario</h4>
+        <h4 style="margin-top: 3%;" >Editar Usuario</h4>
       </li>
     </ul>
   <!-- Right navbar links -->
@@ -105,7 +103,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style=" font-family: 'Microsoft YaHei UI'; font-size: 14.5px; background-image: url(../../dist/img/foto11.jpg); padding: 0px 15px; padding-right: 20px;">
+  <div class="content-wrapper" style="font-size: 16px; background-image: url(../../dist/img/foto11.jpg); padding: 0px 15px; padding-right: 20px;">
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -122,16 +120,16 @@
             <!-- jquery validation -->
             <div class="card">
               <div class="card-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
-                <h3 class="card-title">Información del usuario</h3>
+                <h3 class="card-title" style="margin-top: 5px; font-size: 19px;">Información del usuario</h3>
               </div>
               <!-- form start -->
-              <form id="quickForm" method="post">
+              <form id="quickForm">
                 <div class="card-body" style="padding: 30px 105px;">
                   <!-- name -->
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nombre</label>
                     <div class="input-group col-sm-10">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Nombre" maxlenght="30" required style="font-size: 14px;" />
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Nombre" maxlenght="30" required/>
                     </div>
                   </div>
                   <!-- lastname -->
@@ -176,22 +174,15 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <a href="./campaign.html" class="btn btn-default">Cancelar</a>
-                  <button type="submit" class="btn btn-success float-right">Agregar</button>
+                  <a href="./users.html" class="btn btn-default">Cancelar</a>
+                  <button type="submit" class="btn btn-success float-right">Guardar</button>
                 </div>
               </form>
             </div>
             <!-- /.card -->
-            </div>
-          <!--/.col (left) -->
-          <!-- right column -->
-          <div class="col-md-6">
-
           </div>
-          <!--/.col (right) -->
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
+        <div class="col-md-6">
+      </div>
     </section>
     <!-- /.content -->
   </div>
@@ -247,19 +238,42 @@
 <!-- Page specific script -->
 <script>
 
-  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+  /*var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
   var userBar = document.getElementById("userBar");
   if (activeSession.role == 'Admin'){
     userBar.style.display = "block";
   } else {
     userBar.style.display = "none";
     window.location.href = "user403.html";
-  }
+  }*/
+  var user_id = localStorage.getItem("user_id");
+
+  fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users/' + user_id)
+  .then( 
+    response => { 
+      response.json().then(
+        data => {
+          var usuario = data[0];
+          $("#name").val(usuario.user_first_name);
+          $("#lastname").val(usuario.user_last_name);
+          $("#email").val(usuario.user_email);
+          $("#username").val(usuario.user_username);
+          $("#rol").val(usuario.user_role);
+          $("#password").val(usuario.user_password);
+      })
+      /*.catch(error => {
+        notificationFunction('No se pudo traer la campaña.', 'error');
+        console.error('Error:', error);
+      })*/
+    }
+  )
 
   var form = document.getElementById('quickForm');
   form.addEventListener('submit', function(e){
 
     e.preventDefault();
+
+    var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users/' + user_id;
 
     var user = {
       user_first_name: $("#name").val(),
@@ -269,31 +283,28 @@
       user_username: $("#username").val(),
       user_password: $("#password").val()
     };
-    console.log(user);
 
-    var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users';
     fetch(url, {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(user),
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     })
-    .then(res => {
-      res.json();
+   .then(res => {
+      //No hace falta transformar a JSON aqui en esta linea
       if (res.status == 200 || res.status == 201) {
-        notificationFunction('Usuario creado.', 'success');
+        notificationFunction('Usuario actualizado.', 'success');
       } else {
-        notificationFunction('No se pudo crear el usuario.', 'error');
+        notificationFunction('No se pudo actualizar el usuario.', 'error');
       }
     })
     .catch(error => {
-      notificationFunction('No se pudo crear el usuario.', 'error');
+      notificationFunction('No se pudo actualizar el usuario.', 'error');
       console.error('Error:', error);
     })
     // .then(response => console.log('Success:', response));
-
-  })
+  });
 </script>
 </body>
 </html>

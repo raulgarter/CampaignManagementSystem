@@ -17,7 +17,7 @@
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="../../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" onload="getUsers();">
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-light navbar-light" style="background-image: url(../../dist/img/foto9.jpg); color: white;">
@@ -27,7 +27,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item">
-          <h4 style="margin-top: 3%;" >Usuarios</h4>
+          <h4  id="titulo" style="margin-top: 3%;" >Usuarios</h4>
         </li>
       </ul>
 
@@ -59,13 +59,13 @@
               </a>
             </li>
             <li class="nav-item" id="userBar">
-              <a href="./users.html" class="nav-link" style="background-color: lightgrey;">
+              <a href="./users.html" class="nav-link" style="background-color: lightgrey; color: black;">
                 <i class="nav-icon fas fa-users"></i>
                 <p>Usuarios</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="·" class="nav-link" style="background-color: lightgrey; color: black;">
+              <a href="·" class="nav-link">
                 <i class="nav-icon fas fa-bullhorn"></i>
                 <p>Campañas<i class="right fas fa-angle-left"></i></p>
               </a>
@@ -134,27 +134,27 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="myTable" class="table table-bordered table-hover"></table>
+                  <div id="botonesDatatable" style="text-align: right; margin-top: 8px;"></div>
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
-                          <h5 class="modal-title" id="exampleModalLabel">Confirmaciónn</h5>
+                          <h5 class="modal-title" id="exampleModalLabel"><b>Confirmación</b></h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div class="modal-body">
-                          Are you sure about delete this?
+                          ¿Está seguro/a que desea eliminar este usuario?
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                          <!-- <button type="button" class="btn btn-success">Yes</button> -->
-                          <button type="button" class="btn btn-success swalDefaultSuccess" data-dismiss="modal">Yes</button>
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                          <button type="button" class="btn btn-success" data-dismiss="modal" onclick="deleteCampaign2()" id="deleteVariable2">Sí</button>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div><!-- Final Modal -->
                 </div>
               </div>
             </div>
@@ -186,7 +186,15 @@
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
-
+<!-- Datatable buttons -->
+<script type="text/javascript" src="../../plugins/jszip/jszip.min.js"></script>
+<script type="text/javascript" src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script type="text/javascript" src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<!-- Datatables CSV Download config -->
+<script src="../../dist/js/csv-button.js"></script>
 <script>
 
   var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
@@ -198,44 +206,70 @@
     window.location.href = "user403.html";
   }
 
-  fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users').then( 
-    response => { 
-      response.json().then(
-        data => {
-          console.log(data);
-          if (data.length > 0) {
-            var fila = "<thead><tr><th>Usuario</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Opciones</th></tr></thead><tbody>";
-            data.forEach((celda) =>{
-              fila += "<tr>";
-              fila += "<td>" + celda.user_username + "</td>";
-              fila += "<td>" + celda.user_first_name + " " + celda.user_last_name + "</td>";
-              fila += "<td>" + celda.user_email + "</td>";
-              fila += "<td>" + celda.user_role + "</td>";
-              fila += "<td><a class=\"btn btn-info btn-sm\" href=\"./userEdit.html\"><i class=\"fas fa-pencil-alt\" title=\"Editar\"></i></a>"
-                + " <a class=\"btn btn-danger btn-sm\" href=\"#\"><i class=\"fas fa-trash\" title=\"Eliminar\" data-toggle=\"modal\" data-target=\"#exampleModal\"></i></a></tr>";
-            })
-            fila += "</tbody>";
-            document.getElementById("myTable").innerHTML = fila;
-            $('#myTable').DataTable({
-              "paging": true,
-              "lengthChange": false,
-              "searching": false,
-              "ordering": true,
-              "info": true,
-              "autoWidth": false,
-              "responsive": true,
-            });
+  function getUsers () {
+    fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users').then( 
+      response => { 
+        response.json().then(
+          data => {
+            console.log(data);
+            if (data.length > 0) {
+              var fila = "<thead><tr><th>Usuario</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Opciones</th></tr></thead><tbody>";
+              data.forEach((celda) =>{
+                fila += "<tr>";
+                fila += "<td>" + celda.user_username + "</td>";
+                fila += "<td>" + celda.user_first_name + " " + celda.user_last_name + "</td>";
+                fila += "<td>" + celda.user_email + "</td>";
+                fila += "<td>" + celda.user_role + "</td>";
+                fila += "<td><a class=\"btn btn-info btn-sm\" onclick=\"keepID("+ celda.user_id +")\" href=\"./userEdit.html\"><i class=\"fas fa-pencil-alt\" title=\"Editar\"></i></a>"
+                  + " <a class=\"btn btn-danger btn-sm\" id=\"deleteVariable1\" onclick=\"deleteCampaign("+ celda.user_id +")\" href=\"#\"><i class=\"fas fa-trash\" title=\"Eliminar\"></i></a></td></tr>";
+              })
+              fila += "</tbody>";
+              document.getElementById("myTable").innerHTML = fila;
+              configureDatatable();
+            }
           }
+        )
+      }
+    )
+  }
+
+  function keepID(user_id) {
+    localStorage.setItem("user_id", user_id);
+  }
+
+  function deleteCampaign(user_id) {
+    document.getElementById("deleteVariable1").value = user_id;
+    // console.log($("#deleteVariable1").val());
+    $('#exampleModal').modal('show');
+  }
+
+  function deleteCampaign2() {
+    console.log($("#deleteVariable1").val());
+    // console.log(document.getElementById("deleteVariable1").value);
+    return fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users/' + $("#deleteVariable1").val(), {
+      method: 'delete'
+      })
+      .then(res => {
+        res.json();
+        if (res.status == 200 || res.status == 201) {
+          notificationFunction('Usuario eliminado.', 'success');
+          setTimeout(location.reload.bind(location), 1500);
+        } else {
+          notificationFunction('No se pudo eliminar el usuario.', 'error');
         }
-      )
-    }
-  )
+      })
+      .catch(error => {
+        notificationFunction('No se pudo eliminar el usuario.', 'error');
+        console.error('Error:', error);
+      })
+  }
 </script>
 
 <!-- SweetAlert2 -->
 <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 <script>
-  $(function() {
+
+  function notificationFunction(text, iconType) {
     var Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -243,150 +277,13 @@
       timer: 3000
     });
 
-    $('.swalDefaultSuccess').click(function() {
+    $(function() {
       Toast.fire({
-        icon: 'success',
-        title: '<br> User Deleted!'
+        icon: iconType,
+        title: '&nbsp' + text
       })
-    });
-    $('.swalDefaultInfo').click(function() {
-      Toast.fire({
-        icon: 'info',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultError').click(function() {
-      Toast.fire({
-        icon: 'error',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultWarning').click(function() {
-      Toast.fire({
-        icon: 'warning',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultQuestion').click(function() {
-      Toast.fire({
-        icon: 'question',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-
-    $('.toastrDefaultSuccess').click(function() {
-      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultInfo').click(function() {
-      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultError').click(function() {
-      toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-    $('.toastrDefaultWarning').click(function() {
-      toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-
-    $('.toastsDefaultDefault').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultTopLeft').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'topLeft',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultBottomRight').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'bottomRight',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultBottomLeft').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        position: 'bottomLeft',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultAutohide').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        autohide: true,
-        delay: 750,
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultNotFixed').click(function() {
-      $(document).Toasts('create', {
-        title: 'Toast Title',
-        fixed: false,
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultFull').click(function() {
-      $(document).Toasts('create', {
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        icon: 'fas fa-envelope fa-lg',
-      })
-    });
-    $('.toastsDefaultFullImage').click(function() {
-      $(document).Toasts('create', {
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        image: '../../dist/img/user3-128x128.jpg',
-        imageAlt: 'User Picture',
-      })
-    });
-    $('.toastsDefaultSuccess').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-success',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultInfo').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-info',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultWarning').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-warning',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultDanger').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-danger',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastsDefaultMaroon').click(function() {
-      $(document).Toasts('create', {
-        class: 'bg-maroon',
-        title: 'Toast Title',
-        subtitle: 'Subtitle',
-        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-  });
+    })
+  }
 </script>
 
 </body>

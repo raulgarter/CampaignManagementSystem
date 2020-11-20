@@ -1,5 +1,5 @@
-$(function () {
-  var table = $('#example2').DataTable({
+function configureDatatable() {
+  var table = $("#myTable").DataTable({
     "oLanguage": {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -24,10 +24,10 @@ $(function () {
     buttons: [
         {
           extend: 'csvHtml5',
-          title: $('#titulo').html(),
+		  title: 'CMS_' + $('#titulo').html(),
           className: 'btn-success btn-sm'
         }
     ]
   });
   table.buttons().container().appendTo($('#botonesDatatable'));
-});
+};
