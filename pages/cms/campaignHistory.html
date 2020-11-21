@@ -210,10 +210,8 @@
           var usuario = data[0];
           var userBar = document.getElementById("userBar");
           if (usuario.user_role == 'Administrador'){
-            console.log('Admin');
             userBar.style.display = "block";
           } else {
-            console.log('User');
             userBar.style.display = "none";
           }
       })

@@ -242,7 +242,7 @@
     response => { 
       response.json().then(
         data => {
-          console.log(data);
+          // console.log(data);
           if (data.length > 0) {
             var fila = "<thead><tr><th>Campaña</th><th>Descripción</th><th>Estatus</th><th>Opciones</th></tr></thead><tbody>";
             data.forEach((celda) =>{
@@ -273,7 +273,7 @@
     response => { 
       response.json().then(
         data => {
-          console.log(data);
+          // console.log(data);
           document.getElementById("campaignsTotal").innerHTML = data.count;
           document.getElementById("campaignsOn").innerHTML = data.countActive;
         }

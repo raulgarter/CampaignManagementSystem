@@ -110,7 +110,7 @@
         user_username: $("#username").val(),
         user_password: $("#password").val(),
       };
-      console.log(data);
+      // console.log(data);
       
       fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/login', {
         method: 'POST',
@@ -122,8 +122,8 @@
           data => {
             console.log(data);
             if (res.status == 200 || res.status == 201) {
-              var sessionInformationObject = { username : data[0].user_username, role : data[0].user_role};
-              console.log("sessionInformationObject");
+              // console.log(data);
+              var sessionInformationObject = { username : data.username, role : data.role};
               console.log(sessionInformationObject);
               var sessionInformation = JSON.stringify(sessionInformationObject);
               localStorage.setItem("sessionInformation", sessionInformation);

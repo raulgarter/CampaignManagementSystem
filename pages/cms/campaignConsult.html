@@ -246,7 +246,6 @@
 <script src="../../plugins/select2/js/select2.full.min.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/moment/moment.min.js"></script>
-<script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
 <!-- date-range-picker -->
 <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
@@ -268,10 +267,8 @@
           var usuario = data[0];
           var userBar = document.getElementById("userBar");
           if (usuario.user_role == 'Administrador'){
-            console.log('Admin');
             userBar.style.display = "block";
           } else {
-            console.log('User');
             userBar.style.display = "none";
           }
       })
@@ -292,8 +289,8 @@
       response => { 
         response.json().then(
           data => {
-            console.log(data);
-            console.log((data.rules).length);
+            // console.log(data);
+            // console.log((data.rules).length);
 
             // Campaing info
             document.getElementById("name").value = data.campaign_name;

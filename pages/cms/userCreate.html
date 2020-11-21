@@ -287,7 +287,7 @@
       user_username: $("#username").val(),
       user_password: $("#password").val()
     };
-    console.log(user);
+    // console.log(user);
 
     var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users';
     fetch(url, {
@@ -301,6 +301,7 @@
       res.json();
       if (res.status == 200 || res.status == 201) {
         notificationFunction('Usuario creado.', 'success');
+        window.location.href = "./users.html";
       } else {
         notificationFunction('No se pudo crear el usuario.', 'error');
       }

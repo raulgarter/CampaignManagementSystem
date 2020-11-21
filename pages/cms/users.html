@@ -229,7 +229,7 @@
       response => { 
         response.json().then(
           data => {
-            console.log(data);
+            // console.log(data);
             if (data.length > 0) {
               var fila = "<thead><tr><th>Usuario</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Opciones</th></tr></thead><tbody>";
               data.forEach((celda) =>{
@@ -257,13 +257,10 @@
 
   function deleteCampaign(user_id) {
     document.getElementById("deleteVariable1").value = user_id;
-    // console.log($("#deleteVariable1").val());
     $('#exampleModal').modal('show');
   }
 
   function deleteCampaign2() {
-    console.log($("#deleteVariable1").val());
-    // console.log(document.getElementById("deleteVariable1").value);
     return fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users/' + $("#deleteVariable1").val(), {
       method: 'delete'
       })

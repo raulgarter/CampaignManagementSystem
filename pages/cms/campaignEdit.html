@@ -335,7 +335,6 @@
 <script src="../../plugins/select2/js/select2.full.min.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/moment/moment.min.js"></script>
-<script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
 <!-- date-range-picker -->
 <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
@@ -389,12 +388,13 @@
     }
   )
 
+  var id_campaign = localStorage.getItem("id_campaign");
   fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
   .then( 
     response => { 
       response.json().then(
         data => {
-          console.log(data);
+          // console.log(data);
           // Campañas
           document.getElementById("name").value = data.campaign_name;
           document.getElementById("description").value = data.description;
@@ -433,12 +433,12 @@
             $("input[name='horaMensual']").val(hour); // si estos dos no son con val sino value, hay que anteceder [0] como un array
             $("input[name='fechaNro']").val(data.scheduler.date);
           }else{
-            console.log($("#customSwitch1"));
+            // console.log($("#customSwitch1"));
             $("#customSwitch1").prop('checked', false);
             $("#divNoRepite").removeAttr('hidden');
             var date = data.scheduler.dateRange.substring(0,10);
             var dateAndHour = date.substring(6,10) + '-' + date.substring(0,2) + '-' + date.substring(3,5) + 'T' + hour;
-            console.log($("input[name='fecha']")[0]);
+            // console.log($("input[name='fecha']")[0]);
             $("input[name='fecha']")[0].value= dateAndHour;
           }
           // Reglas
@@ -543,7 +543,7 @@ form.addEventListener('submit', function(e){
   e.preventDefault();
 
   var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns' + '/' + id_campaign;
-  console.log(url);
+  // console.log(url);
   var data = {
     campaign_name: $("#name").val(),
     description: $("#description").val(),
@@ -579,7 +579,7 @@ formScheduler.addEventListener('submit', function(e){
 
   e.preventDefault();
 
-  console.log($("#rangoFechas").val());
+  // console.log($("#rangoFechas").val());
   var scheduler = {
     dateRange: $('#rangoFechas').val(),
     frequency: $('#frequencia').val(),
@@ -588,8 +588,8 @@ formScheduler.addEventListener('submit', function(e){
     day_week: null,
     fk_campaign: parseInt(id_campaign)
   };
-  console.log(scheduler);
-  console.log($("input[name='fecha']").val());
+  // console.log(scheduler);
+  // console.log($("input[name='fecha']").val());
 
   if ($('#frequencia').val() == 'diaria') {
     scheduler.fixed_hour = $("input[name='horaDiario']").val();

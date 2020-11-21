@@ -209,10 +209,8 @@
           var usuario = data[0];
           var userBar = document.getElementById("userBar");
           if (usuario.user_role == 'Administrador'){
-            console.log('Admin');
             userBar.style.display = "block";
           } else {
-            console.log('User');
             userBar.style.display = "none";
           }
       })
@@ -273,7 +271,7 @@
       response => { 
         response.json().then(
           data => {
-            console.log(data);
+            // console.log(data);
             if (data.length > 0) {
               var fila = "<thead><tr><th>Campaña</th><th>Descripción</th><th>Estatus</th><th>Opciones</th></tr></thead><tbody>";
               data.forEach((celda) =>{
