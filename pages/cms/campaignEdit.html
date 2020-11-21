@@ -37,7 +37,7 @@
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="./pages/cms/loginCMS.html">
+          <a class="nav-link" href="../../index.html">
             <i class="fas fa-sign-out-alt" style="font-size: 25px;"></i>
           </a>
         </li>
@@ -56,7 +56,7 @@
       <nav class="mt-2" >
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
           <li class="nav-item">
-            <a href="../../index.html" class="nav-link">
+            <a href="./home.html" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>Inicio</p>
             </a>
@@ -363,16 +363,33 @@
 <!-- Page specific script -->
 <script>
 
-  var id_campaign = localStorage.getItem("id_campaign");
-  // var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
-  // var userBar = document.getElementById("userBar");
-  // if (activeSession.role == 'Admin'){
-  //   userBar.style.display = "block";
-  // } else {
-  //   userBar.style.display = "none";
-  // }
+  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+  if (activeSession == null) {
+    localStorage.setItem("infoMessage", 'Active');
+    window.location.href = "../../index.html";
+  }
 
-  fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
+  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users/' + activeSession.username)
+  .then( 
+    response => { 
+      response.json().then(
+        data => {
+          var usuario = data[0];
+          var userBar = document.getElementById("userBar");
+          if (usuario.user_role == 'Administrador'){
+            userBar.style.display = "block";
+          } else {
+            userBar.style.display = "none";
+          }
+      })
+      /*.catch(error => {
+        notificationFunction('No se pudo traer la campaña.', 'error');
+        console.error('Error:', error);
+      })*/
+    }
+  )
+
+  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
   .then( 
     response => { 
       response.json().then(
@@ -525,7 +542,7 @@ form.addEventListener('submit', function(e){
 
   e.preventDefault();
 
-  var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns' + '/' + id_campaign;
+  var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns' + '/' + id_campaign;
   console.log(url);
   var data = {
     campaign_name: $("#name").val(),
@@ -589,7 +606,7 @@ formScheduler.addEventListener('submit', function(e){
     scheduler.dateRange = dateFormatted + " - " + dateFormatted;
   };
 
-  var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/scheduler';
+  var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/scheduler';
 
   fetch(url, {
     method: 'PUT',
@@ -643,7 +660,7 @@ formRules.addEventListener('submit', function(e){
     rules.push(rule);
   }
   
-  var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/rules';
+  var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/rules';
 
   fetch(url, {
     method: 'PUT',

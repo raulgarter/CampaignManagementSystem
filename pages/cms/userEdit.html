@@ -30,7 +30,7 @@
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-      <a class="nav-link" href="./pages/cms/loginCMS.html">
+      <a class="nav-link" href="../../index.html">
         <i class="fas fa-sign-out-alt" style="font-size: 25px;"></i>
       </a>
     </li>
@@ -48,19 +48,19 @@
       <nav class="mt-2" >
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
           <li class="nav-item">
-            <a href="../../index.html" class="nav-link">
+            <a href="./home.html" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>Inicio</p>
             </a>
           </li>
           <li class="nav-item" id="userBar">
-            <a href="./users.html" class="nav-link" style="background-color: lightgrey; color: black;">
+            <a href="./users.html" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Usuarios</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="·" class="nav-link">
+            <a href="·" class="nav-link" style="background-color: lightgrey; color: black;">
               <i class="nav-icon fas fa-bullhorn"></i>
               <p>Campañas<i class="right fas fa-angle-left"></i></p>
             </a>
@@ -238,17 +238,34 @@
 <!-- Page specific script -->
 <script>
 
-  /*var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
-  var userBar = document.getElementById("userBar");
-  if (activeSession.role == 'Admin'){
-    userBar.style.display = "block";
-  } else {
-    userBar.style.display = "none";
-    window.location.href = "user403.html";
-  }*/
-  var user_id = localStorage.getItem("user_id");
+  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
+  if (activeSession == null) {
+    localStorage.setItem("infoMessage", 'Active');
+    window.location.href = "../../index.html";
+  }
 
-  fetch('https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users/' + user_id)
+  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users/' + activeSession.username)
+  .then( 
+    response => { 
+      response.json().then(
+        data => {
+          var usuario = data[0];
+          var userBar = document.getElementById("userBar");
+          if (usuario.user_role == 'Administrador'){
+            userBar.style.display = "block";
+          } else {
+            userBar.style.display = "none";
+            window.location.href = "user403.html";
+          }
+      })
+      /*.catch(error => {
+        notificationFunction('No se pudo traer la campaña.', 'error');
+        console.error('Error:', error);
+      })*/
+    }
+  )
+
+  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users/' + user_id)
   .then( 
     response => { 
       response.json().then(
@@ -273,7 +290,7 @@
 
     e.preventDefault();
 
-    var url = 'https://cms-web-portal-ux-api.us-e1.cloudhub.io/api/users/' + user_id;
+    var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users/' + user_id;
 
     var user = {
       user_first_name: $("#name").val(),
