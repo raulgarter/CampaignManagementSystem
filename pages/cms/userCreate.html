@@ -56,15 +56,15 @@
             </a>
           </li>
           <li class="nav-item" id="userBar">
-            <a href="./users.html" class="nav-link">
+            <a href="./users.html" class="nav-link" style="background-color: lightgrey; color: black;">
               <i class="nav-icon fas fa-users"></i>
               <p>Usuarios</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="·" class="nav-link" style="background-color: lightgrey; color: black;">
+            <a href="·" class="nav-link">
               <i class="nav-icon fas fa-bullhorn"></i>
-              <p>Campañas<i class="right fas fa-angle-left"></i></p>
+              <p>Campañas<i style="font-size:20px;" class="right fas fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
@@ -136,7 +136,7 @@
                   </div>
                   <!-- lastname -->
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Apellido</label>
+                    <label class="col-sm-2 col-form-label">Correo</label>
                     <div class="input-group col-sm-10">
                       <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Apellido" maxlenght="30" required/>
                   </div>
@@ -145,7 +145,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Email</label>
                     <div class="input-group col-sm-10">
-                      <input type="email" name="email" id="email" class="form-control" placeholder="Email" minlength="3" maxlenght="50" required/>
+                      <input type="text" name="email" id="email" class="form-control" placeholder="Email" minlength="3" maxlenght="50" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required/>
                     </div>
                   </div>
                   <!-- Role -->
@@ -155,7 +155,7 @@
                       <select class="form-control" id="rol" required>
                         <option disabled selected>Seleccionar tipo</option>
                         <option value="Usuario">Usuario</option>
-                        <option value="Administrador">Admistrador</option>
+                        <option value="Administrador">Administrador</option>
                       </select>
                     </div>
                   </div>
@@ -163,7 +163,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Usuario</label>
                     <div class="input-group col-sm-10">
-                      <input type="text" class="form-control" name="username" id="username" placeholder="Usuario" minlength="4" maxlenght="20" required/>
+                      <input type="text" class="form-control" name="username" id="username" placeholder="Usuario" minlength="4" maxlenght="20" pattern="^\d*[a-zA-Z-_.][a-zA-Z0-9]*$" required/>
                     </div>
                   </div>
                   <!-- Contraseña -->
@@ -233,34 +233,8 @@
 </script>
 
 <!-- Page specific script -->
+<script src="../../dist/js/auth-validation.js"></script>
 <script>
-
-  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
-  if (activeSession == null) {
-    localStorage.setItem("infoMessage", 'Active');
-    window.location.href = "../../index.html";
-  }
-
-  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users/' + activeSession.username)
-  .then( 
-    response => { 
-      response.json().then(
-        data => {
-          var usuario = data[0];
-          var userBar = document.getElementById("userBar");
-          if (usuario.user_role == 'Administrador'){
-            userBar.style.display = "block";
-          } else {
-            userBar.style.display = "none";
-            window.location.href = "user403.html";
-          }
-      })
-      /*.catch(error => {
-        notificationFunction('No se pudo traer la campaña.', 'error');
-        console.error('Error:', error);
-      })*/
-    }
-  )
 
   var form = document.getElementById('quickForm');
   form.addEventListener('submit', function(e){

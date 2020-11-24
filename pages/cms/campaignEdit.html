@@ -61,7 +61,7 @@
               <p>Inicio</p>
             </a>
           </li>
-          <li class="nav-item" id="userBar">
+          <li class="nav-item" id="userBar" hidden>
             <a href="./users.html" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Usuarios</p>
@@ -70,7 +70,7 @@
           <li class="nav-item">
             <a href="·" class="nav-link" style="background-color: lightgrey; color: black;">
               <i class="nav-icon fas fa-bullhorn"></i>
-              <p>Campañas<i class="right fas fa-angle-left"></i></p>
+              <p>Campañas<i style="font-size:20px;" class="right fas fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
@@ -360,33 +360,8 @@
   }
 </script>
 <!-- Page specific script -->
+<script src="../../dist/js/auth-validation.js"></script>
 <script>
-
-  var activeSession = JSON.parse(localStorage.getItem("sessionInformation"));
-  if (activeSession == null) {
-    localStorage.setItem("infoMessage", 'Active');
-    window.location.href = "../../index.html";
-  }
-
-  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users/' + activeSession.username)
-  .then( 
-    response => { 
-      response.json().then(
-        data => {
-          var usuario = data[0];
-          var userBar = document.getElementById("userBar");
-          if (usuario.user_role == 'Administrador'){
-            userBar.style.display = "block";
-          } else {
-            userBar.style.display = "none";
-          }
-      })
-      /*.catch(error => {
-        notificationFunction('No se pudo traer la campaña.', 'error');
-        console.error('Error:', error);
-      })*/
-    }
-  )
 
   var id_campaign = localStorage.getItem("id_campaign");
   fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
