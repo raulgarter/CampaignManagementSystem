@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <style>
-      input,option, select {font-size: 14.5px !important;}
-  </style>  <meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NEWTOMS LLC</title>
 
@@ -19,7 +17,7 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-light navbar-light" style="background-image: url(../../dist/img/foto9.jpg); color: white;">
+  <nav class="main-header navbar navbar-expand navbar-light navbar-light" style="background-image: url(../../dist/img/foto9.jpg); font-family: 'Gadugi'; font-weight: 400; color: white;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -45,7 +43,9 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <img src="../../dist/img/newtoms.png" alt="" style="width: 80%; height: 22%; margin-left: 10%; margin-bottom: -15%;">
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex"></div>
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <label for="" style="color: grey;">&nbsp; Campaign Management System</label>
+      </div>
       <!-- Sidebar Menu -->
       <nav class="mt-2" >
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
@@ -105,7 +105,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style=" font-family: 'Microsoft YaHei UI'; font-size: 14.5px; background-image: url(../../dist/img/foto11.jpg); padding: 0px 15px; padding-right: 20px;">
+  <div class="content-wrapper" style="font-size: 16.5px; background-image: url(../../dist/img/foto11.jpg); padding: 0px 15px; padding-right: 20px;">
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -122,7 +122,7 @@
             <!-- jquery validation -->
             <div class="card">
               <div class="card-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
-                <h3 class="card-title" style="font-weight: bold;">Información del usuario</h3>
+                <h3 class="card-title" style="margin-top: 5px; font-size: 19.5px;">Información del usuario</h3>
               </div>
               <!-- form start -->
               <form id="quickForm" method="post">
@@ -131,19 +131,19 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nombre</label>
                     <div class="input-group col-sm-10">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Nombre" maxlenght="30" required style="font-size: 14px;" />
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Nombre" maxlenght="30" required/>
                     </div>
                   </div>
                   <!-- lastname -->
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Correo</label>
+                    <label class="col-sm-2 col-form-label">Apellido</label>
                     <div class="input-group col-sm-10">
                       <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Apellido" maxlenght="30" required/>
                   </div>
                   </div>
                   <!-- Email -->
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Email</label>
+                    <label class="col-sm-2 col-form-label">Correo</label>
                     <div class="input-group col-sm-10">
                       <input type="text" name="email" id="email" class="form-control" placeholder="Email" minlength="3" maxlenght="50" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required/>
                     </div>
@@ -263,7 +263,7 @@
       res.json();
       if (res.status == 200 || res.status == 201) {
         notificationFunction('Usuario creado.', 'success');
-        window.location.href = "./users.html";
+        setTimeout(() => {  window.location.href = "./users.html"; }, 1000);
       } else {
         notificationFunction('No se pudo crear el usuario.', 'error');
       }
