@@ -48,7 +48,7 @@
           <div class="row">
             <div class="col-12">
               <button class="btn btn-primary float-right" id="loginStatic" onclick="loginSpinner()"> Ingresar </button>
-              <button type="submit" class="btn btn-primary float-right" id="loginDynamic">
+              <button type="submit" class="btn btn-primary float-right" id="loginDynamic" hidden>
                 <span class="spinner-border spinner-border-sm"></span>
                 Ingresando
               </button>
@@ -68,7 +68,8 @@
   <script src="dist/js/adminlte.min.js"></script>
   <!-- SweetAlert2 -->
   <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
-  <script>
+  <script src="dist/js/notifications.js"></script>
+  <!-- <script>
     function notificationFunction(text, iconType) {
       var Toast = Swal.mixin({
         toast: true,
@@ -84,10 +85,9 @@
         })
       })
     }
-  </script>
+  </script> -->
   
   <script>
-
     var sessionMessage = localStorage.getItem("infoMessage");
     if (sessionMessage == 'Active') {
       notificationFunction('Recuerde iniciar sesión', 'info');
@@ -96,10 +96,12 @@
     localStorage.clear();
     
     loginStatic.style.display = "block";
-    loginDynamic.style.display = "none";
+    // loginDynamic.style.display = "none";
     function loginSpinner() {
-      loginStatic.style.display = "none";
-      loginDynamic.style.display = "block";
+      // loginStatic.style.display = "none";
+      // loginDynamic.style.display = "block";
+      $('#loginStatic').attr("hidden", true);
+      $('#loginDynamic').removeAttr("hidden");
     }
 
     var form = document.getElementById('loginForm');
@@ -120,7 +122,7 @@
       .then(res => {
         res.json().then(
           data => {
-            console.log(data);
+            // console.log(data);
             if (res.status == 200 || res.status == 201) {
               // console.log(data);
               var sessionInformationObject = { username : data.username, role : data.role};
@@ -130,8 +132,10 @@
               window.location.href = "./pages/cms/home.html";
             } else {
               notificationFunction('Error al iniciar sesión', 'error');     
-              loginStatic.style.display = "block";
-              loginDynamic.style.display = "none";
+              // loginStatic.style.display = "block";
+              // loginDynamic.style.display = "none";
+              $('#loginDynamic').attr("hidden", true);
+              $('#loginStatic').removeAttr("hidden");
               document.getElementById("username").value = "";
               document.getElementById("password").value = "";     
             }
@@ -140,8 +144,10 @@
       })
       .catch(error => {
         notificationFunction('Error al iniciar sesión', 'error');     
-        loginStatic.style.display = "block";
-        loginDynamic.style.display = "none";
+        // loginStatic.style.display = "block";
+        // loginDynamic.style.display = "none";
+        $('#loginDynamic').attr("hidden", true);
+        $('#loginStatic').removeAttr("hidden");
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
         console.error('Error:', error);

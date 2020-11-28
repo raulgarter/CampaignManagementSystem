@@ -169,8 +169,12 @@
                   <!-- Contraseña -->
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Contraseña</label>
-                    <div class="input-group col-sm-10">
+                    <div class="input-group col-sm-9">
                       <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" minlength="8" maxlenght="20" required>
+                    </div>
+                    <div class="form-check col-sm-1" style="margin-top: 7px;">
+                      <input class="form-check-input" type="checkbox" onclick="showPassword()">
+                      <label style="font-size: 90%;">Ver</label>
                     </div>
                   </div>
                 </div>
@@ -243,13 +247,23 @@
 <script src="../../dist/js/auth-validation.js"></script>
 <script>
 
+  function showPassword() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
   var user_id = localStorage.getItem("user_id");
   fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/users/' + user_id)
   .then( 
     response => { 
       response.json().then(
         data => {
-          var usuario = data[0];
+          // console.log(data);
+          var usuario = data;
           $("#name").val(usuario.user_first_name);
           $("#lastname").val(usuario.user_last_name);
           $("#email").val(usuario.user_email);

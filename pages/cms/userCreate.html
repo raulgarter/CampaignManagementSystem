@@ -169,8 +169,12 @@
                   <!-- Contraseña -->
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Contraseña</label>
-                    <div class="input-group col-sm-10">
+                    <div class="input-group col-sm-9">
                       <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" minlength="8" maxlenght="20" required>
+                    </div>
+                    <div class="form-check col-sm-1" style="margin-top: 7px;">
+                      <input class="form-check-input" type="checkbox" onclick="showPassword()">
+                      <label style="font-size: 90%;">Ver</label>
                     </div>
                   </div>
                 </div>
@@ -214,6 +218,15 @@
 <!-- SweetAlert2 -->
 <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 <script>
+
+  function showPassword() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
 
   function notificationFunction(text, iconType) {
     var Toast = Swal.mixin({
