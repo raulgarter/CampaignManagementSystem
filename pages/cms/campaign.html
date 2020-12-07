@@ -54,57 +54,7 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2" >
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
-          <li class="nav-item">
-            <a href="./home.html" class="nav-link">
-              <i class="nav-icon fas fa-home"></i>
-              <p>Inicio</p>
-            </a>
-          </li>
-          <li class="nav-item" id="userBar" hidden>
-            <a href="./users.html" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>Usuarios</p>
-            </a>
-          </li>
-          <li class="nav-item menu-open">
-            <a href="·" class="nav-link" style="background-color: lightgrey; color: black;">
-              <i class="nav-icon fas fa-bullhorn"></i>
-              <p>Campañas<i style="font-size:20px;" class="right fas fa-angle-left"></i></p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="campaign.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Campañas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="campaignCreate.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Crear campaña</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="campaignHistory.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Historial de ejecuciones</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="churn.html" class="nav-link">
-              <i class="nav-icon fas fa-users-slash"></i>
-              <p>Churn</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="churn.html" class="nav-link">
-              <i class="nav-icon fas fa-chart-line"></i>
-              <p>Search Analytics</p>
-            </a>
-          </li>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id="menu">
         </ul>
       </nav>
     </div>
@@ -222,31 +172,10 @@
       )
     }
   )*/
-
-  $(document).on('click', '.ejecutar', function(){
-    var id = $(this).attr("id");
-    var url = "http://localhost:8081/manual-execution/" + id;
-    console.log("La url es " + url);
-    $.ajax({
-      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-      url: url,
-      method:"POST",
-      data:{id:id},
-      dataType:"json",
-      success:function(data){
-        $('.card-title').innerHTML("Edit Usuario");
-      }
-    })
-    /*fetch(url)
-    .then(function (response) {
-      return response.json();
-    })
-    .catch(function (error) {
-      console.log("Error: " + error);
-    });*/
-  });
 </script>
 <script>
+  validateRole('campaign');
+
   function getCampaigns () {
     fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns').then( 
       response => { 
@@ -264,7 +193,7 @@
                   + " <a class=\"btn btn-info btn-sm\" onclick=\"keepID("+ celda.id_campaign +")\" href=\"./campaignEdit.html\"><i class=\"fas fa-pencil-alt\" title=\"Editar\"></i></a>"
                   // + " <a class=\"btn btn-danger btn-sm\" onclick=\"deleteCampaign(celda.id_campaign)\" href=\"#\"><i class=\"fas fa-trash\" title=\"Eliminar\" data-toggle=\"modal\" data-target=\"#exampleModal\"></i></a>"
                   + " <a class=\"btn btn-danger btn-sm\" id=\"deleteVariable1\" onclick=\"deleteCampaign("+ celda.id_campaign +")\" href=\"#\"><i class=\"fas fa-trash\" title=\"Eliminar\"></i></a>"
-                  + " <a class=\"btn btn-success btn-sm ejecutar\" href=\"#\"><i class=\"fa fa-play-circle\" title=\"Ejecutar\"></i></a></td></tr>";
+                  + " <a class=\"btn btn-success btn-sm ejecutar\" onclick=\"executeCampaign("+ celda.id_campaign +")\" href=\"#\"><i class=\"fa fa-play-circle\" title=\"Ejecutar\"></i></a></td></tr>";
               })
               fila += "</tbody>";
               document.getElementById("myTable").innerHTML = fila;
@@ -307,6 +236,24 @@
         console.error('Error:', error);
       })
       // .then(response => setTimeout(location.reload.bind(location), 1000));
+  }
+
+  function executeCampaign(id_campaign){
+    var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/execution';
+    fetch(url, {
+        method: 'GET'
+      }).then(res => {
+          res.json();
+          if (res.status == 200 || res.status == 201) {
+            notificationFunction('Campaña ejecutada.', 'success');
+          } else {
+            notificationFunction('No se pudo ejecutar la campaña', 'error');
+          }
+        })
+        .catch(error => {
+          notificationFunction('No se pudo ejecutar la campaña', 'error');
+          console.error('Error:', error);
+        })
   }
 </script>
 <!-- SweetAlert2 -->

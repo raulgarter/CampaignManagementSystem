@@ -45,7 +45,7 @@ CREATE TABLE campaign (
     campaign_name VARCHAR (60) NOT NULL,
     description VARCHAR(220) NOT NULL,
     status VARCHAR (14) NOT NULL,
-    email_template VARCHAR (25) NOT NULL
+    email_template VARCHAR (70) NOT NULL
 );
 
 CREATE TABLE scheduler (

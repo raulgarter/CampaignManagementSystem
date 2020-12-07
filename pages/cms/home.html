@@ -58,57 +58,7 @@
         
       <!-- Sidebar Menu -->
       <nav class="mt-2" >
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
-          <li class="nav-item">
-            <a href="./home.html" class="nav-link" style="background-color: lightgrey; color: black;">
-              <i class="nav-icon fas fa-home"></i>
-              <p>Inicio</p>
-            </a>
-          </li>
-          <li class="nav-item" id="userBar" hidden>
-            <a href="./users.html" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>Usuarios</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="·" class="nav-link">
-              <i class="nav-icon fas fa-bullhorn"></i>
-              <p>Campañas<i style="font-size:20px;" class="right fas fa-angle-left"></i></p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="campaign.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Campañas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="campaignCreate.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Crear campaña</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="campaignHistory.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Historial de ejecuciones</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="churn.html" class="nav-link">
-              <i class="nav-icon fas fa-users-slash"></i>
-              <p>Churn</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="churn.html" class="nav-link">
-              <i class="nav-icon fas fa-chart-line"></i>
-              <p>Search Analytics</p>
-            </a>
-          </li>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id="menu">
         </ul>
       </nav>
         <!-- /.sidebar-menu -->
@@ -212,6 +162,7 @@
 
 <script src="../../dist/js/auth-validation.js"></script>
 <script>
+  validateRole('home');
 
   fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns').then( 
     response => { 
