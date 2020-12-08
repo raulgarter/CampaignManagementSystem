@@ -114,10 +114,6 @@
                       <label for="inputEmail3" class="col-sm-3 col-form-label">Plantilla del correo</label>
                       <div class="col-sm-9">
                         <select class="form-control" name="template" id="template" required>
-                          <!--<option value="" disabled selected>Seleccionar Plantilla</option>
-                          <option value="Plantilla 1">Plantilla 1</option>
-                          <option value="2">Plantilla 2</option>
-                          <option value="3">Plantilla 3</option>-->
                         </select>
                       </div>
                     </div>
@@ -316,6 +312,57 @@
 <!-- Page specific script -->
 <script src="../../dist/js/auth-validation.js"></script>
 <script>
+  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/templates').then( 
+      response => { 
+        response.json().then(
+          data => {
+            // console.log(data);
+            if (data.length > 0) {
+              var plantillas = "<option value='' disabled selected>Seleccionar Plantilla</option>";
+              data.forEach((celda) =>{
+                plantillas += "<option value="+ celda.id +">"+ celda.name +"</option>";
+              })
+              document.getElementById("template").innerHTML = plantillas;
+              //$("#myTable").buttons().container().appendTo($('#botonesDatatable'));
+            }
+          }
+        )
+      }
+    )
+
+  /*function templateEquivalence(template_id){
+    fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/templates').then( 
+      response => { 
+        response.json().then(
+          data => {
+            data.forEach((template) =>{
+              if( template.id == template_id) { 
+                $("option[value='" + template.id + "']").attr("selected", "selected");
+              }
+            })
+          })
+      }
+    )
+  }*/
+    function templateEquivalence(template_id){
+    fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/templates').then( 
+      response => { 
+        response.json().then(
+          data => {
+            var plantillas = "<";
+            data.forEach((template) =>{
+              if(template.id != template_id){
+                plantillas += "<option value="+ template.id +">"+ template.name +"</option>";
+              }else{
+                plantillas += "<option value="+ template.id +" selected>"+ template.name +"</option>";
+              }
+            })
+            document.getElementById("template").innerHTML = plantillas;
+          })
+      }
+    )
+  }
+
   validateRole('campaignEdit');
   var id_campaign = localStorage.getItem("id_campaign");
   fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign)
@@ -327,12 +374,7 @@
           // Campañas
           document.getElementById("name").value = data.campaign_name;
           document.getElementById("description").value = data.description;
-          var template = data.email_template;
-          var templateOption = '<option value="1" ';
-          if( template == "1") { templateOption+='selected'; } templateOption += '>Plantilla 1</option><option value="2" ';
-          if( template == "2") { templateOption+='selected'; } templateOption += '>Plantilla 2</option><option value="3" ';
-          if( template == "3") { templateOption+='selected'; } templateOption += '>Plantilla 3</option>';
-          document.getElementById("template").innerHTML = templateOption;    
+          templateEquivalence(data.email_template);   
           document.getElementById("campaignStatus").value = data.status;
           // Horario
           var frequency = data.scheduler.frequency;

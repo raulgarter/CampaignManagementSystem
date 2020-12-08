@@ -17,11 +17,14 @@
   <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <style>
+      input, textarea {font-size: 14.5px !important;}
+  </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-image: url(../../dist/img/foto9.jpg); font-family: 'Gadugi'; font-weight: 400; color: white;">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-image: url(../../dist/img/foto9.jpg); font-family: 'Gadugi'; font-weight: 300; color: white;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -89,13 +92,13 @@
                     <!-- Nombre Campaña -->
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nombre</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                           <div class="input-group" data-target-input="nearest">
                               <input type="text" name="name" id="name" class="form-control" disabled/>
                           </div>
                         </div>
                         <label class="col-sm-2 col-form-label text-right">Estatus</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                           <div class="input-group" data-target-input="nearest">
                               <input type="text" name="status" id="status" class="form-control" disabled/>
                           </div>
@@ -103,10 +106,10 @@
                     </div>
                     <!-- Descripción Campaña -->
                     <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Descripción</label>
-                      <div class="col-sm-9">
+                      <label class="col-sm-2 col-form-label">Descripción</label>
+                      <div class="col-sm-10">
                         <div class="input-group" data-target-input="nearest">
-                          <textarea name="description" id="description" class="form-control" rows="2" disabled></textarea>  
+                          <textarea name="description" id="description" class="form-control" rows="1" disabled></textarea>  
                         </div>
                       </div>
                     </div>
@@ -127,38 +130,38 @@
                   <div style="padding-left: 11px; padding-right: 11px;">
                     <!-- Begin and Ending Date -->
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Rango de ejecución</label>
-                      <div class="col-sm-6">
+                      <label class="col-sm-3 col-form-label">Fecha de inicio-fin</label>
+                      <div class="col-sm-9">
                         <div class="input-group" data-target-input="nearest">
                             <input type="text" name="dateRange" id="dateRange" class="form-control" disabled/>
                         </div>
                       </div>
-                      <label class="col-sm-1 col-form-label">Hora</label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Frecuencia</label>
+                      <div class="col-sm-3">
+                        <div class="input-group" data-target-input="nearest">
+                          <input type="text" name="frequency" id="frequency" class="form-control" disabled/>
+                        </div>
+                      </div>
+                      <label class="col-sm-3 col-form-label text-right">Hora</label>
                       <div class="col-sm-3">
                         <div class="input-group" data-target-input="nearest">
                             <input type="text" name="fixedHour" id="fixedHour" class="form-control" disabled/>
                         </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Frecuencia</label>
-                      <div class="col-sm-4">
-                        <div class="input-group" data-target-input="nearest">
-                          <input type="text" name="frequency" id="frequency" class="form-control" disabled/>
-                        </div>
                       </div>                    
-                      <label class="col-sm-2 col-form-label">Fecha del mes</label>
-                      <div class="col-sm-4">
-                        <div class="input-group" data-target-input="nearest">
-                          <input type="text" name="dayMonth" id="dayMonth" class="form-control" disabled/>
-                        </div>
-                      </div>
                     </div>
                     <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Día de la semana</label>
-                      <div class="col-sm-4">
+                      <label class="col-sm-3 col-form-label">Día de la semana</label>
+                      <div class="col-sm-3">
                         <div class="input-group" data-target-input="nearest">
                             <input type="text" name="dayWeek" id="dayWeek" class="form-control" disabled/>
+                        </div>
+                      </div>
+                      <label class="col-sm-3 col-form-label text-right">Fecha del mes</label>
+                      <div class="col-sm-3">
+                        <div class="input-group" data-target-input="nearest">
+                          <input type="text" name="dayMonth" id="dayMonth" class="form-control" disabled/>
                         </div>
                       </div>
                     </div>
@@ -170,7 +173,7 @@
                   <table id="myTable" class="table table-bordered table-hover"></table>
                 </div><!-- /.card-body -->
                 <div class="card-footer">
-                  <a href="./campaign.html" class="btn btn-info float-right" style="margin-right: 1%;">Regresar</a>
+                  <a href="./campaign.html" class="btn btn-info float-right" style="margin-right: 1%; font-size: 14.5px;">Regresar</a>
                 </div>
               </form>
             </div><!-- /.card -->  
@@ -213,8 +216,22 @@
 <!-- Page specific script -->
 <script src="../../dist/js/auth-validation.js"></script>
 <script>
+  function templateEquivalence(template_id){
+    fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/templates').then( 
+      response => { response.json().then(
+        data => {
+          data.forEach((template) =>{
+            if(template.id == template_id){
+              document.getElementById("template").value =  template.name + " ID: " + template_id;
+            }
+          })
+        }
+      )}
+    )
+  }
+
   function dayWeekEquivalence(number){
-    var day;
+    var day = null;
     switch(number) {
       case '1': day = 'Lunes';      break;
       case '2': day = 'Martes';     break;
@@ -244,7 +261,7 @@
             // Campaing info
             document.getElementById("name").value = data.campaign_name;
             document.getElementById("description").value = data.description;
-            document.getElementById("template").value = data.email_template;
+            templateEquivalence(data.email_template);
             document.getElementById("status").value = data.status;
 
             // Scheduler info
@@ -267,7 +284,7 @@
               })
               fila += "</tbody>";
               document.getElementById("myTable").innerHTML = fila;
-              $('#myTable').DataTable({
+              /*$('#myTable').DataTable({
                 "paging": true,
                 "lengthChange": false,
                 "searching": false,
@@ -275,7 +292,7 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-              });
+              });*/
             }
           }
         )
