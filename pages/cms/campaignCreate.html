@@ -466,7 +466,7 @@
           res.json();
           if (res.status == 200 || res.status == 201) {
             notificationFunction('Campaña creada.', 'success');
-            setTimeout(location.reload.bind(location), 1500);
+            setTimeout(() => {  window.location.href = "./campaign.html"; }, 1000);
             // setTimeout(window.location.href = "campaign.html", 6000);
             // window.location.href = "campaign.html"
           } else {
