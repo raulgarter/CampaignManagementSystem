@@ -71,8 +71,7 @@
   <div class="content-wrapper" style="font-family: 'Microsoft YaHei UI'; font-size: 14.5px; background-image: url(../../dist/img/foto11.jpg); padding: 0px 15px; padding-right: 20px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <div class="container-fluid">
-      </div><!-- /.container-fluid -->
+      <div class="container-fluid"></div>
     </section>
 
     <!-- Main content -->
@@ -89,10 +88,10 @@
               <!-- form start -->
               <form id="quickForm" class="swalDefaultSuccess">
                 <div class="card-body">
-                  <!-- Nombre Campaña -->
                   <label style="margin-top: 5px; font-size: 17px;">&#10022; Campaña</label>
                   <hr class="mt-0">
                   <div style="padding-left: 11px; padding-right: 11px;">
+                    <!-- Nombre Campaña -->
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Nombre</label>
                       <div class="col-sm-9">
@@ -299,7 +298,8 @@
 <script src="../../dist/js/auth-validation.js"></script>
   <!-- SweetAlert2 -->
   <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
-  <script>
+  <script src="../../dist/js/notifications.js"></script>
+  <!-- <script>
     function notificationFunction(text, iconType) {
       var Toast = Swal.mixin({
         toast: true,
@@ -315,7 +315,7 @@
         })
       })
     }
-  </script>
+  </script> -->
 
   <script>
     validateRole('campaignCreate');
