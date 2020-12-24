@@ -290,6 +290,7 @@
 <!-- SweetAlert2 -->
 <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../dist/js/notifications.js"></script>
+<script src="../../dist/js/rules-operator.js"></script>
 <!-- <script>
 
   function notificationFunction(text, iconType) {
@@ -420,18 +421,25 @@
               fila +=  '<tr id=row' + i +'><td>'
               fila += '<div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;" value="' + rule.rule_name + '"/></div></div>';
               fila += '<div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;">' + rule.rule_description + '</textarea></div></div>';
-              fila += '<div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option ';
-              if(rule.rule_type == "Menor") { fila+='selected'; } fila += '>Menor</option><option ';
-              if(rule.rule_type == "Mayor") { fila+='selected'; } fila += '>Mayor</option><option ';
-              if(rule.rule_type == "Menor o igual") { fila+='selected'; } fila += '>Menor o igual</option><option ';
-              if(rule.rule_type == "Mayor o igual") { fila+='selected'; } fila += '>Mayor o igual</option><option ';
-              if(rule.rule_type == "Igual") { fila+='selected'; } fila += '>Igual</option></select></div></div>';
-              fila += '<div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option ';
+
+              fila += '<div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" onchange="showOperator(' + i + ')" required><option ';
+              if(rule.rule_field == "Días entre envíos") { fila+='selected'; } fila += '>Días entre envíos</option><option ';
+              if(rule.rule_field == "Días desde el inicio del plan") { fila+='selected'; } fila += '>Días desde el inicio del plan</option><option ';
               if(rule.rule_field == "Balance actual") { fila+='selected'; } fila += '>Balance actual</option><option ';
+              if(rule.rule_field == "Plan") { fila+='selected'; } fila += '>Plan</option><option ';
               if(rule.rule_field == "SMS") { fila+='selected'; } fila += '>SMS</option><option ';
               if(rule.rule_field == "Voz") { fila+='selected'; } fila += '>Voz</option><option ';
               if(rule.rule_field == "Datos") { fila+='selected'; } fila += '>Datos</option></select></div>';
-              fila += '<label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;" value="' + rule.rule_value + '"/></div></div>'
+              fila += '<label class="col-sm-1 col-form-label pl-4 operators_list" style="font-size: 18px;" name="operators[]">';
+              if(rule.rule_field == 'Días desde el inicio del plan' || rule.rule_field == 'Días entre envíos'){
+                fila+='>';
+              }else if (rule.rule_field == 'Plan'){
+                fila+='=';
+              }else{
+                fila+='<';
+              }
+              fila += '</label>';
+              fila += '<label class="col-sm-1 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;" value="' + rule.rule_value + '"/></div></div>'
               fila += "</td>";
               if( i == 0 ){
                 fila += '<td style="width:10%;"><button style="padding: 4px 10px; margin-top: 2px;" type="button" name="add" id="add" class="btn bg-gradient-success .btn-sm btn_add" title="Add another rule">&#10010;</button></td></tr>';
@@ -493,6 +501,8 @@ $(function () {
       $('#divSemanal').attr("hidden", true);
     }
   });
+
+
 
   //Datemask dd/mm/yyyy
   $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
@@ -624,7 +634,7 @@ formRules.addEventListener('submit', function(e){
       "rule_name": $("input[name='ruleNames[]']")[i].value,
       "rule_description": $("textarea[name='ruleDescriptions[]']")[i].value,
       "rule_field": ruleField.options[ruleField.selectedIndex].text,
-      "rule_type": ruleType.options[ruleType.selectedIndex].text,
+      "rule_type": "",
       "rule_value": $("input[name='ruleValues[]']")[i].value,
       "fk_campaign": parseInt(id_campaign)
     };
@@ -661,9 +671,10 @@ $(document).ready(function(){
       var i=1;  
       //$('#add').click(function(){  
       $(document).on('click', '.btn_add', function(){  
-           i++;  
-           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Tipo</label><div class="col-sm-10"><select class="form-control ruleTypes_list" name="ruleTypes[]" required><option value="" disabled selected>Seleccionar tipo</option><option value="<">Menor</option><option value=">">Mayor</option><option value="<=">Menor o igual</option><option value=">=">Mayor o igual</option><option value="=">Igual</option></select></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-2 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
-      });  
+           $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" style="width:100%;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" onchange="showOperator(' + i + ')" required><option value="" disabled selected>Seleccionar campo</option><option value="">Días entre envíos</option><option value="">Días desde el inicio del plan</option><option value="">Balance actual</option><option value="">Plan</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-1 col-form-label pl-4 operators_list" style="font-size: 18px;" name="operators[]"></label><label class="col-sm-1 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');  
+            i++;
+            //showOperator();  
+      });
       $(document).on('click', '.btn_remove', function(){  
           var button_id = $(this).attr("id");   
           $('#row'+button_id+'').remove();  
