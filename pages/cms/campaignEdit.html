@@ -219,6 +219,25 @@
                   <option value="01:00"><option value="02:00"><option value="03:00">
                   <option value="04:00"><option value="05:00"><option value="06:00">
                 </datalist>
+                <!-- Modal -->
+                <div class="modal fade" id="modalGap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
+                        <h5 class="modal-title ml-1">Recordatorio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body ml-3 mr-3" style="font-size: 14px;">
+                        Todas las campañas deben incluir una condición para <b>días entre envíos</b>, que representa cuántos días deben pasar para que la campaña vuelva a ser enviada a un mismo cliente.
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" style="font-size: 14px;" class="btn btn-info" data-dismiss="modal">Regresar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- Final Modal -->
               </div>
             </div>
             
@@ -239,6 +258,7 @@
                   <div>  
                     <table class="table" id="dynamic_field">    
                     </table>
+                    <p class="mt-0 pt-0" style="color: red; font-size: 14px;"><b>Nota</b>: todas las campañas deben incluir una condición para "días entre envíos".</p>
                   <div class="card-footer pb-1 mt-0 pr-0 pl-0" style="background-color: white;">
                     <a href="./campaign.html" class="btn btn-default">Cancelar</a>
                     <button class="btn btn-success float-right">Guardar</button>
@@ -624,6 +644,7 @@ formRules.addEventListener('submit', function(e){
   var rulesCount = $("input[name='ruleNames[]']").length;
   var ruleField = null;
   var ruleType = null;
+  var condGap = null;
   //var field1 = $(".ruleFields_list")[0];
   //console.log(field1.options[field1.selectedIndex].text);
 
@@ -639,29 +660,36 @@ formRules.addEventListener('submit', function(e){
       "fk_campaign": parseInt(id_campaign)
     };
     rules.push(rule);
+    if (rule.rule_field == "Días entre envíos"){
+      condGap = true;
+    }
   }
   
   var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/rules';
 
-  fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(rules),
-    headers:{
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(res => {
-    res.json();
-    if (res.status == 200 || res.status == 201) {
-      notificationFunction('Condiciones actualizadas', 'success');
-    } else {
+  if(condGap){
+    fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(rules),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => {
+      res.json();
+      if (res.status == 200 || res.status == 201) {
+        notificationFunction('Condiciones actualizadas', 'success');
+      } else {
+        notificationFunction('No se pudieron actualizar las condiciones', 'error');
+      }
+    })
+    .catch(error => {
       notificationFunction('No se pudieron actualizar las condiciones', 'error');
-    }
-  })
-  .catch(error => {
-    notificationFunction('No se pudieron actualizar las condiciones', 'error');
-    console.error('Error:', error);
-  })
+      console.error('Error:', error);
+    })
+  }else{
+    $('#modalGap').modal('show');
+  }
   // .then(response => console.log('Success:', response));
   
 })

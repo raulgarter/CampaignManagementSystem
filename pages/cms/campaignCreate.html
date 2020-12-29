@@ -231,6 +231,7 @@
                       <td style="width:10%;"><button style="padding: 4px 10px; margin-top: 2px;" type="button" name="add" id="add" class="btn bg-gradient-success .btn-sm" title="Add another rule">&#10010;</button></td>  
                     </tr>  
                   </table>
+                  <p style="color: red; font-size: 13px;"><b>Nota</b>: todas las campañas deben incluir una condición para "días entre envíos".</p>
                 </div><!-- /.card-body -->
                 <div class="card-footer">
                   <a href="./campaign.html" class="btn btn-default" style="font-size: 14.5px;">Cancelar</a>
@@ -247,6 +248,25 @@
                 <option value="01:00"><option value="02:00"><option value="03:00">
                 <option value="04:00"><option value="05:00"><option value="06:00">
               </datalist>
+              <!-- Modal -->
+                <div class="modal fade" id="modalGap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
+                        <h5 class="modal-title ml-1">Recordatorio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body ml-3 mr-3" style="font-size: 14px;">
+                        Todas las campañas deben incluir una condición para <b>días entre envíos</b>, que representa cuántos días deben pasar para que la campaña vuelva a ser enviada a un mismo cliente.
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" style="font-size: 14px;" class="btn btn-info" data-dismiss="modal">Regresar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- Final Modal -->
             </div><!-- /.card -->  
           </div>
         </div><!-- /.row -->
@@ -421,6 +441,7 @@
       var rulesCount = $("input[name='ruleNames[]']").length;
       var ruleField = null;
       var ruleType = null;
+      var condGap = false;
 
       for (var i = 0; i < rulesCount; i++) {
         ruleField = $(".ruleFields_list")[i];
@@ -433,6 +454,9 @@
           "rule_value": $("input[name='ruleValues[]']")[i].value
         };
         rules.push(rule);
+        if (rule.rule_field == "Días entre envíos"){
+          condGap = true;
+        }
       }
       console.log(rules);
 
@@ -448,6 +472,7 @@
 
       console.log(data);
 
+      if (condGap){
       fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -469,6 +494,9 @@
           notificationFunction('No se pudo crear la campaña', 'error');
           console.error('Error:', error);
         })
+      }else{
+        $('#modalGap').modal('show');
+      }
       // .then(response => console.log('Success:', response));
 
       $("#frequencia").val(null);
@@ -482,7 +510,7 @@
   $(document).ready(function(){  
         var i=1;  
         $('#add').click(function(){
-            $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" rows="1" style="width:100%; font-size: 14.5px;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" onchange="showOperator(' + i + ')" required><option value="" disabled selected>Seleccionar campo</option><option value="">Balance actual</option><option value="">SMS</option><option value="">Voz</option><option value="">Data</option></select></div><label class="col-sm-1 col-form-label pl-4 operators_list" style="font-size: 18px;" name="operators[]"></label><label class="col-sm-1 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');
+            $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" rows="1" style="width:100%; font-size: 14.5px;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" onchange="showOperator(' + i + ')" required><option value="" disabled selected>Seleccionar campo</option><option value="balance">Balance actual</option><option value="plan">Plan</option><option value="sms">SMS</option><option value="voz">Voz</option><option value="datos">Datos</option><option value="fplan">Días desde el inicio del plan</option></select></div><label class="col-sm-1 col-form-label pl-4 operators_list" style="font-size: 18px;" name="operators[]"></label><label class="col-sm-1 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');
           i++;    
         });  
         $(document).on('click', '.btn_remove', function(){  
