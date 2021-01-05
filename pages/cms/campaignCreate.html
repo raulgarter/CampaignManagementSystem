@@ -212,10 +212,10 @@
                           <div class="col-sm-4">
                             <select class="form-control ruleFields_list" name="ruleFields[]" onchange="showOperator(0)" required>
                               <option value="" disabled selected>Seleccionar campo</option>
-                              <option value="">Días entre envíos</option>
-                              <option value="">Días desde el inicio del plan</option>
+                              <option value="gap">Días entre envíos</option>
+                              <option value="fplan">Días desde el inicio del plan</option>
                               <option value="balance">Balance actual</option>
-                              <option value="">Plan</option>
+                              <option value="plan">Plan</option>
                               <option value="sms">SMS</option>
                               <option value="voz">Voz</option>
                               <option value="datos">Datos</option>
@@ -449,7 +449,8 @@
         rule = {
           "rule_name": $("input[name='ruleNames[]']")[i].value,
           "rule_description": $("textarea[name='ruleDescriptions[]']")[i].value,
-          "rule_field": ruleField.options[ruleField.selectedIndex].text,
+          //"rule_field": ruleField.options[ruleField.selectedIndex].text,
+          "rule_field": ruleField.value,
           "rule_type": "",
           "rule_value": $("input[name='ruleValues[]']")[i].value
         };
@@ -472,7 +473,7 @@
 
       console.log(data);
 
-      if (condGap){
+      /*if (condGap){
       fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -497,6 +498,7 @@
       }else{
         $('#modalGap').modal('show');
       }
+      */
       // .then(response => console.log('Success:', response));
 
       $("#frequencia").val(null);
@@ -510,7 +512,7 @@
   $(document).ready(function(){  
         var i=1;  
         $('#add').click(function(){
-            $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" rows="1" style="width:100%; font-size: 14.5px;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" onchange="showOperator(' + i + ')" required><option value="" disabled selected>Seleccionar campo</option><option value="balance">Balance actual</option><option value="plan">Plan</option><option value="sms">SMS</option><option value="voz">Voz</option><option value="datos">Datos</option><option value="fplan">Días desde el inicio del plan</option></select></div><label class="col-sm-1 col-form-label pl-4 operators_list" style="font-size: 18px;" name="operators[]"></label><label class="col-sm-1 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');
+            $('#dynamic_field').append('<tr id="row'+i+'"><td><div class="form-group row"><label class="col-sm-2 col-form-label">Nombre</label><div class="col-sm-10"><input type="text" name="ruleNames[]" required maxlength="50" class="form-control ruleNames_list" style="width:100%;"/></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Descripción</label><div class="col-sm-10"><textarea type="text" name="ruleDescriptions[]" maxlength="200" class="form-control ruleDescriptions_list" rows="1" style="width:100%; font-size: 14.5px;"></textarea></div></div><div class="form-group row"><label class="col-sm-2 col-form-label">Campo</label><div class="col-sm-4"><select class="form-control ruleFields_list" name="ruleFields[]" onchange="showOperator(' + i + ')" required><option value="" disabled selected>Seleccionar campo</option><option value="gap">Días entre envíos</option><option value="fplan">Días desde el inicio del plan</option><option value="balance">Balance actual</option><option value="plan">Plan</option><option value="sms">SMS</option><option value="voz">Voz</option><option value="datos">Datos</option></select></div><label class="col-sm-1 col-form-label pl-4 operators_list" style="font-size: 18px;" name="operators[]"></label><label class="col-sm-1 col-form-label text-right">Valor</label><div class="col-sm-4"><input type="text" name="ruleValues[]" required maxlength="50" class="form-control ruleValues_list" style="width:100%;"/></div></div></td><td><button type="button" name="remove" style="padding: 4px 10px; margin-top: 2px;" id="'+i+'" class="btn bg-gradient-danger .btn-sm btn_remove">&#10005</button></td></tr>');
           i++;    
         });  
         $(document).on('click', '.btn_remove', function(){  
