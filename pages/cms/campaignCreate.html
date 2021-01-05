@@ -127,12 +127,16 @@
                       <label class="custom-control-label" for="customSwitch1" id="lblSwitch">Se repite</label>
                     </div>
                     <div class="form-group row" id="divNoRepite">
-                      <label class="col-sm-2 col-form-label text-right">Fecha</label>
-                      <div class="col-sm-6">
+                      <label class="col-sm-1 col-form-label text-right">Fecha</label>
+                      <div class="col-sm-5">
                         <div class="input-group date">
                           <input type="datetime-local" step=900 min="2020-10-01T08:00" max="2025-12-31T08:00" name="fecha" class="form-control datetimepicker-input" data-target="#fecha" required/>
                         </div>
                       </div>
+                      <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30" required>
+                      </div> 
                     </div>
                       <!-- Date range -->
                     <div class="form-group row" id="divRepite" hidden>
@@ -152,7 +156,8 @@
                         </select>
                       </div>
                     </div>
-                    <div class="form-group row" id="divMensual" hidden>
+                    <div id="divMensual" hidden>
+                      <div class="form-group row">
                       <label class="col-sm-2 col-form-label text-right">Fecha</label>
                       <div class="col-sm-4">
                         <div class="input-group date">
@@ -163,8 +168,16 @@
                       <div class=" col-sm-4">
                         <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaMensual" required>
                       </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                        <div class="col-sm-4">
+                          <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30" required>
+                        </div> 
+                      </div>
                     </div>
-                    <div class="form-group row" id="divSemanal" hidden>
+                    <div id="divSemanal" hidden>
+                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label text-right">Día</label>
                       <div class="col-sm-4">
                         <select class="form-control" name="dia" id="dia">
@@ -181,13 +194,24 @@
                       <label class="col-sm-2 text-right">Hora</label>
                       <div class=" col-sm-4">
                         <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaSemanal" required>
-                      </div>  
+                      </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                        <div class="col-sm-4">
+                          <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30" required>
+                        </div> 
+                      </div> 
                     </div>
                     <div class="form-group row" id="divDiario" hidden>
                       <label class="col-sm-2 text-right">Hora</label>
                       <div class=" col-sm-4">
                         <input class="form-control" type="time"  value="08:00" step="900" max="23:00" list="hora" name="horaDiario" required>
-                      </div>  
+                      </div>
+                      <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                      <div class="col-sm-4">
+                        <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30" required>
+                      </div> 
                     </div>
                     <br>
                   </div> 
@@ -247,6 +271,13 @@
                 <option value="22:00"><option value="00:00">
                 <option value="01:00"><option value="02:00"><option value="03:00">
                 <option value="04:00"><option value="05:00"><option value="06:00">
+              </datalist>
+              <datalist id="zona">
+                <option value="UTC">
+                <option value="America/Mexico_City">
+                <option value="America/Caracas">
+                <option value="America/New_York">
+                <option value="Australia/Sydney">
               </datalist>
               <!-- Modal -->
                 <div class="modal fade" id="modalGap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -415,6 +446,7 @@
         dateRange: $('#rangoFechas').val(), //$("#rangoFechas").val().substring(0, 10),
         //$("#rangoFechas").val().substring(13, 23),
         frequency: $('#frequencia').val(),
+        time_zone: $('#zona').val(),
         fixed_hour: null,
         fixed_date: null,
         day_week: null
@@ -455,7 +487,7 @@
           "rule_value": $("input[name='ruleValues[]']")[i].value
         };
         rules.push(rule);
-        if (rule.rule_field == "Días entre envíos"){
+        if (rule.rule_field == "gap"){
           condGap = true;
         }
       }
@@ -473,7 +505,7 @@
 
       console.log(data);
 
-      /*if (condGap){
+      if (condGap){
       fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -498,7 +530,6 @@
       }else{
         $('#modalGap').modal('show');
       }
-      */
       // .then(response => console.log('Success:', response));
 
       $("#frequencia").val(null);
