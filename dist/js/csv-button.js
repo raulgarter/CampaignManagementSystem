@@ -1,5 +1,7 @@
 function configureDatatable() {
   var table = $("#myTable").DataTable({
+    "autoWidth": false,
+    "responsive": true,
     "oLanguage": {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",

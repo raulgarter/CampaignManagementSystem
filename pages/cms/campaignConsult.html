@@ -131,9 +131,15 @@
                     <!-- Begin and Ending Date -->
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Fecha de inicio-fin</label>
-                      <div class="col-sm-9">
+                      <div class="col-sm-6">
                         <div class="input-group" data-target-input="nearest">
                             <input type="text" name="dateRange" id="dateRange" class="form-control" disabled/>
+                        </div>
+                      </div>
+                      <label class="col-sm-1 col-form-label text-right">UTC</label>
+                      <div class="col-sm-2">
+                        <div class="input-group" data-target-input="nearest">
+                            <input type="text" name="timeZone" id="timeZone" class="form-control" disabled/>
                         </div>
                       </div>
                     </div>
@@ -267,6 +273,7 @@
             // Scheduler info
             document.getElementById("dateRange").value = data.scheduler.dateRange;
             document.getElementById("frequency").value = (data.scheduler.frequency) ? data.scheduler.frequency : "Única";
+            document.getElementById("timeZone").value = (data.scheduler.time_zone) ? data.scheduler.time_zone : "";
             document.getElementById("fixedHour").value = (data.scheduler.hour) ? (data.scheduler.hour).substring(11, 16) : "";          
             document.getElementById("dayMonth").value = (data.scheduler.date) ? data.scheduler.date: "No aplica";
             document.getElementById("dayWeek").value = (data.scheduler.day_week) ? dayWeekEquivalence(data.scheduler.day_week): "No aplica";
