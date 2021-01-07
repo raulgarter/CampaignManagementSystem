@@ -76,14 +76,14 @@
           <div class="col-md-9 mx-auto">
             <div class="card">
               <div class="card-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
-                <h3 class="card-title" style="margin-top: 5px; font-size: 18.5px;">Clientes calificados</h3>
+                <h3 class="card-title" id="titulo" style="margin-top: 5px; font-size: 18.5px;">Clientes calificados</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="myTable" class="table table-bordered table-hover"></table>
                 <div id="botonesDatatable" style="text-align: right; margin-top: 8px;">
                   <span class="card-tools" id="createCampaignButton">
-                    <a class="btn btn-default btn-sm float-left" title="Agregar campaña" href="./campaignHistory.html">
+                    <a class="btn btn-default btn-sm float-left" title="Regresar" href="./campaignHistory.html">
                       Regresar
                     </a>
                   </span>
@@ -146,7 +146,7 @@
   };
   // console.log(data);
 
-  fetch('https://cms-campaign-system-api.us-e1.cloudhub.io/api/campaigns/executions/clients', {
+  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/executions/clients', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {

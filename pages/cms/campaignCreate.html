@@ -130,12 +130,12 @@
                       <label class="col-sm-1 col-form-label text-right">Fecha</label>
                       <div class="col-sm-5">
                         <div class="input-group date">
-                          <input type="datetime-local" step=900 min="2020-10-01T08:00" max="2025-12-31T08:00" name="fecha" class="form-control datetimepicker-input" data-target="#fecha" required/>
+                          <input type="datetime-local" step="300" min="2020-10-01T08:00" max="2025-12-31T08:00" name="fecha" class="form-control datetimepicker-input" data-target="#fecha" required/>
                         </div>
                       </div>
                       <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30" required>
+                        <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30">
                       </div> 
                     </div>
                       <!-- Date range -->
@@ -166,13 +166,13 @@
                       </div>
                       <label class="col-sm-2 col-form-label text-right">Hora</label>
                       <div class=" col-sm-4">
-                        <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaMensual" required>
+                        <input class="form-control" type="time" value="08:00" step="300" max="23:00" list="hora" name="horaMensual" required>
                       </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
                         <div class="col-sm-4">
-                          <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30" required>
+                          <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zonaMensual" maxlength="30">
                         </div> 
                       </div>
                     </div>
@@ -193,24 +193,24 @@
                       </div>
                       <label class="col-sm-2 text-right">Hora</label>
                       <div class=" col-sm-4">
-                        <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaSemanal" required>
+                        <input class="form-control" type="time" value="08:00" step="300" max="23:00" list="hora" name="horaSemanal" required>
                       </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
                         <div class="col-sm-4">
-                          <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30" required>
+                          <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zonaSemanal" maxlength="30">
                         </div> 
                       </div> 
                     </div>
                     <div class="form-group row" id="divDiario" hidden>
                       <label class="col-sm-2 text-right">Hora</label>
                       <div class=" col-sm-4">
-                        <input class="form-control" type="time"  value="08:00" step="900" max="23:00" list="hora" name="horaDiario" required>
+                        <input class="form-control" type="time"  value="08:00" step="300" max="23:00" list="hora" name="horaDiario" required>
                       </div>
                       <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
                       <div class="col-sm-4">
-                        <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30" required>
+                        <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zonaDiario" maxlength="30">
                       </div> 
                     </div>
                     <br>
@@ -441,12 +441,11 @@
       e.preventDefault();
 
       console.log($("#rangoFechas").val());
-
       var scheduler = {
         dateRange: $('#rangoFechas').val(), //$("#rangoFechas").val().substring(0, 10),
         //$("#rangoFechas").val().substring(13, 23),
         frequency: $('#frequencia').val(),
-        time_zone: $('#zona').val(),
+        time_zone: null,
         fixed_hour: null,
         fixed_date: null,
         day_week: null
@@ -455,17 +454,21 @@
 
       if ($('#frequencia').val() == 'diaria') {
         scheduler.fixed_hour = $("input[name='horaDiario']").val();
+        scheduler.time_zone = $("input[name='zonaDiario']").val();
       } else if ($('#frequencia').val() == 'semanal') {
         scheduler.fixed_hour = $("input[name='horaSemanal']").val();
-        scheduler.day_week= $("#dia").val();
+        scheduler.time_zone = $("input[name='zonaSemanal']").val();
+        scheduler.day_week = $("#dia").val();
       } else if ($('#frequencia').val() == 'mensual') {
-        scheduler.fixed_hour= $("input[name='horaMensual']").val();
+        scheduler.fixed_hour = $("input[name='horaMensual']").val();
+        scheduler.time_zone = $("input[name='zonaMensual']").val();
         scheduler.fixed_date= $("#fechaNro").val();
       } else {
         var fecha = $("input[name='fecha']").val();
         var dateFormatted = fecha.substring(5,7) + "/" + fecha.substring(8,10) + "/" + fecha.substring(0,4);
-        scheduler.fixed_hour= $("input[name='fecha']").val().substring(11, );
+        scheduler.fixed_hour = $("input[name='fecha']").val().substring(11, );
         scheduler.dateRange = dateFormatted + " - " + dateFormatted;
+        scheduler.time_zone = $("input[name='zona']").val();
       };
 
       var rules = [];

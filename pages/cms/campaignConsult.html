@@ -131,13 +131,13 @@
                     <!-- Begin and Ending Date -->
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Fecha de inicio-fin</label>
-                      <div class="col-sm-6">
+                      <div class="col-sm-4">
                         <div class="input-group" data-target-input="nearest">
                             <input type="text" name="dateRange" id="dateRange" class="form-control" disabled/>
                         </div>
                       </div>
-                      <label class="col-sm-1 col-form-label text-right">UTC</label>
-                      <div class="col-sm-2">
+                      <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                      <div class="col-sm-3">
                         <div class="input-group" data-target-input="nearest">
                             <input type="text" name="timeZone" id="timeZone" class="form-control" disabled/>
                         </div>
@@ -251,6 +251,32 @@
     return day;
   }
 
+  function fieldEquivalence(field){
+    var result = null;
+    switch(field) {
+      case 'gap': result = 'Días entre envíos';      break;
+      case 'fplan': result = 'Días desde el inicio del plan';     break;
+      case 'plan': result = 'Plan';  break;
+      case 'sms': result = 'SMS';     break;
+      case 'voz': result = 'Voz';    break;
+      case 'datos': result = 'Datos';     break;
+      case 'balance': result = 'Balance actual';    break;
+      default : // code block
+    }
+    return result;
+  }
+
+  function typeEquivalence(field){
+    var result = null;
+    if(field == 'fplan' || field == 'gap'){
+      return 'Mayor a';
+    }else if (field == 'plan'){
+      return 'Igual a';
+    }else{
+      return 'Menor a';
+    }
+  }
+
   $(function () {
     validateRole('campaignConsult');
     var id_campaign = localStorage.getItem("id_campaign");
@@ -285,8 +311,8 @@
                 fila += "<tr>";
                 fila += "<td>" + celda.rule_name + "</td>";
                 fila += "<td>" + ((celda.rule_description) ? celda.rule_description : '')  + "</td>";
-                fila += "<td>" + celda.rule_field + "</td>";
-                fila += "<td>" + celda.rule_type + "</td>";
+                fila += "<td>" + fieldEquivalence(celda.rule_field) + "</td>";
+                fila += "<td>" + typeEquivalence(celda.rule_type) + "</td>";
                 fila += "<td>" + celda.rule_value + "</td></tr>";
               })
               fila += "</tbody>";

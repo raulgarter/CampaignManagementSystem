@@ -143,12 +143,16 @@
                     <label class="custom-control-label" for="customSwitch1" id="lblSwitch">Se repite</label>
                   </div>
                   <div class="form-group row" id="divNoRepite" hidden>
-                    <label class="col-sm-2 col-form-label">Fecha</label>
+                    <label class="col-sm-1 col-form-label">Fecha</label>
                     <div class="col-sm-5">
                       <div class="input-group date">
-                        <input type="datetime-local" step=900 min="2020-10-01T08:00" max="2025-12-31T08:00" name="fecha" class="form-control datetimepicker-input" data-target="#fecha"/>
+                        <input type="datetime-local" step=300 min="2020-10-01T08:00" max="2025-12-31T08:00" name="fecha" class="form-control datetimepicker-input" data-target="#fecha"/>
                       </div>
                     </div>
+                    <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                    <div class="col-sm-3">
+                      <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zona" maxlength="30">
+                    </div> 
                   </div>
                   <div class="form-group row" id="divRepite" hidden>
                     <label class="col-sm-2 col-form-label text-right">Fecha inicio-fin</label>
@@ -167,42 +171,62 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group row" id="divMensual" hidden>
-                    <label class="col-sm-2 col-form-label text-right">Fecha</label>
-                    <div class="col-sm-4">
-                      <div class="input-group date">
-                        <input type="number" min="1" max="31" class="form-control" placeholder="Ingrese nro entre 1 y 31" id="fechaNro" name="fechaNro"/>
+                  <div id="divMensual" hidden>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label text-right">Fecha</label>
+                      <div class="col-sm-4">
+                        <div class="input-group date">
+                          <input type="number" min="1" max="31" class="form-control" placeholder="Ingrese nro entre 1 y 31" id="fechaNro" name="fechaNro"/>
+                        </div>
+                      </div>
+                      <label class="col-sm-2 col-form-label text-right">Hora</label>
+                      <div class=" col-sm-4">
+                        <input class="form-control" type="time" value="08:00" step="300" max="23:00" list="hora" name="horaMensual" required>
+                      </div>
+                    </div> 
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                      <div class="col-sm-4">
+                        <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zonaMensual" maxlength="30">
+                      </div> 
+                    </div> 
+                  </div>
+                  <div id="divSemanal" hidden>
+                    <div class="form-group row"> 
+                      <label class="col-sm-2 col-form-label text-right">Día</label>
+                      <div class="col-sm-4">
+                        <select class="form-control" name="dia" id="dia">
+                          <option value="" disabled selected>Seleccionar día</option>
+                          <option value="1">Lunes</option>
+                          <option value="2">Martes</option>
+                          <option value="3">Miércoles</option>
+                          <option value="4">Jueves</option>
+                          <option value="5">Viernes</option>
+                          <option value="6">Sábado</option>
+                          <option value="7">Domingo</option>
+                        </select>
+                      </div>
+                      <label class="col-sm-2 text-right">Hora</label>
+                      <div class=" col-sm-4">
+                        <input class="form-control" type="time" value="08:00" step="300" max="23:00" list="hora" name="horaSemanal" required>
                       </div>
                     </div>
-                    <label class="col-sm-2 col-form-label text-right">Hora</label>
-                    <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaMensual" required>
-                    </div>
-                  </div>
-                  <div class="form-group row" id="divSemanal" hidden>
-                    <label class="col-sm-2 col-form-label text-right">Día</label>
-                    <div class="col-sm-4">
-                      <select class="form-control" name="dia" id="dia">
-                        <option value="" disabled selected>Seleccionar día</option>
-                        <option value="1">Lunes</option>
-                        <option value="2">Martes</option>
-                        <option value="3">Miércoles</option>
-                        <option value="4">Jueves</option>
-                        <option value="5">Viernes</option>
-                        <option value="6">Sábado</option>
-                        <option value="7">Domingo</option>
-                      </select>
-                    </div>
-                    <label class="col-sm-2 text-right">Hora</label>
-                    <div class=" col-sm-4">
-                      <input class="form-control" type="time" value="08:00" step="900" max="23:00" list="hora" name="horaSemanal" required>
-                    </div>  
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                      <div class="col-sm-4">
+                        <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zonaSemanal" maxlength="30">
+                      </div> 
+                    </div>    
                   </div>
                   <div class="form-group row" id="divDiario" hidden>
                     <label class="col-sm-2 text-right">Hora</label>
                     <div class=" col-sm-4">
-                      <input class="form-control" type="time"  value="08:00" step="900" max="23:00" list="hora" name="horaDiario" required>
-                    </div>  
+                      <input class="form-control" type="time"  value="08:00" step="300" max="23:00" list="hora" name="horaDiario" required>
+                    </div>
+                    <label class="col-sm-2 col-form-label text-right">Zona horaria</label>
+                    <div class="col-sm-4">
+                      <input class="form-control" type="text" placeholder="Ingrese zona horaria" list="zona" name="zonaDiario" maxlength="30">
+                    </div>     
                   </div>
                   <div class="card-footer pb-1 mt-4 pr-0 pl-0" style="background-color: white;">
                     <a href="./campaign.html" class="btn btn-default">Cancelar</a>
@@ -218,6 +242,13 @@
                   <option value="22:00"><option value="00:00">
                   <option value="01:00"><option value="02:00"><option value="03:00">
                   <option value="04:00"><option value="05:00"><option value="06:00">
+                </datalist>
+                <datalist id="zona">
+                  <option value="UTC">
+                  <option value="America/Mexico_City">
+                  <option value="America/Caracas">
+                  <option value="America/New_York">
+                  <option value="Australia/Sydney">
                 </datalist>
                 <!-- Modal -->
                 <div class="modal fade" id="modalGap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -400,6 +431,7 @@
           // Horario
           var frequency = data.scheduler.frequency;
           var hour = data.scheduler.hour.substring(11,);
+          var timezone = data.scheduler.time_zone;
           if (frequency == "diaria"){
             $("#customSwitch1").prop('checked', "checked");
             $("#divRepite").removeAttr('hidden');
@@ -407,6 +439,7 @@
             $("#rangoFechas").val(data.scheduler.dateRange);
             $("option[value='diaria']").attr("selected", "selected");
             $("input[name='horaDiario']").val(hour);
+            $("input[name='zonaDiario']").val(timezone);
           }else if(frequency == "semanal"){
             $("#customSwitch1").prop('checked', "checked");
             $("#divRepite").removeAttr('hidden');
@@ -415,6 +448,7 @@
             $("option[value='semanal']").attr("selected", "selected");
             $("option[value='"+ data.scheduler.day_week +"']").attr("selected", "selected");
             $("input[name='horaSemanal']").val(hour);
+            $("input[name='zonaSemanal']").val(timezone);
           }else if(frequency == "mensual"){
             $("#customSwitch1").prop('checked', "checked");
             $("#divRepite").removeAttr('hidden');
@@ -424,6 +458,7 @@
             $("option[value='mensual']").attr("selected", "selected");
             $("input[name='horaMensual']").val(hour); // si estos dos no son con val sino value, hay que anteceder [0] como un array
             $("input[name='fechaNro']").val(data.scheduler.date);
+            $("input[name='zonaMensual']").val(timezone);            
           }else{
             // console.log($("#customSwitch1"));
             $("#customSwitch1").prop('checked', false);
@@ -432,6 +467,7 @@
             var dateAndHour = date.substring(6,10) + '-' + date.substring(0,2) + '-' + date.substring(3,5) + 'T' + hour;
             // console.log($("input[name='fecha']")[0]);
             $("input[name='fecha']")[0].value= dateAndHour;
+            $("input[name='zona']").val(timezone);
           }
           // Reglas
           var fila = "";
@@ -584,6 +620,7 @@ formScheduler.addEventListener('submit', function(e){
   var scheduler = {
     dateRange: $('#rangoFechas').val(),
     frequency: $('#frequencia').val(),
+    time_zone: null,
     fixed_hour: null,
     fixed_date: null,
     day_week: null,
@@ -594,17 +631,21 @@ formScheduler.addEventListener('submit', function(e){
 
   if ($('#frequencia').val() == 'diaria') {
     scheduler.fixed_hour = $("input[name='horaDiario']").val();
+    scheduler.time_zone = $("input[name='zonaDiario']").val();
   } else if ($('#frequencia').val() == 'semanal') {
     scheduler.fixed_hour = $("input[name='horaSemanal']").val();
+    scheduler.time_zone = $("input[name='zonaSemanal']").val();
     scheduler.day_week= $("#dia").val();
   } else if ($('#frequencia').val() == 'mensual') {
     scheduler.fixed_hour= $("input[name='horaMensual']").val();
+    scheduler.time_zone = $("input[name='zonaMensual']").val();
     scheduler.fixed_date= $("#fechaNro").val();
   } else {
     var fecha = $("input[name='fecha']").val();
     var dateFormatted = fecha.substring(5,7) + "/" + fecha.substring(8,10) + "/" + fecha.substring(0,4);
     scheduler.fixed_hour= $("input[name='fecha']").val().substring(11, );
     scheduler.dateRange = dateFormatted + " - " + dateFormatted;
+    scheduler.time_zone = $("input[name='zona']").val();
   };
 
   var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + id_campaign + '/scheduler';
