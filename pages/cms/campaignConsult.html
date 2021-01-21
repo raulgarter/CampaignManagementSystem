@@ -277,6 +277,21 @@
     }
   }
 
+  function unitEquivalence(field){
+    var result = null;
+    switch(field) {
+      case 'gap': result = 'días';      break;
+      case 'fplan': result = 'días';     break;
+      case 'plan': result = '';  break;
+      case 'sms': result = 'mensajes';     break;
+      case 'voz': result = 'minutos';    break;
+      case 'datos': result = 'MB';     break;
+      case 'balance': result = '$ MXN';    break;
+      default : // code block
+    }
+    return result;
+  }
+
   $(function () {
     validateRole('campaignConsult');
     var id_campaign = localStorage.getItem("id_campaign");
@@ -306,26 +321,16 @@
 
             // Rules info 
             if ((data.rules).length > 0) {
-              var fila = "<thead><tr><th>Nombre</th><th>Descripción</th><th>Campo</th><th>Tipo</th><th>Valor</th></tr></thead><tbody>";
+              var fila = "<thead><tr><th>Nombre</th><th>Descripción</th><th>Campo</th><th>Condición</th></tr></thead><tbody>";
               (data.rules).forEach((celda) =>{
                 fila += "<tr>";
                 fila += "<td>" + celda.rule_name + "</td>";
                 fila += "<td>" + ((celda.rule_description) ? celda.rule_description : '')  + "</td>";
                 fila += "<td>" + fieldEquivalence(celda.rule_field) + "</td>";
-                fila += "<td>" + typeEquivalence(celda.rule_type) + "</td>";
-                fila += "<td>" + celda.rule_value + "</td></tr>";
+                fila += "<td>" + typeEquivalence(celda.rule_field) + " " + celda.rule_value + " " + unitEquivalence(celda.rule_field) + "</td></tr>";
               })
               fila += "</tbody>";
               document.getElementById("myTable").innerHTML = fila;
-              /*$('#myTable').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-              });*/
             }
           }
         )

@@ -26,7 +26,9 @@ function configureDatatable() {
     buttons: [
         {
           extend: 'csvHtml5',
-		  title: 'CMS_' + $('#titulo').html(),
+          charset: 'UTF-8',
+          bom: true,
+		      title: 'CMS_' + $('#titulo').html(),
           className: 'btn-success btn-sm'
         }
     ]

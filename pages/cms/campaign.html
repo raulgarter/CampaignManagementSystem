@@ -268,7 +268,7 @@
   }
 
   function executeCampaign(){
-    var url = 'https://cms-rules-validation-process-api.us-e2.cloudhub.io/api/validation/' + $("#executionId").val();
+    var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/' + $("#executionId").val() + '/execution';
     fetch(url, {
         method: 'GET'
       }).then(res => {
