@@ -7,7 +7,8 @@ function displayMenu(){
   		'<li class="nav-item"><a href="campaignCreate.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Crear campaña</p></a></li>'
   		+'<li class="nav-item"><a href="campaignHistory.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Historial de ejecuciones</p></a></li></ul></li>'
   		+'<li class="nav-item"><a href="churn.html" class="nav-link"><i class="nav-icon fas fa-users-slash"></i><p>Churn</p></a></li>'
-        +'<li class="nav-item"><a href="churn.html" class="nav-link"><i class="nav-icon fas fa-chart-line"></i><p>Search Analytics</p></a></li>');
+  		+'<li class="nav-item"><a href="churnRate.html" class="nav-link"><i class="nav-icon fas fa-percent"></i><p>Churn Rate</p></a></li>'
+        +'<li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-chart-line"></i><p>Search Analytics</p></a></li>');
 }
 
 function setActiveItem(page){
@@ -33,6 +34,9 @@ function setActiveItem(page){
 	    break;
 	  case 'churn':
     	$("li > a[href='churn.html']")[0].style.backgroundColor = 'lightgrey';
+	    break;
+	  case 'churnRate':
+    	$("li > a[href='churnRate.html']")[0].style.backgroundColor = 'lightgrey';
 	    break;
 	  case 'home':
     	$("li > a[href='./home.html']")[0].style.backgroundColor = 'lightgrey';
