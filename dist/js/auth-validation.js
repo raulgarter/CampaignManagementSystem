@@ -3,8 +3,9 @@ function displayMenu(){
   		'<li class="nav-item" id="userBar" hidden><a href="./users.html" class="nav-link"><i class="nav-icon fas fa-users"></i><p>Usuarios</p></a></li>'+
   		'<li class="nav-item" id="li-campaigns"><a href="·" class="nav-link"><i class="nav-icon fas fa-bullhorn"></i>'+
   		'<p>Campañas<i style="font-size:20px;" class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview">'+
-  		'<li class="nav-item"><a href="campaign.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Campañas</p></a></li>'+
-  		'<li class="nav-item"><a href="campaignCreate.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Crear campaña</p></a></li>'
+  		'<li class="nav-item"><a href="campaign.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Campañas</p></a></li>'
+      +'<li class="nav-item"><a href="campaignCreate.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Crear campaña</p></a></li>'
+  		+'<li class="nav-item"><a href="campaignTemplates.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Plantillas de correo</p></a></li>'
   		+'<li class="nav-item"><a href="campaignHistory.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Historial de ejecuciones</p></a></li></ul></li>'
   		+'<li class="nav-item"><a href="churn.html" class="nav-link"><i class="nav-icon fas fa-users-slash"></i><p>Churn</p></a></li>'
   		+'<li class="nav-item"><a href="churnRate.html" class="nav-link"><i class="nav-icon fas fa-percent"></i><p>Churn Rate</p></a></li>'
@@ -23,6 +24,10 @@ function setActiveItem(page){
 	    $('#li-campaigns').addClass('menu-open');
     	$("li > a[href='campaignCreate.html']").addClass('active');
 	    break;
+    case 'campaignTemplates':
+      $('#li-campaigns').addClass('menu-open');
+      $("li > a[href='campaignTemplates.html']").addClass('active');
+      break;
 	  case 'campaignHistory':
 	    $('#li-campaigns').addClass('menu-open');
 	  	$("li > a[href='campaignHistory.html']").addClass('active');

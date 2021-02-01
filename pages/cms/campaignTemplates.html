@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEWTOMS LLC</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <style>
+      input, textarea {font-size: 14.5px ;}
+  </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-image: url(../../dist/img/foto9.jpg); font-family: 'Gadugi'; font-weight: 300; color: white;">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item">
+        <h4 style="margin-top: 3%;">Plantillas de campaña</h4>
+      </li>
+    </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../../index.html">
+            <i class="fas fa-sign-out-alt" style="font-size: 25px;"></i>
+          </a>
+        </li>
+      </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4" style="background-image: url('../../dist/img/foto1.jpg');">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <img src="../../dist/img/newtoms.png" alt="" style="width: 80%; height: 22%; margin-left: 10%; margin-bottom: -15%;">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <label for="" style="color: grey;">&nbsp; Campaign Management System</label>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2" >
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id="menu">
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="font-family: 'Microsoft YaHei UI'; font-size: 14.5px; background-image: url(../../dist/img/foto11.jpg); padding: 0px 15px; padding-right: 20px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid"></div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-10 mx-auto">
+            <!-- jquery validation -->
+            <div class="card">
+              <div class="card-header" style="background-image: url(../../dist/img/foto4.jpg); color: white;">
+                <h3 class="card-title" style="margin-top: 5px; font-size: 18.5px;">&nbsp;&nbsp;Vista previa de plantillas de campaña</h3>
+              </div>
+              <!-- form start -->
+              <form id="quickForm">
+                <div class="card-body">
+                  <div style="padding-left: 6px; padding-right: 6px;" class="mx-auto">
+                    <!-- Email Template -->
+                    <div class="col-sm-6 mt-2">
+                      <select class="form-control" name="template" id="template" style="font-size: 14px;" onchange="getTemplate()"required>
+                      </select>
+                    </div>
+                    <br>
+                    <div id="vistaPrevia">
+                    
+                    </div>
+                  </div>
+                  
+                </div><!-- /.card-body -->
+                <div class="card-footer">
+                  <a href="./campaign.html" class="btn btn-info float-right" style="margin-right: 1%; font-size: 14.5px;">Regresar</a>
+                </div>
+              </form>
+            </div><!-- /.card -->  
+          </div>
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>
+      Copyright &copy; 2020 
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <a href="https://www.newtoms.com">NEWTOMS LLC</a>.</strong>
+    </div>
+  </footer>
+</div>
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jquery-validation -->
+<script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- Select2 -->
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="../../plugins/moment/moment.min.js"></script>
+<!-- date-range-picker -->
+<script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Page specific script -->
+<script src="../../dist/js/auth-validation.js"></script>
+<script>
+validateRole('campaignTemplates');
+  function getTemplate(){
+    var template_id = $('#template').val();
+    fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/templates/' + template_id).then( 
+      response => { response.text().then(
+        data => {
+            document.getElementById("vistaPrevia").innerHTML = data
+        }
+      )}
+    )
+  }
+
+  fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/campaigns/templates').then( 
+      response => { 
+        response.json().then(
+          data => {
+            // console.log(data);
+            if (data.length > 0) {
+              var plantillas = "<option value='' disabled selected>Seleccione la plantilla de correo a visualizar</option>";
+              data.forEach((celda) =>{
+                plantillas += "<option value="+ celda.id +">"+ celda.name +"</option>";
+              })
+              document.getElementById("template").innerHTML = plantillas;
+              //$("#myTable").buttons().container().appendTo($('#botonesDatatable'));
+            }
+          }
+        )
+      }
+    )
+</script>
+</body>
+</html>
