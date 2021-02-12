@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Suscripción de correos</title>
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  </head>
+
+  <body style=' '>
+    <div id="divPpal">
+      <a id="titulo"> Suscripción de correos - EXiS </a>
+    </div>
+    <main role="main" class="container">
+      <div id="textoCentral">
+        <h1>Entérate de ofertas personalizadas!</h1>
+        <p style="font-size:1.25rem;font-weight:300">Al llenar el formulario, se activará tu suscripción de correo para mensajes y ofertas personalizadas.<br><br>
+        <form id="quickForm" method="post">      
+          <div class="form-group row">
+            <input type="text" name="email" id="email" class="form-control" placeholder="Email" minlength="3" maxlenght="50" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required/>
+            <button type="submit" class="btn btn-success">Agregar</button>
+          </div>
+          <br>
+        </form><br>
+          <div >
+            <a class="btn btn-light"  href="http://exis.mx/" >Cancelar </a>
+          </div>
+      </div>
+    </main>
+  </body>
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+  <script src="../dist/js/notifications.js"></script>
+  <script>
+  var form = document.getElementById('quickForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();  
+
+    var url = 'https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/clients/unsuscribes/' + document.getElementById("email").value;
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => {
+      res.json();
+      if (res.status == 200 || res.status == 201) {
+        notificationFunction('Suscripción exitosa.', 'success');
+      } else {
+        notificationFunction('No se pudo realizar la suscripción.', 'error');
+      }
+    })
+    .catch(error => {
+      notificationFunction('No se pudo realizar la suscripción.', 'error');
+      console.error('Error:', error);
+    })
+  })  
+  </script>
+  <style>
+    #email{
+      margin-top:1px;
+    }
+    .form-control {
+  width: 40%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+    .btn {
+      margin-top: -4px;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn:hover, .btn:focus {
+  text-decoration: none;
+}
+
+.btn:focus, .btn.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+    .btn-success {
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn-success:focus, .btn-success.focus {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+}
+.btn-light {
+  color: #212529;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.btn-light:hover {
+  color: #212529;
+  background-color: #e2e6ea;
+  border-color: #dae0e5;
+}
+
+.btn-light:focus, .btn-light.focus {
+  box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
+}
+      body{
+        font-family:apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        padding-top: 5rem;
+      }
+      h1{
+        color: #15dae5;
+        font-size:2.5rem;
+        font-weight:500;
+        margin-top:0;
+        margin-bottom:.5rem
+      }
+      #titulo{
+        color: white;display:inline-block;padding-top:.3125rem;padding-bottom:.3125rem;margin-right:1rem;font-size:1.25rem;line-height:inherit;white-space:nowrap
+      }
+      #divPpal{
+        position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;padding:.5rem 1rem;position:fixed;top:0;right:0;left:0;z-index:1030;background-color: darkorange; height: 45px;
+      }
+      #textoCentral{
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+      a:link {
+          text-decoration: none;
+        }
+      .container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
+  @media (min-width:576px){.container{max-width:540px}}@media (min-width:768px){.container{max-width:720px}}@media (min-width:992px){.container{max-width:960px}}@media (min-width:1200px){.container{max-width:1140px}}
+    </style>
+</html>

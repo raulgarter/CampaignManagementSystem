@@ -93,3 +93,15 @@ CREATE TABLE execution (
 	CONSTRAINT fk_campaign FOREIGN KEY (fk_campaign) references campaign (id_campaign) ON DELETE CASCADE,
 	CONSTRAINT fk_client FOREIGN KEY (fk_client) references client (id_client) ON DELETE CASCADE
 );
+
+CREATE TABLE event (
+	event_id serial PRIMARY KEY,
+	event_code VARCHAR(24) NOT NULL,
+	event_type VARCHAR(16) NOT NULL,
+	event_date timestamp NOT NULL,
+	event_notes VARCHAR(64),
+	event_template VARCHAR(64),
+	fk_client integer NOT NULL,
+	
+	CONSTRAINT fk_client FOREIGN KEY (fk_client) references client (client_id) ON DELETE CASCADE
+);
