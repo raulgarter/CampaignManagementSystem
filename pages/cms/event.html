@@ -134,22 +134,25 @@
 <script src="../../dist/js/csv-button.js"></script>
 <script src="../../dist/js/auth-validation.js"></script>
 <script>
-  validateRole('campaignHistory');
+  validateRole('event');
+
   fetch('https://cms-web-portal-experience-api.us-e1.cloudhub.io/api/events').then( 
     response => { 
       response.json().then(
         data => {
           console.log(data);
           if (data.length > 0) {
-            var fila = "<thead><tr><th>ID</th><th>Fecha y hora</th><th>Tipo de evento</th><th>Plantilla</th><th>Notas</th><th>Cliente</th></tr></thead><tbody>";
+            var fila = "<thead><tr><th>Fecha y hora</th><th>Tipo de evento</th><th>Cliente</th><th>Plantilla</th><th>Notas</th></tr></thead><tbody>";
             data.forEach((celda) =>{
               fila += "<tr>";
-              fila += "<td>" + celda.id + "</td>";
-              fila += "<td>" + celda.date + "</td>";
-              fila += "<td>" + celda.event + "</td>";
+              // fila += "<td>" + celda.id + "</td>";
+              fila += "<td>" + celda.date.substring(0,10) + ' :: ' + celda.date.substring(11,19) + "</td>";
+              // fila += "<td>" + celda.event + "</td>";
+              fila += "<td>" + eventTranslator(celda.event) + "</td>";
+              fila += "<td>" + celda.email + ", ID:" + celda.client + "</td>"
               fila += "<td>" + celda.template + "</td>";
-              fila += "<td>" + celda.notes + "</td>";  
-              fila += "<td>" + celda.email + ", ID:" + celda.client + "</td></tr>"
+              fila += "<td>" + celda.notes + "</td></tr>";  
+              // fila += "<td>" + celda.email + ", ID:" + celda.client + "</td></tr>"
             })
             fila += "</tbody>";
             document.getElementById("myTable").innerHTML = fila;
@@ -159,6 +162,19 @@
       )
     }
   )
+
+  function eventTranslator(text){
+    switch(text) {
+      case 'open': return 'Abierto'; break;
+      case 'click': return 'Clic'; break;
+      case 'bounce': return 'Rechazado'; break;
+      case 'dropped': return 'Abandono'; break;
+      case 'spamreport': return 'No deseado'; break;
+      case 'unsubscribe': return 'Cancelación'; break;
+      default: return 'N/A'
+    }
+  }
+
 
   function keepID(executionDate, executionTime, executionCampaign) {
     var executionClients = { execution_date : executionDate, execution_time : executionTime, fk_campaign : executionCampaign};
