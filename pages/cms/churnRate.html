@@ -195,20 +195,22 @@
           if (res.status == 200 || res.status == 201) {
             if (data.hasOwnProperty('churn')) {
               $('#churnList').removeAttr("hidden");
-              var fila = "<thead><tr><th>Nombre</th><th>Correo</th><th>Fecha de baja</th></tr></thead><tbody>";
+              var fila = "<thead><tr><th>Nombre</th><th>Correo</th><th>Fecha de inicio</th><th>Fecha de baja</th></tr></thead><tbody>";
               data.churn.forEach((celda) =>{
                 console.log(celda);
                 fila += "<tr>";
                 fila += "<td>" + celda.client_forename + " " +celda.client_surname + "</td>";
                 fila += "<td>" + celda.client_email + "</td>";
+                fila += "<td>" + celda.client_start_date.substring(0,10) + "</td>";
                 fila += "<td>" + celda.client_disconnected_date.substring(0,10) + "</td></tr>";
                 // fila += "<td>" + celda.client_email + "</td></tr>";
               })
               fila += "</tbody>";
               document.getElementById("myTable").innerHTML = fila;
               configureDatatable();
+            }else{
+                $('#churnList').attr("hidden", true);
             }
-            $('#churnList').attr("hidden", true);
             $('#result').removeAttr("hidden");
             console.log(data);
             document.getElementById('rate').innerHTML = data.churn_rate; 
