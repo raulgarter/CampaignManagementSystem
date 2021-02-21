@@ -10,8 +10,12 @@ function displayMenu(){
   		+'<li class="nav-item"><a href="campaignHistory.html" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Historial de ejecuciones</p></a></li></ul></li>'
   		// +'<li class="nav-item"><a href="churn.html" class="nav-link"><i class="nav-icon fas fa-users-slash"></i><p>Churn</p></a></li>'
   		+'<li class="nav-item"><a href="churnRate.html" class="nav-link"><i class="nav-icon fas fa-users-slash"></i><p>Churn Rate</p></a></li>'
-        +'<li class="nav-item"><a href="https://54.162.61.66/#/login" target="_blank" class="nav-link"><i class="nav-icon fas fa-chart-line"></i><p>Search Analytics</p></a></li>');
-    //https://54.162.61.66/#/embed/viz/799db240-a7be-4314-ac9f-43b6587e80e0/
+      +'<li class="nav-item" id="li-campaigns"><a href="·" class="nav-link"><i class="nav-icon fas fa-chart-line"></i>'
+      +'<p>Search Analytics<i style="font-size:20px;" class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview">'
+        +'<li class="nav-item"><a href="https://54.162.61.66/#/answer/" target="_blank" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Search</p></a></li>'
+        +'<li class="nav-item"><a href="https://54.162.61.66/#/embed/viz/799db240-a7be-4314-ac9f-43b6587e80e0/" target="_blank" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Ingresos y egresos</p></a></li>'
+        +'<li class="nav-item"><a href="https://54.162.61.66/#/embed/viz/4457aeb1-8570-4ba8-92c9-ef502c21d51d/" target="_blank" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Operaciones y estrategia</p></a></li>'
+        +'<li class="nav-item"><a href="https://54.162.61.66/#/embed/viz/814ccd76-d66b-4d52-908d-59b2724dfc17/" target="_blank" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Campañas</p></a></li></ul></li>');
 }
 
 function setActiveItem(page){

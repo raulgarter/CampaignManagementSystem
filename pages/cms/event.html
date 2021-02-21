@@ -27,7 +27,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item">
-        <h4 style="margin-top: 3%;" >Eventos</h4>
+        <h4 style="margin-top: 3%;" id="titulo" >Eventos</h4>
       </li>
     </ul>
 
@@ -170,8 +170,8 @@
       case 'deferred': return 'Diferido'; break;
       case 'open': return 'Abierto'; break;
       case 'click': return 'Clicado'; break;
-      case 'bounce': return 'Rechazado'; break;
-      case 'dropped': return 'Abandonado'; break;
+      case 'bounce': return 'Cancelado'; break;
+      case 'dropped': return 'Rechazado'; break;
       case 'spamreport': return 'Reportado como spam'; break;
       case 'unsubscribe': return 'Dado de baja'; break;
       default: return 'N/A'
