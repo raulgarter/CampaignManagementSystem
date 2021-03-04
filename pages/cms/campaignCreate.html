@@ -376,7 +376,8 @@
       $('#rangoFechas').daterangepicker({
         showDropdowns: true,
         minDate: todayDate,
-        maxDate: '12/31/2025'
+        maxDate: '12/31/2025',
+        autoApply: true
       });
       $.validator.setDefaults({
         submitHandler: function () {
