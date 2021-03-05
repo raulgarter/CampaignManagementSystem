@@ -141,13 +141,12 @@
         data => {
           console.log(data);
           if (data.length > 0) {
-            var fila = "<thead><tr><th>Campaña</th><th>Fecha</th><th>Hora</th><th>UTC</th><th>Frecuencia</th><th>Consultar</th></tr></thead><tbody>";
+            var fila = "<thead><tr><th>Campaña</th><th>Fecha</th><th>Hora</th><th>Frecuencia</th><th>Consultar</th></tr></thead><tbody>";
             data.forEach((celda) =>{
               fila += "<tr>";
               fila += "<td>" + celda.campaign_name + "</td>";
               fila += "<td>" + celda.execution_date + "</td>";
               fila += "<td>" + celda.execution_time + "</td>";
-              fila += "<td>" + celda.time_zone + "</td>";
               fila += "<td>" + ((celda.frequency) ? celda.frequency : "N/A") + "</td>";  
               fila += "<td><a class=\"btn btn-warning btn-sm\" href=\"./campaignExecutionClients.html\"  onclick='keepID(\""+ celda.execution_date + "\",\"" + celda.execution_time + "\",\"" + celda.id_campaign + "\")'><i class=\"fas fa-eye\" title=\"Consultar\"></i></a></td></tr>"
               // fila += "<td><a class=\"btn btn-warning btn-sm\" onclick='keepID(\""+ celda.execution_date + "\",\"" + celda.execution_time + "\",\"" + celda.id_campaign + "\")'><i class=\"fas fa-eye\" title=\"Consultar\"></i></a></td></tr>"
